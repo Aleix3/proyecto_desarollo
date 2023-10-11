@@ -28,7 +28,7 @@
 	  delete[] x;				\
 	  x = NULL;					\
 		}							\
-							  \
+					  \
 	}
 
 #define IN_RANGE( value, min, max ) ( ((value) >= (min) && (value) <= (max)) ? 1 : 0 )
