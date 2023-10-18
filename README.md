@@ -1,2 +1,0 @@
-# proyecto_desarollo
-R
