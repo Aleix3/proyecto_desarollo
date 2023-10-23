@@ -73,6 +73,11 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		velocity.x = 0.2*dt;
 	}
+
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		velocity.y = -3*dt;
+	}
 		
 	pbody->body->SetLinearVelocity(velocity);
 	b2Transform pbodyPos = pbody->body->GetTransform();
