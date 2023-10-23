@@ -34,9 +34,7 @@ public:
 
 	// A set of animations
 	Animation idleAnim;
-	Animation forwardAnim;
-	Animation crouched_idleAnim;
-	Animation crouched_forwardAnim;
+
 
 	//L02: DONE 2: Declare player parameters
 	float speed = 0.2f;

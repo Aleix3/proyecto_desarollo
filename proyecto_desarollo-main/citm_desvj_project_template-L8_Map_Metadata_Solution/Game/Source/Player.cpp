@@ -23,12 +23,21 @@ bool Player::Awake() {
 	//L03: DONE 2: Initialize Player parameters
 	position = iPoint(config.attribute("x").as_int(), config.attribute("y").as_int());
 
+	// idle animation
+	idleAnim.PushBack({ 5, 5, 23, 28 });
+	idleAnim.PushBack({ 28, 33, 23, 28 });
+	idleAnim.speed = 0.2f;
+	idleAnim.loop = true;
+
+
 	return true;
 }
 
 bool Player::Start() {
 
 	texture = app->tex->Load(config.attribute("texturePath").as_string());
+
+	
 
 	// L07 TODO 5: Add physics to the player - initialize physics body
 	app->tex->GetSize(texture, texW, texH);
@@ -53,6 +62,8 @@ bool Player::Update(float dt)
 
 	//L03: DONE 4: render the player texture and modify the position of the player using WSAD keys and render the texture
 	
+	currentAnimation = &idleAnim;
+
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -69,6 +80,7 @@ bool Player::Update(float dt)
 	position.y = METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2;
 
 	app->render->DrawTexture(texture,position.x,position.y);
+
 
 	return true;
 }
