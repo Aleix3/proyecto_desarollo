@@ -30,33 +30,6 @@ bool Player::Start() {
 
 	texture = app->tex->Load(config.attribute("texturePath").as_string());
 
-	///////////////////////
-	//    ANIMACIONES    //
-	///////////////////////
-
-	// idle animation
-	idleAnim.PushBack({ 281, 112, 46, 60 });
-	idleAnim.speed = 0.2f;
-
-	// walk forward animation
-	forwardAnim.PushBack({ 11, 112, 46, 60 });
-	forwardAnim.PushBack({ 65, 112, 46, 60 });
-	forwardAnim.PushBack({ 119, 112, 46, 60 });
-	forwardAnim.PushBack({ 173, 112, 46, 60 });
-	forwardAnim.PushBack({ 227, 112, 46, 60 });
-	forwardAnim.PushBack({ 281, 112, 46, 60 });
-	forwardAnim.speed = 0.17f;
-
-	// crouched idle anim
-	crouched_idleAnim.PushBack({ 270, 211, 51, 36 });
-	crouched_idleAnim.speed = 0.2f;
-
-	//crouched forward anim
-	crouched_forwardAnim.PushBack({ 158, 211, 51, 36 });
-	crouched_forwardAnim.PushBack({ 214, 211, 51, 36 });
-	crouched_forwardAnim.PushBack({ 270, 211, 51, 36 });
-	crouched_forwardAnim.speed = 0.1f;
-
 	// L07 TODO 5: Add physics to the player - initialize physics body
 	app->tex->GetSize(texture, texW, texH);
 	pbody = app->physics->CreateCircle(position.x, position.y, texW / 2, bodyType::DYNAMIC);
