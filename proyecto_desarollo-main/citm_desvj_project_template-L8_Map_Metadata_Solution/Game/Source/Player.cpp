@@ -29,6 +29,8 @@ bool Player::Awake() {
 	idleAnim.speed = 0.2f;
 	idleAnim.loop = true;
 
+	
+
 
 	return true;
 }
@@ -74,10 +76,18 @@ bool Player::Update(float dt)
 		velocity.x = 0.2*dt;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN/* && IsOnGround() == true*/)
 	{
-		velocity.y = -3*dt;
+		velocity.y = -jumpSpeed;
+
+		if (IsOnGround() == false)
+		{
+
+			velocity.y += GRAVITY_Y * dt;
+		}
 	}
+
+	
 		
 	pbody->body->SetLinearVelocity(velocity);
 	b2Transform pbodyPos = pbody->body->GetTransform();
@@ -85,6 +95,8 @@ bool Player::Update(float dt)
 	position.y = METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2;
 
 	app->render->DrawTexture(texture,position.x,position.y);
+
+
 
 
 	return true;
@@ -112,4 +124,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	default:
 		break;
 	}
+}
+bool Player::IsOnGround() 
+{
+	
+
+	return false;
 }

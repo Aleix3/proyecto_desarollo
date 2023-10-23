@@ -24,6 +24,8 @@ public:
 
 	bool CleanUp();
 
+	bool IsOnGround();
+
 	// L07 TODO 6: Define OnCollision function for the player. 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
@@ -47,6 +49,8 @@ public:
 
 	// L07 TODO 5: Add physics to the player - declare a Physics body
 	PhysBody* pbody;
+
+	float jumpSpeed = 30.0f;
 };
 
 #endif // __PLAYER_H__
