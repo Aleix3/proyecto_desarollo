@@ -92,6 +92,11 @@ bool Player::Update(float dt)
 		}
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	{
+		velocity.x = dashSpeed;
+	}
+
 	
 		
 	pbody->body->SetLinearVelocity(velocity);
