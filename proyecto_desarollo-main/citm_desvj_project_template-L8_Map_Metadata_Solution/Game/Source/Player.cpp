@@ -18,6 +18,8 @@ Player::~Player() {
 
 }
 
+int Salto = 0;
+
 bool Player::Awake() {
 
 	//L03: DONE 2: Initialize Player parameters
@@ -64,6 +66,8 @@ bool Player::Update(float dt)
 
 	//L03: DONE 4: render the player texture and modify the position of the player using WSAD keys and render the texture
 	
+
+
 	currentAnimation = &idleAnim;
 
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
@@ -76,11 +80,12 @@ bool Player::Update(float dt)
 		velocity.x = 0.2*dt;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN/* && IsOnGround() == true*/)
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && Salto == 1)	//&& IsOnGround() == true)
 	{
+		Salto = 0;
 		velocity.y = -jumpSpeed;
 
-		if (IsOnGround() == false)
+		if (Salto == 0)
 		{
 
 			velocity.y += GRAVITY_Y * dt;
@@ -112,6 +117,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	switch (physB->ctype)
 	{
 	case ColliderType::PLATFORM:
+		Salto = 1;
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::ITEM:
@@ -125,6 +131,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	}
 }
+
 bool Player::IsOnGround() 
 {
 	
