@@ -95,6 +95,14 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
 		velocity.x = dashSpeed;
+		//if (pbody->body->GetAngle() == 0)
+		//{
+		//	velocity.x = dashSpeed;
+		//}
+		//if (pbody->body->GetAngle() == 180)
+		//{
+		//	velocity.x = -dashSpeed;
+		//}
 	}
 
 	
