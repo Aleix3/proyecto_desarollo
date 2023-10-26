@@ -132,6 +132,8 @@ public:
     // L06: TODO 6: Load a group of properties 
     bool LoadProperties(pugi::xml_node& node, Properties& properties);
 
+    
+
 public: 
     SString name;
     SString path;

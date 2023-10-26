@@ -4,7 +4,7 @@
 #include "Textures.h"
 #include "Map.h"
 #include "Physics.h"
-
+#include "Scene.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -56,7 +56,7 @@ bool Map::Update(float dt)
         //Check if the property Draw exist get the value, if it's true draw the lawyer
         if (mapLayer->data->properties.GetProperty("Draw") != NULL && mapLayer->data->properties.GetProperty("Draw")->value) {
             //iterate all tiles in a layer
-            for (int i = 0; i < mapData.width; i++) {
+            for (int i = (app->scene->GetPlayer()->position.x)/32 -25 ; i < (app->scene->GetPlayer()->position.x) / 32 + 25; i++) {
                 for (int j = 0; j < mapData.height; j++) {
                     //Get the gid from tile
                     int gid = mapLayer->data->Get(i, j);

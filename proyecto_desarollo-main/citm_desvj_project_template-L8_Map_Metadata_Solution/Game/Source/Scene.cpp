@@ -44,6 +44,7 @@ bool Scene::Awake(pugi::xml_node config)
 		item->parameters = itemNode;
 	}
 
+
 	return ret;
 }
 
@@ -115,4 +116,9 @@ bool Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+Player* Scene::GetPlayer()
+{
+	return player;
 }
