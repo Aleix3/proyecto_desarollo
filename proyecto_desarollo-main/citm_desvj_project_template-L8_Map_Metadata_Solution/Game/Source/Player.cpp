@@ -80,6 +80,18 @@ bool Player::Update(float dt)
 		velocity.x = 0.2*dt;
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && Salto == 0)	//&& IsOnGround() == true)
+	{
+		Salto = 2;
+		velocity.y = -jumpSpeed;
+
+		if (Salto == 2)
+		{
+
+			velocity.y += GRAVITY_Y * dt;
+		}
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && Salto == 1)	//&& IsOnGround() == true)
 	{
 		Salto = 0;
