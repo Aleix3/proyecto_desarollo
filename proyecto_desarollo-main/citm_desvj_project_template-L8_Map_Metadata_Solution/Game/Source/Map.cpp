@@ -56,25 +56,61 @@ bool Map::Update(float dt)
         //Check if the property Draw exist get the value, if it's true draw the lawyer
         if (mapLayer->data->properties.GetProperty("Draw") != NULL && mapLayer->data->properties.GetProperty("Draw")->value) {
             //iterate all tiles in a layer
-            for (int i = (app->scene->GetPlayer()->position.x)/32 -40 ; i < (app->scene->GetPlayer()->position.x) / 32 + 40; i++) {
-                for (int j = 0; j < mapData.height; j++) {
-                    //Get the gid from tile
-                    int gid = mapLayer->data->Get(i, j);
+            if ((app->scene->GetPlayer()->position.x) / 32 - 40 > 0)
+            {
+                for (int i = (app->scene->GetPlayer()->position.x) / 32 - 40; i < (app->scene->GetPlayer()->position.x) / 32 + 40; i++) {
+                    for (int j = 0; j < mapData.height; j++) {
+                        //Get the gid from tile
 
-                    //L08: DONE 3: Obtain the tile set using GetTilesetFromTileId
-                    //Get the Rect from the tileSetTexture;
-                    TileSet* tileSet = GetTilesetFromTileId(gid);
-                    SDL_Rect tileRect = tileSet->GetRect(gid);
-                    //SDL_Rect tileRect = mapData.tilesets.start->data->GetRect(gid); // (!!) we are using always the first tileset in the list
+                        {
+                            int gid = mapLayer->data->Get(i, j);
 
-                    //Get the screen coordinates from the tile coordinates
-                    iPoint mapCoord = MapToWorld(i, j);
+                            //L08: DONE 3: Obtain the tile set using GetTilesetFromTileId
+                            //Get the Rect from the tileSetTexture;
+                            TileSet* tileSet = GetTilesetFromTileId(gid);
+                            SDL_Rect tileRect = tileSet->GetRect(gid);
+                            //SDL_Rect tileRect = mapData.tilesets.start->data->GetRect(gid); // (!!) we are using always the first tileset in the list
 
-                    // L06: DONE 9: Complete the draw function
-                    app->render->DrawTexture(tileSet->texture, mapCoord.x, mapCoord.y, &tileRect);
+                            //Get the screen coordinates from the tile coordinates
+                            iPoint mapCoord = MapToWorld(i, j);
 
+                            // L06: DONE 9: Complete the draw function
+                            app->render->DrawTexture(tileSet->texture, mapCoord.x, mapCoord.y, &tileRect);
+                        }
+
+
+
+                    }
                 }
             }
+            else
+            {
+                for (int i = 0; i < (app->scene->GetPlayer()->position.x) / 32 + 40; i++) {
+                    for (int j = 0; j < mapData.height; j++) {
+                        //Get the gid from tile
+
+                        {
+                            int gid = mapLayer->data->Get(i, j);
+
+                            //L08: DONE 3: Obtain the tile set using GetTilesetFromTileId
+                            //Get the Rect from the tileSetTexture;
+                            TileSet* tileSet = GetTilesetFromTileId(gid);
+                            SDL_Rect tileRect = tileSet->GetRect(gid);
+                            //SDL_Rect tileRect = mapData.tilesets.start->data->GetRect(gid); // (!!) we are using always the first tileset in the list
+
+                            //Get the screen coordinates from the tile coordinates
+                            iPoint mapCoord = MapToWorld(i, j);
+
+                            // L06: DONE 9: Complete the draw function
+                            app->render->DrawTexture(tileSet->texture, mapCoord.x, mapCoord.y, &tileRect);
+                        }
+
+
+
+                    }
+                }
+            }
+            
         }
 
 

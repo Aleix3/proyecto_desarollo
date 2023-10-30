@@ -52,6 +52,8 @@ public:
 
 	float jumpSpeed = 10.0f;
 	float dashSpeed = 100.0f;
+
+	
 };
 
 #endif // __PLAYER_H__
