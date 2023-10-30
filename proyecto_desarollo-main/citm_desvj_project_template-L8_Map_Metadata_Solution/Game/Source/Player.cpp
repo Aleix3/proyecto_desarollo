@@ -84,6 +84,7 @@ bool Player::Update(float dt)
 	{
 		Salto = 2;
 		velocity.y = -jumpSpeed;
+		/*pbody->body->ApplyLinearImpulse();*/
 
 		if (Salto == 2)
 		{
