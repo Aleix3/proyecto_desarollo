@@ -63,14 +63,14 @@ bool Player::Start() {
 bool Player::Update(float dt)
 {
 	// L07 TODO 5: Add physics to the player - updated player position using physics
-
+	// 
 	//L03: DONE 4: render the player texture and modify the position of the player using WSAD keys and render the texture
 	
-
-
 	currentAnimation = &idleAnim;
 
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
+	b2Vec2 Impulso = b2Vec2(0, velocity.y);
+	b2Vec2 Point = b2Vec2(position.x, position.y);
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		velocity.x = -0.2*dt;
@@ -83,26 +83,18 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && Salto == 0)	//&& IsOnGround() == true)
 	{
 		Salto = 2;
-		velocity.y = -jumpSpeed;
-		/*pbody->body->ApplyLinearImpulse();*/
-
-		if (Salto == 2)
-		{
-
-			velocity.y += GRAVITY_Y * dt;
-		}
+		//velocity.y = -jumpSpeed;
+		pbody->body->ApplyLinearImpulse(Impulso, Point, true);
+		//velocity.y += GRAVITY_Y * dt;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && Salto == 1)	//&& IsOnGround() == true)
 	{
 		Salto = 0;
-		velocity.y = -jumpSpeed;
-
-		if (Salto == 0)
-		{
-
-			velocity.y += GRAVITY_Y * dt;
-		}
+		//velocity.y = -jumpSpeed;
+		pbody->body->ApplyLinearImpulse(Impulso, Point, true);
+		//velocity.y += GRAVITY_Y * dt;
+		
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
