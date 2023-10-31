@@ -69,7 +69,7 @@ bool Player::Update(float dt)
 	currentAnimation = &idleAnim;
 
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
-	b2Vec2 Impulso = b2Vec2(0, velocity.y);
+	b2Vec2 Impulso = b2Vec2(0, -jumpSpeed);
 	b2Vec2 Point = b2Vec2(position.x, position.y);
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -85,15 +85,15 @@ bool Player::Update(float dt)
 		Salto = 2;
 		//velocity.y = -jumpSpeed;
 		pbody->body->ApplyLinearImpulse(Impulso, Point, true);
-		//velocity.y += GRAVITY_Y * dt;
+		velocity.y += GRAVITY_Y * dt;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && Salto == 1)	//&& IsOnGround() == true)
 	{
 		Salto = 0;
 		//velocity.y = -jumpSpeed;
-		pbody->body->ApplyLinearImpulse(Impulso, Point, true);
-		//velocity.y += GRAVITY_Y * dt;
+		pbody->body->ApplyLinearImpulse(velocity, Point, true);
+		velocity.y += GRAVITY_Y * dt;
 		
 	}
 
