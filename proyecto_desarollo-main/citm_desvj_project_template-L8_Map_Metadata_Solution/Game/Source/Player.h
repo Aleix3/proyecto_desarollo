@@ -7,11 +7,25 @@
 #include "SDL/include/SDL.h"
 #include "Physics.h"
 
+
+#include <map>
+
+
 struct SDL_Texture;
+
+enum class PlayerState {
+	IDLE,
+	JUMPING,
+	DYING
+	// Añadir mas estados para el personaje
+};
 
 class Player : public Entity
 {
 public:
+
+	PlayerState currentState;
+	std::map<PlayerState, Animation> animations;
 
 	Player();
 	
@@ -26,6 +40,8 @@ public:
 	bool CleanUp();
 
 	bool IsOnGround();
+
+	bool IsJumping();
 
 	void EndContact(PhysBody* physA, PhysBody* physB);
 

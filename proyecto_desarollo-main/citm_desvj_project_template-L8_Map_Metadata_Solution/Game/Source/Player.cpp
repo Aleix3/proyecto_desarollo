@@ -24,17 +24,22 @@ bool Player::Awake() {
 
 	//L03: DONE 2: Initialize Player padsrameters
 	position = iPoint(config.attribute("x").as_int(), config.attribute("y").as_int());
-	SDL_Rect spriteRect = { 5, 5, 24, 27 };
-	idleAnim.PushBack(spriteRect);
-	// idle animation
-// Define los frames de la animaci�n "idle" usando SDL_Rect para cada uno de ellos
-	SDL_Rect frame1 = { 5, 5, 24, 27 };
-	SDL_Rect frame2 = { 28, 33, 24, 27 };
-	// Agrega estos frames a la animaci�n
-	idleAnim.PushBack(frame1);
-	idleAnim.PushBack(frame2);
-	idleAnim.speed = 0.2f;
-	idleAnim.loop = true;
+    Animation idleAnimation;
+    Animation jumpAnimation;
+    Animation dieAnimation;
+
+    SDL_Rect idleFrame1 = { 5, 5, 24, 27 };
+    SDL_Rect idleFrame2 = { 28, 33, 24, 27 };
+
+    idleAnimation.PushBack(idleFrame1);
+    idleAnimation.PushBack(idleFrame2);
+
+    idleAnimation.speed = 0.2f;
+    idleAnimation.loop = true;
+    animations[PlayerState::IDLE] = idleAnimation;
+
+    currentState = PlayerState::IDLE;
+
 	return true;
 }
 
@@ -52,12 +57,13 @@ bool Player::Start() {
 	pbody->ctype = ColliderType::PLAYER;
 
 	//initialize audio effect
-	pickCoinFxId = app->audio->LoadFx(config.attribute("coinfxpath").as_string());
+	//pickCoinFxId = app->audio->LoadFx(config.attribute("coinfxpath").as_string());
 
 	return true;
 }
 
 bool Player::Update(float dt) {
+
 
     isOnGround = IsOnGround();
     b2Vec2 velocity = pbody->body->GetLinearVelocity();     
@@ -98,7 +104,9 @@ bool Player::Update(float dt) {
     position.x = METERS_TO_PIXELS(pbodyPos.p.x) - texW / 2;
     position.y = METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2;
 
-    app->render->DrawTexture(texture, position.x, position.y);
+    Animation& currentAnimation = animations[currentState];
+    SDL_Rect& currentFrame = currentAnimation.GetCurrentFrame();
+    app->render->DrawTexture(texture, position.x, position.y, &currentFrame);
 
     return true;
 }
@@ -137,3 +145,8 @@ bool Player::IsOnGround()
 {
     return isOnGround;
 }
+
+//bool Player::IsJumping()
+//{
+//    return;
+//}
