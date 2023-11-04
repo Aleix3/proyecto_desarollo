@@ -74,28 +74,38 @@ bool Scene::PreUpdate()
 {
 	return true;
 }
-
+bool camaralibre = false;
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
 	
 	//L02 DONE 3: Make the camera movement independent of framerate
 	float camSpeed = 1; 
+	if (app->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT)
+	{
+		camaralibre = true;
+	}
+	if (camaralibre == true)
+	{
+		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+			app->render->camera.y -= (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y -= (int)ceil(camSpeed * dt);
+		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+			app->render->camera.y += (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y += (int)ceil(camSpeed * dt);
+		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+			app->render->camera.x -= (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x -= (int)ceil(camSpeed * dt);
+		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+			app->render->camera.x += (int)ceil(camSpeed * dt);
+	}
+	else
+	{
+		app->render->camera.x = 2 * (-player->position.x) + 600;
+		app->render->camera.y = 2 * (-player->position.y) + 400;
+	}
 
-	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x += (int)ceil(camSpeed * dt);
-
-	app->render->camera.x = 2 * (-player->position.x) + 600;
-	app->render->camera.y = 2 * (-player->position.y) + 400;
+	
 
 	// Renders the image in the center of the screen 
 	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
