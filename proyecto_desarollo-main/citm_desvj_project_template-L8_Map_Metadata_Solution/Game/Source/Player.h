@@ -51,7 +51,9 @@ public:
 	PhysBody* pbody;
 
 	float jumpSpeed = 10.0f;
-	float dashSpeed = 100.0f;
+	float dashSpeed = 0.0f;
+
+
 
 	
 };

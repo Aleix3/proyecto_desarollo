@@ -22,17 +22,22 @@ int Salto = 0;
 
 bool Player::Awake() {
 
-	//L03: DONE 2: Initialize Player parameters
+	//L03: DONE 2: Initialize Player padsrameters
 	position = iPoint(config.attribute("x").as_int(), config.attribute("y").as_int());
-
+	SDL_Rect spriteRect = { 5, 5, 24, 27 };
+	idleAnim.PushBack(spriteRect);
 	// idle animation
-	idleAnim.PushBack({ 5, 5, 23, 28 });
-	idleAnim.PushBack({ 28, 33, 23, 28 });
+// Define los frames de la animación "idle" usando SDL_Rect para cada uno de ellos
+	SDL_Rect frame1 = { 5, 5, 24, 27 };
+	SDL_Rect frame2 = { 28, 33, 24, 27 };
+	// Agrega estos frames a la animación
+	idleAnim.PushBack(frame1);
+	idleAnim.PushBack(frame2);
 	idleAnim.speed = 0.2f;
 	idleAnim.loop = true;
 
 	
-
+	
 
 	return true;
 }
@@ -46,6 +51,8 @@ bool Player::Start() {
 	// L07 TODO 5: Add physics to the player - initialize physics body
 	app->tex->GetSize(texture, texW, texH);
 	pbody = app->physics->CreateCircle(position.x, position.y, texW / 2, bodyType::DYNAMIC);
+
+	
 
 	// L07 TODO 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
 	pbody->listener = this;
@@ -68,6 +75,7 @@ bool Player::Update(float dt)
 	
 	currentAnimation = &idleAnim;
 
+	b2Vec2 jumpForce(0.0f, 1000.0f);
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
 	b2Vec2 Impulso = b2Vec2(0, -jumpSpeed);
 	b2Vec2 Point = b2Vec2(position.x, position.y);
@@ -84,7 +92,7 @@ bool Player::Update(float dt)
 	{
 		Salto = 2;
 		//velocity.y = -jumpSpeed;
-		pbody->body->ApplyLinearImpulse(Impulso, Point, true);
+		pbody->body->ApplyForceToCenter(jumpForce, true);
 		velocity.y += GRAVITY_Y * dt;
 	}
 
@@ -92,7 +100,7 @@ bool Player::Update(float dt)
 	{
 		Salto = 0;
 		//velocity.y = -jumpSpeed;
-		pbody->body->ApplyLinearImpulse(velocity, Point, true);
+		pbody->body->ApplyForceToCenter(jumpForce, true);
 		velocity.y += GRAVITY_Y * dt;
 		
 	}

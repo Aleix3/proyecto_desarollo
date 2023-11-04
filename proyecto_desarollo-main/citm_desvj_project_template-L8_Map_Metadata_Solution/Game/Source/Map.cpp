@@ -267,7 +267,7 @@ bool Map::Load(SString mapFileName)
 
 
         // L07 TODO 7: Assign collider type
-
+        LoadColisions();
 
         // L05: DONE 5: LOG all the data loaded iterate all tilesetsand LOG everything
         if (ret == true)
@@ -333,6 +333,71 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
     }
 
     return ret;
+}
+
+bool Map::LoadColisions()
+{
+    bool ret = true;
+
+
+    ListItem<MapLayer*>* mapLayer;
+    mapLayer = mapData.layers.start;
+
+    // L06: DONE 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
+
+    // iterates the layers in the map
+    while (mapLayer != NULL) {
+        //Check if the property Draw exist get the value, if it's true draw the lawyer
+        if (mapLayer->data->properties.GetProperty("Draw") != NULL && mapLayer->data->properties.GetProperty("Draw")->value == false) {
+            //iterate all tiles in a layer
+            
+            
+                for (int i = 0; i < mapData.width; i++) {
+                    for (int j = 0; j < mapData.height; j++) {
+                        //Get the gid from tile
+
+                        {
+                            int gid = mapLayer->data->Get(i, j);
+
+                            //L08: DONE 3: Obtain the tile set using GetTilesetFromTileId
+                            //Get the Rect from the tileSetTexture;
+                            TileSet* tileSet = GetTilesetFromTileId(gid);
+                            SDL_Rect tileRect = tileSet->GetRect(gid);
+                            //SDL_Rect tileRect = mapData.tilesets.start->data->GetRect(gid); // (!!) we are using always the first tileset in the list
+
+                            //Get the screen coordinates from the tile coordinates
+                            iPoint mapCoord = MapToWorld(i, j);
+
+                            // L06: DONE 9: Complete the draw function
+                            /*app->render->DrawTexture(tileSet->texture, mapCoord.x, mapCoord.y, &tileRect);*/
+
+                            LOG("Firstgid: %d    GID: %d", tileSet->firstgid, gid);
+
+                            if (gid == 49 + 0)
+                            {
+
+                                PhysBody* c1 = app->physics->CreateRectangle(mapCoord.x + 16, mapCoord.y + 16, 32, 32, STATIC);
+                                c1->ctype = ColliderType::PLATFORM;
+                            }
+                            
+                        }
+
+
+
+                    }
+                }
+            
+            
+
+        }
+
+
+        mapLayer = mapLayer->next;
+    }
+    return ret;
+
+
+    return false;
 }
 
 // L08: TODO 7: Implement a method to get the value of a custom property
