@@ -60,85 +60,49 @@ bool Player::Start() {
 	return true;
 }
 
-bool Player::Update(float dt)
-{
-	// L07 TODO 5: Add physics to the player - updated player position using physics
-	// 
-	//L03: DONE 4: render the player texture and modify the position of the player using WSAD keys and render the texture
-	
-	currentAnimation = &idleAnim;
-
-	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
-	b2Vec2 Impulso = b2Vec2(0, -jumpSpeed);
-	b2Vec2 Point = b2Vec2(position.x, position.y);
+bool Player::Update(float dt) {
+	b2Vec2 velocity = pbody->body->GetLinearVelocity();
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		velocity.x = -0.2*dt;
+		velocity.x = -0.2 * dt;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		velocity.x = 0.2*dt;
+		velocity.x = 0.2 * dt;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && Salto == 0)	//&& IsOnGround() == true)
-	{
-		Salto = 2;
-		//velocity.y = -jumpSpeed;
-		pbody->body->ApplyLinearImpulse(Impulso, Point, true);
-		velocity.y += GRAVITY_Y * dt;
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		if (Salto < 2) {
+			velocity.y = -jumpSpeed;
+			pbody->body->SetLinearVelocity(velocity);
+			Salto++;
+		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && Salto == 1)	//&& IsOnGround() == true)
-	{
+	if (IsOnGround()) {
 		Salto = 0;
-		//velocity.y = -jumpSpeed;
-		pbody->body->ApplyLinearImpulse(velocity, Point, true);
-		velocity.y += GRAVITY_Y * dt;
-		
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		velocity.x = -dashSpeed;
-		//if (pbody->body->GetAngle() == 0)
-		//{
-		//	velocity.x = dashSpeed;
-		//}
-		//if (pbody->body->GetAngle() == 180)
-		//{
-		//	velocity.x = -dashSpeed;
-		//}
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		velocity.x = dashSpeed;
-		//if (pbody->body->GetAngle() == 0)
-		//{
-		//	velocity.x = dashSpeed;
-		//}
-		//if (pbody->body->GetAngle() == 180)
-		//{
-		//	velocity.x = -dashSpeed;
-		//}
 	}
 
-
-
-	
-		
 	pbody->body->SetLinearVelocity(velocity);
 	b2Transform pbodyPos = pbody->body->GetTransform();
-	position.x = METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2;
+	position.x = METERS_TO_PIXELS(pbodyPos.p.x) - texW / 2;
 	position.y = METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2;
 
-	app->render->DrawTexture(texture,position.x,position.y);
-
-
-
+	app->render->DrawTexture(texture, position.x, position.y);
 
 	return true;
 }
+
 
 bool Player::CleanUp()
 {
@@ -150,7 +114,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	switch (physB->ctype)
 	{
 	case ColliderType::PLATFORM:
-		Salto = 1;
+		isOnGround = true;
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::ITEM:
@@ -165,9 +129,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	}
 }
 
-bool Player::IsOnGround() 
-{
-	
+void Player::EndContact(PhysBody* physA, PhysBody* physB) {
+	if (physB->ctype == ColliderType::PLATFORM) {
+		isOnGround = false; // El jugador ya no está en el suelo
+	}
+}
 
-	return false;
+bool Player::IsOnGround()
+{
+	return isOnGround;
 }

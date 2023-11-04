@@ -26,6 +26,8 @@ public:
 
 	bool IsOnGround();
 
+	void EndContact(PhysBody* physA, PhysBody* physB);
+
 	// L07 TODO 6: Define OnCollision function for the player. 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
@@ -44,13 +46,16 @@ public:
 	pugi::xml_node config;
 	uint texW, texH;
 
+
+	bool isOnGround = false;
+
 	//Audio fx
 	int pickCoinFxId;
 
 	// L07 TODO 5: Add physics to the player - declare a Physics body
 	PhysBody* pbody;
 
-	float jumpSpeed = 10.0f;
+	float jumpSpeed = 5.0f;
 	float dashSpeed = 100.0f;
 
 	
