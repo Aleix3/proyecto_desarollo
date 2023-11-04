@@ -105,6 +105,7 @@ bool Player::Update(float dt) {
     position.y = METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2;
 
     Animation& currentAnimation = animations[currentState];
+    currentAnimation.Update();
     SDL_Rect& currentFrame = currentAnimation.GetCurrentFrame();
     app->render->DrawTexture(texture, position.x, position.y, &currentFrame);
 
