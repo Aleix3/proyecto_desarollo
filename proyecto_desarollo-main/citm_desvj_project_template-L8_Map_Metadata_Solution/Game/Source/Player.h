@@ -26,8 +26,6 @@ public:
 
 	bool IsOnGround();
 
-	void EndContact(PhysBody* physA, PhysBody* physB);
-
 	// L07 TODO 6: Define OnCollision function for the player. 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
@@ -45,9 +43,6 @@ public:
 	SDL_Texture* texture = NULL;
 	pugi::xml_node config;
 	uint texW, texH;
-
-
-	bool isOnGround = false;
 
 	//Audio fx
 	int pickCoinFxId;
