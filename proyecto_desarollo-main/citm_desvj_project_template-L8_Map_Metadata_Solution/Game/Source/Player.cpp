@@ -56,6 +56,9 @@ bool Player::Start() {
 	//initialize audio effect
 	pickCoinFxId = app->audio->LoadFx(config.attribute("coinfxpath").as_string());
 
+	for (b2Fixture* fixture = pbody->body->GetFixtureList(); fixture; fixture = fixture->GetNext()) {
+		fixture->SetFriction(0.9f); // Ajusta este valor para aumentar la fricción
+	}
 
 	return true;
 }
@@ -66,9 +69,11 @@ bool Player::Update(float dt) {
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		velocity.x = -0.2 * dt;
 	}
-
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		velocity.x = 0.2 * dt;
+	}
+	else {
+		velocity.x = 0;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
