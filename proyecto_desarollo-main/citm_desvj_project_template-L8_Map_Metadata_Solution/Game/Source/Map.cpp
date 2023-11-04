@@ -43,43 +43,50 @@ bool Map::Update(float dt)
 {
     bool ret = true;
 
-    if(mapLoaded == false)
+    if (mapLoaded == false)
         return false;
 
-    ListItem<MapLayer*>* mapLayer; 
+    ListItem<MapLayer*>* mapLayer;
     mapLayer = mapData.layers.start;
 
-    // L06: DONE 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
+    // Comprueba si se ha presionado la tecla F1
+    if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+    {
+        // Invierte el valor de la propiedad "Draw" de la capa de colisiones
+        while (mapLayer != NULL)
+        {
+            // Comprueba si la capa actual es la capa de colisiones
+            if (mapLayer->data->name == "Collisions")
+            {
+                Properties::Property* property = mapLayer->data->properties.GetProperty("Draw");
+                if (property != NULL)
+                {
+                    property->value = !property->value;
+                }
+            }
+            mapLayer = mapLayer->next;
+        }
 
-    // iterates the layers in the map
-    while (mapLayer != NULL) {
-        //Check if the property Draw exist get the value, if it's true draw the lawyer
-        if (mapLayer->data->properties.GetProperty("Draw") != NULL && mapLayer->data->properties.GetProperty("Draw")->value) {
-            //iterate all tiles in a layer
+        // Reinicia el iterador de capas
+        mapLayer = mapData.layers.start;
+    }
+
+    // Dibuja las capas
+    while (mapLayer != NULL)
+    {
+        Properties::Property* property = mapLayer->data->properties.GetProperty("Draw");
+        if (property != NULL && property->value)
+        {
+            // Aquí va tu código para dibujar las colisiones...
             if ((app->scene->GetPlayer()->position.x) / 32 - 40 > 0)
             {
                 for (int i = (app->scene->GetPlayer()->position.x) / 32 - 40; i < (app->scene->GetPlayer()->position.x) / 32 + 40; i++) {
                     for (int j = 0; j < mapData.height; j++) {
-                        //Get the gid from tile
-
-                        {
-                            int gid = mapLayer->data->Get(i, j);
-
-                            //L08: DONE 3: Obtain the tile set using GetTilesetFromTileId
-                            //Get the Rect from the tileSetTexture;
-                            TileSet* tileSet = GetTilesetFromTileId(gid);
-                            SDL_Rect tileRect = tileSet->GetRect(gid);
-                            //SDL_Rect tileRect = mapData.tilesets.start->data->GetRect(gid); // (!!) we are using always the first tileset in the list
-
-                            //Get the screen coordinates from the tile coordinates
-                            iPoint mapCoord = MapToWorld(i, j);
-
-                            // L06: DONE 9: Complete the draw function
-                            app->render->DrawTexture(tileSet->texture, mapCoord.x, mapCoord.y, &tileRect);
-                        }
-
-
-
+                        int gid = mapLayer->data->Get(i, j);
+                        TileSet* tileSet = GetTilesetFromTileId(gid);
+                        SDL_Rect tileRect = tileSet->GetRect(gid);
+                        iPoint mapCoord = MapToWorld(i, j);
+                        app->render->DrawTexture(tileSet->texture, mapCoord.x, mapCoord.y, &tileRect);
                     }
                 }
             }
@@ -87,37 +94,25 @@ bool Map::Update(float dt)
             {
                 for (int i = 0; i < (app->scene->GetPlayer()->position.x) / 32 + 40; i++) {
                     for (int j = 0; j < mapData.height; j++) {
-                        //Get the gid from tile
-
-                        {
-                            int gid = mapLayer->data->Get(i, j);
-
-                            //L08: DONE 3: Obtain the tile set using GetTilesetFromTileId
-                            //Get the Rect from the tileSetTexture;
-                            TileSet* tileSet = GetTilesetFromTileId(gid);
-                            SDL_Rect tileRect = tileSet->GetRect(gid);
-                            //SDL_Rect tileRect = mapData.tilesets.start->data->GetRect(gid); // (!!) we are using always the first tileset in the list
-
-                            //Get the screen coordinates from the tile coordinates
-                            iPoint mapCoord = MapToWorld(i, j);
-
-                            // L06: DONE 9: Complete the draw function
-                            app->render->DrawTexture(tileSet->texture, mapCoord.x, mapCoord.y, &tileRect);
-                        }
-
-
-
+                        int gid = mapLayer->data->Get(i, j);
+                        TileSet* tileSet = GetTilesetFromTileId(gid);
+                        SDL_Rect tileRect = tileSet->GetRect(gid);
+                        iPoint mapCoord = MapToWorld(i, j);
+                        app->render->DrawTexture(tileSet->texture, mapCoord.x, mapCoord.y, &tileRect);
                     }
                 }
             }
-            
         }
-
 
         mapLayer = mapLayer->next;
     }
+
     return ret;
 }
+
+
+
+
 
 
 // L08: DONE 2: Implement function to the Tileset based on a tile id
