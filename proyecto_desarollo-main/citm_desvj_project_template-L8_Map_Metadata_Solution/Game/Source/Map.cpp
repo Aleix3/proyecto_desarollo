@@ -14,7 +14,7 @@ Map::Map() : Module(), mapLoaded(false)
 {
     name.Create("map");
 }
-int cambio = 40;
+int cambio = 10;
 // Destructor
 Map::~Map()
 {}
@@ -106,11 +106,7 @@ bool Map::Update(float dt)
         mapLayer = mapLayer->next;
     }
 
-    if ((app->scene->GetPlayer()->position.x) / 32 > cambio )
-    {
-        LoadColisions();
-        cambio += 40;
-    }
+    
 
 
     
@@ -269,7 +265,7 @@ bool Map::Load(SString mapFileName)
         c6->ctype = ColliderType::PLATFORM;
 
 
-
+        LoadColisions();
         // L07 TODO 7: Assign collider type
         
 
@@ -348,13 +344,12 @@ bool Map::LoadColisions()
     mapLayer = mapData.layers.start;
 
     // L06: DONE 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
-    PhysBody* c1 = nullptr;
+    
     // iterates the layers in the map
     while (mapLayer != NULL) {
         //Check if the property Draw exist get the value, if it's true draw the lawyer
         
-        if ((app->scene->GetPlayer()->position.x) / 32 - 40 > 0)
-        {
+        
             
             if (mapLayer->data->properties.GetProperty("Draw") != NULL && mapLayer->data->properties.GetProperty("Draw")->value == false) {
                 //iterate all tiles in a layer
@@ -384,9 +379,9 @@ bool Map::LoadColisions()
                             if (gid == 49 + 0)
                             {
 
-                                c1 = app->physics->CreateRectangle(mapCoord.x + 16, mapCoord.y + 16, 32, 32, STATIC);
+                                PhysBody* c1 = app->physics->CreateRectangle(mapCoord.x + 16, mapCoord.y + 16, 32, 32, STATIC);
                                 c1->ctype = ColliderType::PLATFORM;
-                                gid = 1000;
+                                
                             }
 
                         }
@@ -396,51 +391,51 @@ bool Map::LoadColisions()
                     }
                 }
             }
-        }
-        if (cambio == 120)
-        {
-            for (int i = (app->scene->GetPlayer()->position.x) / 32 - 80; i < (app->scene->GetPlayer()->position.x) / 20 - 40; i++) {
-                for (int j = 0; j < mapData.height; j++) {
-                    //Get the gid from tile
+        
+        //if (cambio == 120)
+        //{
+        //    for (int i = (app->scene->GetPlayer()->position.x) / 32 - 80; i < (app->scene->GetPlayer()->position.x) / 20 - 40; i++) {
+        //        for (int j = 0; j < mapData.height; j++) {
+        //            //Get the gid from tile
 
-                    {
-                        int gid = mapLayer->data->Get(i, j);
+        //            {
+        //                int gid = mapLayer->data->Get(i, j);
 
-                        //L08: DONE 3: Obtain the tile set using GetTilesetFromTileId
-                        //Get the Rect from the tileSetTexture;
-                        TileSet* tileSet = GetTilesetFromTileId(gid);
-                        SDL_Rect tileRect = tileSet->GetRect(gid);
-                        //SDL_Rect tileRect = mapData.tilesets.start->data->GetRect(gid); // (!!) we are using always the first tileset in the list
+        //                //L08: DONE 3: Obtain the tile set using GetTilesetFromTileId
+        //                //Get the Rect from the tileSetTexture;
+        //                TileSet* tileSet = GetTilesetFromTileId(gid);
+        //                SDL_Rect tileRect = tileSet->GetRect(gid);
+        //                //SDL_Rect tileRect = mapData.tilesets.start->data->GetRect(gid); // (!!) we are using always the first tileset in the list
 
-                        //Get the screen coordinates from the tile coordinates
-                        iPoint mapCoord = MapToWorld(i, j);
+        //                //Get the screen coordinates from the tile coordinates
+        //                iPoint mapCoord = MapToWorld(i, j);
 
-                        // L06: DONE 9: Complete the draw function
-                        /*app->render->DrawTexture(tileSet->texture, mapCoord.x, mapCoord.y, &tileRect);*/
+        //                // L06: DONE 9: Complete the draw function
+        //                /*app->render->DrawTexture(tileSet->texture, mapCoord.x, mapCoord.y, &tileRect);*/
 
-                        LOG("Firstgid: %d    GID: %d", tileSet->firstgid, gid);
+        //                LOG("Firstgid: %d    GID: %d", tileSet->firstgid, gid);
 
-                        if (c1)
-                        {
-                            b2World* world = app->physics->GetWorld();
+        //                if (c1)
+        //                {
+        //                    b2World* world = app->physics->GetWorld();
 
-                            if (world) {
-                                if (c1->body) {
-                                    world->DestroyBody(c1->body);
-                                    c1->body = nullptr; // Establece el puntero del cuerpo a nullptr para evitar problemas posteriores
-                                }
-                            }
-                            
-                        }
+        //                    if (world) {
+        //                        if (c1->body) {
+        //                            world->DestroyBody(c1->body);
+        //                            c1->body = nullptr; // Establece el puntero del cuerpo a nullptr para evitar problemas posteriores
+        //                        }
+        //                    }
+        //                    
+        //                }
 
-                    }
-                }
-            }
-        }
+        //            }
+        //        }
+        //    }
+        //}
         
         mapLayer = mapLayer->next;
     }
-    return ret;
+   /* return ret;*/
 
 
     return false;
