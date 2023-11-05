@@ -15,6 +15,8 @@ This is the Alpha 01 of the project for the subject of (Desarrollo de Videojuego
 - F3 = restart level
 - **Free Camera**: With the debug mode activated, if you press the C key, the camera will be free and you can move it with the arrow keys. Press the C key again if you want to return to the player's position.
 
+- YOU CAN JUMP IN THE WALLS
+
 ## Developers
 
 - Aliex Botella. Github: [@Aleix3](https://github.com/Aleix3).
