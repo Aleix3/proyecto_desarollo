@@ -355,7 +355,7 @@ bool Map::LoadColisions()
                 //iterate all tiles in a layer
 
 
-                for (int i = (app->scene->GetPlayer()->position.x) / 32 - 40; i < (app->scene->GetPlayer()->position.x) / 20 + 40; i++) {
+                for (int i = 0; i < mapData.width; i++) {
                     for (int j = 0; j < mapData.height; j++) {
                         //Get the gid from tile
 
@@ -391,7 +391,7 @@ bool Map::LoadColisions()
                     }
                 }
             }
-        
+            
         //if (cambio == 120)
         //{
         //    for (int i = (app->scene->GetPlayer()->position.x) / 32 - 80; i < (app->scene->GetPlayer()->position.x) / 20 - 40; i++) {
