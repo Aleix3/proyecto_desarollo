@@ -122,16 +122,15 @@ bool Player::Update(float dt) {
     {
         currentAnimation = &jumpAnim;
     }
+    //if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+    //{
+    //    velocity.x = -dashSpeed;
+    //}
 
-    if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-    {
-        velocity.x = -dashSpeed;
-    }
-
-    if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-    {
-        velocity.x = dashSpeed;
-    }
+    //if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+    //{
+    //    velocity.x = dashSpeed;
+    //}
 
     
     
