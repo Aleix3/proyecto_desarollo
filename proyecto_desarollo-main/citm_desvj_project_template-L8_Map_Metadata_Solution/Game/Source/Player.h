@@ -39,11 +39,11 @@ public:
 
 	bool CleanUp();
 
-	bool IsOnGround();
+	//bool IsOnGround();
 
-	bool IsJumping();
+	//bool IsJumping();
 
-	void EndContact(PhysBody* physA, PhysBody* physB);
+	//void EndContact(PhysBody* physA, PhysBody* physB);
 
 	// L07 TODO 6: Define OnCollision function for the player. 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
@@ -58,7 +58,6 @@ public:
 
 
 	//L02: DONE 2: Declare player parameters
-	bool isOnGround = false;
 	float speed = 0.2f;
 	SDL_Texture* texture = NULL;
 	pugi::xml_node config;
@@ -73,6 +72,7 @@ public:
 
 	float jumpSpeed = 3.0f;
 	float dashSpeed = 100.0f;
+	int jumpCount = 0;
 
 	
 };
