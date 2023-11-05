@@ -54,7 +54,11 @@ public:
 	Animation* currentJumpAnim = nullptr;
 
 	// A set of animations
+	Animation runAnim;
+	Animation walkAnim;
 	Animation idleAnim;
+	Animation jumpAnim;
+	Animation dieAnim;
 
 
 	//L02: DONE 2: Declare player parameters
@@ -73,7 +77,7 @@ public:
 	float jumpSpeed = 5.0f;
 	float dashSpeed = 100.0f;
 	int jumpCount = 0;
-
+	bool left = false;
 	
 };
 
