@@ -1,27 +1,21 @@
-# Nombre del Proyecto
+# Project Name
 
-## Descripción
+## Description
 
-Aquí puedes describir tu proyecto. Explica qué hace tu proyecto, por qué es útil y cómo los usuarios pueden comenzar a utilizarlo.
+This is the Alpha 01 of the project for the subject of (Desarrollo de Videojuegos) at the CITM (UPC) center.
 
-## Características Clave
+## Controls
 
- - Característica 1: Describe esta característica y explica cómo beneficia a los usuarios.
- - Característica 2: Describe esta característica y explica cómo beneficia a los usuarios.
- - Característica 3: Describe esta característica y explica cómo beneficia a los usuarios.
- - Característica 4: Describe esta característica y explica cómo beneficia a los usuarios.
+- **Movement**: You move your character with the WASD keys.
+- **Debug Mode**: If you press the F1 key, you activate/deactivate the debug mode. If you do, you can see the collisions of the map and player.
+- **Free Camera**: With the debug mode activated, if you press the C key, the camera will be free and you can move it with the arrow keys. Press the C key again if you want to return to the player's position.
+- **Dash**: If you press the E key, you can dash in the direction you are walking.
 
-## Controles
+## Developers
 
- - Aquí puedes describir cómo los usuarios pueden interactuar con tu proyecto. Por ejemplo, si es un juego, puedes listar los controles del teclado.
+- Aliex Botella. Github: [@Aleix3](https://github.com/Aleix3).
+- Eduard Garcia. Github: [@Eduuuuuuuuuuuu](https://github.com/Eduuuuuuuuuuuu).
 
-## Desarrolladores
+## License
 
- - Aliex Botella: Aquí puedes describir el papel de Aliex en el proyecto.
- - Eduard Garcia: Aquí puedes describir el papel de Eduard en el proyecto.
-
-## Licencia
-
-Este proyecto está licenciado bajo la licencia MIT sin modificaciones, que es una licencia certificada por OSI que permite la vinculación estática con software de código cerrado. Consulta [LICENSE](LICENSE) para obtener más detalles.
-
-Aquí puedes listar cualquier licencia adicional que pueda aplicarse a partes de tu proyecto.
+This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check LICENSE for further details.
