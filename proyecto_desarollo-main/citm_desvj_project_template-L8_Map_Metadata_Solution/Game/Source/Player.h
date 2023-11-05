@@ -78,6 +78,7 @@ public:
 	float dashSpeed = 100.0f;
 	int jumpCount = 0;
 	bool left = false;
+	bool godmode;
 	
 };
 
