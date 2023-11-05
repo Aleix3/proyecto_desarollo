@@ -5,7 +5,7 @@
 #include "Box2D/Box2D/Box2D.h"
 
 #define GRAVITY_X 0.0f
-#define GRAVITY_Y -10.0f
+#define GRAVITY_Y -12.0f
 
 
 
