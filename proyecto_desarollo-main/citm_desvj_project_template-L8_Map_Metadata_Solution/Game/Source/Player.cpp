@@ -21,7 +21,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 
     idleAnim.PushBack({ 4, 4, 23, 27 });
     idleAnim.PushBack({ 37, 3, 22, 28 });
-    idleAnim.speed = 0.1f;
+    idleAnim.speed = 0.05f;
 
     jumpAnim.PushBack({ 4, 131, 23, 28 });
     jumpAnim.PushBack({ 35, 132, 24, 27 });
