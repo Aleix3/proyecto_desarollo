@@ -78,6 +78,8 @@ public:
 	PhysBody* CreateChain(int x, int y, int* points, int size, bodyType type);
 
 	b2World* GetWorld();
+
+	bool debug;
 	
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
@@ -85,7 +87,7 @@ public:
 private:
 
 	// Debug mode
-	bool debug;
+	
 
 	// Box2D World
 	b2World* world;
