@@ -70,7 +70,7 @@ public:
 	// L07 TODO 5: Add physics to the player - declare a Physics body
 	PhysBody* pbody;
 
-	float jumpSpeed = 3.0f;
+	float jumpSpeed = 5.0f;
 	float dashSpeed = 100.0f;
 	int jumpCount = 0;
 
