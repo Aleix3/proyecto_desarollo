@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "Defs.h"
 #include "Log.h"
+#include "player.h"
 
 #include <math.h>
 #include "SDL_image/include/SDL_image.h"
@@ -334,11 +335,19 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 
     return ret;
 }
+bool Map :: Getdied()
+{
+    if (died)
+    {
+        return true;
+    }
+    return false;
+}
 
 bool Map::LoadColisions()
 {
     bool ret = true;
-
+    
 
     ListItem<MapLayer*>* mapLayer;
     mapLayer = mapData.layers.start;
@@ -382,6 +391,11 @@ bool Map::LoadColisions()
                                 PhysBody* c1 = app->physics->CreateRectangle(mapCoord.x + 16, mapCoord.y + 16, 32, 32, STATIC);
                                 c1->ctype = ColliderType::PLATFORM;
                                 
+                            }
+                            else if (gid == 49 + 1 )
+                            {
+                                PhysBody* c2 = app->physics->CreateRectangle(mapCoord.x + 16, mapCoord.y + 16, 32, 32, STATIC);
+                                c2->ctype = ColliderType::DIE;
                             }
 
                         }

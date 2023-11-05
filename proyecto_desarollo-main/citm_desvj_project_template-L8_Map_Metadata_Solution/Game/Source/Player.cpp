@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "map.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -35,6 +36,18 @@ Player::Player() : Entity(EntityType::PLAYER)
     jumpAnim.PushBack({ 292, 132, 23, 27 });
     jumpAnim.speed = 0.15f; 
 
+    dieAnim.PushBack({ 4, 196, 23, 27 });
+    dieAnim.PushBack({ 37, 195, 32, 32 });
+    dieAnim.PushBack({ 68, 196, 23, 27 });
+    dieAnim.PushBack({ 100, 198, 23, 25 });
+    dieAnim.PushBack({ 132, 199, 23, 24 });
+    dieAnim.PushBack({ 164, 200, 24, 23 });
+    dieAnim.PushBack({ 194, 202, 27, 21 });
+    dieAnim.PushBack({ 226, 204, 28, 19 });
+    dieAnim.PushBack({ 258, 205, 29, 18 });
+    dieAnim.PushBack({ 290, 206, 29, 17 });
+    dieAnim.speed = 0.17f;
+    dieAnim.loop = false;
 
 }
 
@@ -74,6 +87,7 @@ bool Player::Start() {
 	return true;
 }
 bool tocasuelo = true;
+bool die = false;
 
 bool Player::Update(float dt) {
 
@@ -120,6 +134,8 @@ bool Player::Update(float dt) {
     }
 
     
+    
+    
 
     pbody->body->SetLinearVelocity(velocity);
     b2Transform pbodyPos = pbody->body->GetTransform();
@@ -127,7 +143,23 @@ bool Player::Update(float dt) {
     position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
     position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 15;
 
-    
+    if (die == true)
+    {
+
+        currentAnimation = &dieAnim;
+        if (dieAnim.HasFinished())
+        {
+            position.x = 250;
+            position.y = 672;
+            app->physics->DestroyBody(pbody);
+            pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
+            pbody->listener = this;
+            pbody->ctype = ColliderType::PLAYER;
+            die = false;
+            dieAnim.Reset();
+        }
+    }
+
     currentAnimation->Update();
 
     SDL_Rect rect = currentAnimation->GetCurrentFrame();
@@ -138,6 +170,8 @@ bool Player::Update(float dt) {
 
     return true;
 }
+
+
 
 bool Player::CleanUp()
 {
@@ -154,6 +188,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
     case ColliderType::ITEM:
         LOG("Collision ITEM");
         app->audio->PlayFx(pickCoinFxId);
+        break;
+    case ColliderType::DIE:
+        LOG("Collision DIE");
+        die = true;
         break;
     case ColliderType::UNKNOWN:
         LOG("Collision UNKNOWN");

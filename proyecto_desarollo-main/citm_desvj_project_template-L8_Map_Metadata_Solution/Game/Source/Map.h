@@ -134,9 +134,13 @@ public:
 
     bool LoadColisions();
 
+    bool Getdied();
+
 public: 
     SString name;
     SString path;
+
+    bool died = false;
 
 private:
     // L05: DONE 1: Declare a variable data of the struct MapData
