@@ -241,10 +241,13 @@ bool Physics::PostUpdate()
 	// Activate or deactivate debug mode
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = true;
+	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+		debug = false;
 	
 	//  Iterate all objects in the world and draw the bodies
 	if (debug)
 	{
+		
 		for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
 		{
 			for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
@@ -318,7 +321,7 @@ bool Physics::PostUpdate()
 			}
 		}
 	}
-
+	
 
 	return ret;
 }
