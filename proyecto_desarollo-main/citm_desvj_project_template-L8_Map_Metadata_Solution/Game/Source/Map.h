@@ -4,7 +4,7 @@
 #include "Module.h"
 #include "List.h"
 #include "Point.h"
-
+#include "Pathfinding.h"
 #include "PugiXml\src\pugixml.hpp"
 
 // L05: DONE 1: Create a struct needed to hold the information to Map node
@@ -139,6 +139,7 @@ public:
 public: 
     SString name;
     SString path;
+    PathFinding* pathfinding;
 
     bool died = false;
 
