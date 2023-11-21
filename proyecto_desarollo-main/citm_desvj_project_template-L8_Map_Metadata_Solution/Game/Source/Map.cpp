@@ -36,6 +36,15 @@ bool Map::Start() {
     mapPath += name;
     Load(mapPath);
 
+    ////Initialize pathfinding 
+    //pathfinding = new PathFinding();
+
+    ////Initialize the navigation map
+    //uchar* navigationMap = NULL;
+    //CreateNavigationMap(mapData.width, mapData.height, &navigationMap);
+    //pathfinding->SetNavigationMap((uint)mapData.width, (uint)mapData.height, navigationMap);
+    //RELEASE_ARRAY(navigationMap);
+
     return true;
 }
 
@@ -319,6 +328,16 @@ iPoint Map::MapToWorld(int x, int y) const
     return ret;
 }
 
+iPoint Map::WorldToMap(int x, int y)
+{
+    iPoint ret(0, 0);
+
+    ret.x = x / mapData.tilewidth;
+    ret.y = y / mapData.tileheight;
+
+    return ret;
+}
+
 // L08: TODO 6: Load a group of properties from a node and fill a list with it
 bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 {
@@ -471,5 +490,38 @@ Properties::Property* Properties::GetProperty(const char* name)
     }
 
     return p;
+}
+
+// L13: Create navigationMap map for pathfinding
+void Map::CreateNavigationMap(int& width, int& height, uchar** buffer) const
+{
+    bool ret = false;
+
+    //Sets the size of the map. The navigation map is a unidimensional array 
+    uchar* navigationMap = new uchar[navigationLayer->width * navigationLayer->height];
+    //reserves the memory for the navigation map
+    memset(navigationMap, 1, navigationLayer->width * navigationLayer->height);
+
+    for (int x = 0; x < mapData.width; x++)
+    {
+        for (int y = 0; y < mapData.height; y++)
+        {
+            //i is the index of x,y coordinate in a unidimensional array that represents the navigation map
+            int i = (y * navigationLayer->width) + x;
+
+            //Gets the gid of the map in the navigation layer
+            int gid = navigationLayer->Get(x, y);
+
+            //If the gid is a blockedGid is an area that I cannot navigate, so is set in the navigation map as 0, all the other areas can be navigated
+            //!!!! make sure that you assign blockedGid according to your map
+            if (gid == blockedGid) navigationMap[i] = 0;
+            else navigationMap[i] = 1;
+        }
+    }
+
+    *buffer = navigationMap;
+    width = mapData.width;
+    height = mapData.height;
+
 }
 
