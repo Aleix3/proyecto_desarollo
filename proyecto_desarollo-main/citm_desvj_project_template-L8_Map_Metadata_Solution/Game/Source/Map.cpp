@@ -209,8 +209,6 @@ bool Map::Load(SString mapFileName)
             mapLayer->name = layerNode.attribute("name").as_string();
             mapLayer->width = layerNode.attribute("width").as_int();
             mapLayer->height = layerNode.attribute("height").as_int();
-
-            //L08: TODO 6 Call Load Layer Properties
             LoadProperties(layerNode, mapLayer->properties);
 
             //Reserve the memory for the data 
@@ -227,10 +225,6 @@ bool Map::Load(SString mapFileName)
             //add the layer to the map
             mapData.layers.Add(mapLayer);
         }
-
-
-        // L07 TODO 3: Create colliders
-        // Later you can create a function here to load and create the colliders from the map
         PhysBody* c1 = app->physics->CreateRectangle(224 + 128, 544 + 32, 256, 64, STATIC);
         c1->ctype = ColliderType::PLATFORM;
 
@@ -299,7 +293,6 @@ iPoint Map::MapToWorld(int x, int y) const
     return ret;
 }
 
-// L08: TODO 6: Load a group of properties from a node and fill a list with it
 bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 {
     bool ret = false;
@@ -428,7 +421,6 @@ bool Map::LoadColisions()
     return false;
 }
 
-// L08: TODO 7: Implement a method to get the value of a custom property
 Properties::Property* Properties::GetProperty(const char* name)
 {
     ListItem<Property*>* property = propertyList.start;

@@ -57,10 +57,7 @@ struct Properties
 
         propertyList.Clear();
     }
-
-    // L08: TODO 7: Method to ask for the value of a custom property
     Property* GetProperty(const char* name);
-
 };
 
 struct MapLayer
