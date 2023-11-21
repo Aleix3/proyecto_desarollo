@@ -45,14 +45,17 @@ public:
 
 	Animation runAnim;
 	Animation walkAnim;
+	Animation walkLeftAnim;
 	Animation idleAnim;
 	Animation jumpAnim;
 	Animation dieAnim;
 
 	float speed = 0.2f;
 	SDL_Texture* texture = NULL;
+	SDL_Texture* textureleft = NULL;
 	pugi::xml_node config;
 	uint texW, texH;
+	uint texWl, texHl;
 	int pickCoinFxId;
 
 	PhysBody* pbody;

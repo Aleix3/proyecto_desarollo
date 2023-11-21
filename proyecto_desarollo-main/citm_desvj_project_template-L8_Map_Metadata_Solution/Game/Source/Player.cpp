@@ -67,6 +67,9 @@ bool Player::Start() {
 	texture = app->tex->Load(config.attribute("texturePath").as_string());
 	app->tex->GetSize(texture, texW, texH);
 
+    /*textureleft = app->tex->Load(config.attribute("texturePath").as_string()); //EL PLAYER A LA IZZQUIERDA
+    app->tex->GetSize(textureleft, texWl, texHl);*/
+
 	pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
@@ -76,7 +79,6 @@ bool Player::Start() {
 
 bool Player::Update(float dt) {
 
-
     currentAnimation = &idleAnim;
 
     b2Vec2 velocity = pbody->body->GetLinearVelocity();
@@ -85,8 +87,6 @@ bool Player::Update(float dt) {
     {
         godmode = true;
     }
-
-
     if (godmode == true )
     {
         if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
