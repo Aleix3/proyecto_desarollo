@@ -6,10 +6,7 @@
 #include "Animation.h"
 #include "SDL/include/SDL.h"
 #include "Physics.h"
-
-
 #include <map>
-
 
 struct SDL_Texture;
 
@@ -39,13 +36,6 @@ public:
 
 	bool CleanUp();
 
-	//bool IsOnGround();
-
-	//bool IsJumping();
-
-	//void EndContact(PhysBody* physA, PhysBody* physB);
-
-	// L07 TODO 6: Define OnCollision function for the player. 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
 public:
@@ -53,25 +43,21 @@ public:
 	Animation* currentAnimation = nullptr;
 	Animation* currentJumpAnim = nullptr;
 
-	// A set of animations
 	Animation runAnim;
 	Animation walkAnim;
+	Animation walkLeftAnim;
 	Animation idleAnim;
 	Animation jumpAnim;
 	Animation dieAnim;
 
-
-	//L02: DONE 2: Declare player parameters
 	float speed = 0.2f;
 	SDL_Texture* texture = NULL;
+	SDL_Texture* textureleft = NULL;
 	pugi::xml_node config;
 	uint texW, texH;
-
-
-	//Audio fx
+	uint texWl, texHl;
 	int pickCoinFxId;
 
-	// L07 TODO 5: Add physics to the player - declare a Physics body
 	PhysBody* pbody;
 
 	float jumpSpeed = 5.0f;
@@ -79,6 +65,8 @@ public:
 	int jumpCount = 0;
 	bool left = false;
 	bool godmode;
+	bool tocasuelo = true;
+	bool die = false;
 	
 };
 

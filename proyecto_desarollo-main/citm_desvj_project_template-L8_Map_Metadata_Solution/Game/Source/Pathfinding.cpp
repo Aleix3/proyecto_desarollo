@@ -98,14 +98,13 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 		while (frontier.list.Count() > 0)
 		{
-			// L13: TODO 3: Get the lowest score cell from frontier list and delete it from the frontier list
+
 			// Keep a reference to the node before deleting the node from the list
 
 			ListItem<PathNode>* lowest = frontier.GetNodeLowestScore();
 			ListItem<PathNode>* node = new ListItem<PathNode>(*lowest);
 			frontier.list.Del(lowest);
 
-			// L13: TODO 6: If we just added the destination, we are done!
 			// Backtrack to create the final path
 			// Use the Pathnode::parent and Flip() the path when you are finish
 
@@ -151,15 +150,6 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		}
 
 	}
-	
-	
-
-	
-
-	
-
-	
-	
 	return ret;
 }
 
