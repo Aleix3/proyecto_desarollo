@@ -17,7 +17,6 @@
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
 {
-	// L1: DONE 3: Measure the amount of ms that takes to execute the App constructor and LOG the result
 	Timer timer = Timer();
 	startupTime = Timer();
 	frameTime = PerfTimer();
@@ -25,32 +24,24 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	frames = 0;
 
-	// L3: DONE 1: Add the EntityManager Module to App
-
 	win = new Window();
 	input = new Input();
 	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
-	//L07 TODO 2: Add Physics module
 	physics = new Physics();
 	scene = new Scene();
 	map = new Map();
 	entityManager = new EntityManager();
 
-
-	// Ordered for awake / Start / Update
-	// Reverse order of CleanUp
 	AddModule(win);
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
-	//L07 TODO 2: Add Physics module
 	AddModule(physics);
 	AddModule(scene);
 	AddModule(map);
 	AddModule(entityManager);
-
 	// Render last to swap buffer
 	AddModule(render);
 
@@ -68,7 +59,6 @@ App::~App()
 		RELEASE(item->data);
 		item = item->prev;
 	}
-
 	modules.Clear();
 }
 
@@ -81,16 +71,12 @@ void App::AddModule(Module* module)
 // Called before render is available
 bool App::Awake()
 {
-	// L1: DONE 3: Measure the amount of ms that takes to execute the Awake and LOG the result
 	Timer timer = Timer();
 
 	bool ret = LoadConfig();
 
 	if(ret == true)
 	{
-		// L04: DONE 3: Read the title from the config file and set the windows title 
-		// substitute "Video Game Template" string from the value of the title in the config file
-		// also read maxFrameDuration 
 		gameTitle.Create(configFile.child("config").child("app").child("title").child_value());
 		win->SetTitle(gameTitle.GetString());
 		maxFrameDuration = configFile.child("config").child("app").child("maxFrameDuration").attribute("value").as_int();
@@ -100,11 +86,6 @@ bool App::Awake()
 
 		while(item != NULL && ret == true)
 		{
-			// L04: DONE 4: Add a new argument to the Awake method to receive a pointer to an xml node.
-			// If the section with the module name exists in config.xml, fill the pointer with the valid xml_node
-			// that can be used to read all variables for that module.
-			// Send nullptr if the node does not exist in config.xml
-
 			ret = item->data->Awake(configFile.child("config").child(item->data->name.GetString()));
 			item = item->next;
 		}
@@ -118,7 +99,6 @@ bool App::Awake()
 // Called before the first frame
 bool App::Start()
 {
-	// L1: DONE 3: Measure the amount of ms that takes to execute the App Start() and LOG the result
 	Timer timer = Timer();
 
 	bool ret = true;
@@ -163,11 +143,6 @@ bool App::LoadConfig()
 {
 	bool ret = true;
 
-	// L04: DONE 2: Load config.xml file using load_file() method from the xml_document class
-	// If the result is ok get the main node of the XML
-	// else, log the error
-	// check https://pugixml.org/docs/quickstart.html#loading
-
 	pugi::xml_parse_result result = configFile.load_file("config.xml");
 	if (result)
 	{
@@ -192,9 +167,6 @@ void App::FinishUpdate()
 {
 	// This is a good place to call Load / Save functions
 
-	// L02: DONE 1: Cap the framerate of the gameloop
-	// L02: DONE 2: Measure accurately the amount of time SDL_Delay() actually waits compared to what was expected
-
 	double currentDt = frameTime.ReadMs();
 	if (maxFrameDuration > 0 && currentDt < maxFrameDuration) {
 		uint32 delay = (uint32) (maxFrameDuration - currentDt);
@@ -203,22 +175,11 @@ void App::FinishUpdate()
 		SDL_Delay(delay);
 		//LOG("We waited for %I32u ms and got back in %f ms",delay,delayTimer.ReadMs());
 	}
-
-
-    // L1: DONE 4: Calculate:
-	// Amount of frames since startup
 	frameCount++;
-
-	// Amount of time since game start (use a low resolution timer)
 	secondsSinceStartup = startupTime.ReadSec();
-	
-	// Amount of ms took the last update (dt)
 	dt = (float) frameTime.ReadMs();
-
-	// Amount of frames during the last second
 	lastSecFrameCount++;
 
-	// Average FPS for the whole game life
 	if (lastSecFrameTime.ReadMs() > 1000) {
 		lastSecFrameTime.Start();
 		averageFps = (averageFps + lastSecFrameCount) / 2;
@@ -226,9 +187,6 @@ void App::FinishUpdate()
 		lastSecFrameCount = 0;
 	}
 
-
-	// Shows the time measurements in the window title
-	// check sprintf formats here https://cplusplus.com/reference/cstdio/printf/
 	static char title[256];
 	sprintf_s(title, 256, "%s: Av.FPS: %.2f Last sec frames: %i Last dt: %.3f Time since startup: %I32u Frame Count: %I64u ", 
 		gameTitle.GetString(), averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount);
@@ -304,7 +262,6 @@ bool App::PostUpdate()
 // Called before quitting
 bool App::CleanUp()
 {
-	// L1: DONE 3: Measure the amount of ms that takes to execute the App CleanUp() and LOG the result
 	Timer timer = Timer();
 
 	bool ret = true;

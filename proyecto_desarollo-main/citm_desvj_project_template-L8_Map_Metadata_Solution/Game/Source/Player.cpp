@@ -57,33 +57,19 @@ Player::~Player() {
 
 bool Player::Awake() {
 
-	//L03: DONE 2: Initialize Player padsrameters
 	position = iPoint(config.attribute("x").as_int(), config.attribute("y").as_int());
-   
-
-    
-
-   
-
+  
 	return true;
 }
 
 bool Player::Start() {
 
 	texture = app->tex->Load(config.attribute("texturePath").as_string());
-	// L07 TODO 5: Add physics to the player - initialize physics body
 	app->tex->GetSize(texture, texW, texH);
+
 	pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
-
-	// L07 TODO 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
 	pbody->listener = this;
-
-	// L07 TODO 7: Assign collider type
 	pbody->ctype = ColliderType::PLAYER;
-
-	//initialize audio effect
-	//pickCoinFxId = app->audio->LoadFx(config.attribute("coinfxpath").as_string());
-
 	return true;
 }
 
@@ -225,21 +211,3 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
         break;
     }
 }
-
-
-
-//void Player::EndContact(PhysBody* physA, PhysBody* physB) {
-//    if (physB->ctype == ColliderType::PLATFORM) {
-//        isOnGround = false; // El jugador ya no est� en el suelo
-//    }
-//}
-//
-//bool Player::IsOnGround()
-//{
-//    return isOnGround;
-//}
-
-//bool Player::IsJumping()
-//{
-//    return;
-//}

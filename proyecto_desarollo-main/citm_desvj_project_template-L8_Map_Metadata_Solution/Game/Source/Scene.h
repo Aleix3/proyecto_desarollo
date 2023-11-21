@@ -40,8 +40,6 @@ private:
 	float textPosX, textPosY = 0;
 	uint texW, texH;
 	uint windowW, windowH;
-
-	//L03: DONE 3b: Declare a Player attribute
 	Player* player;
 
 };

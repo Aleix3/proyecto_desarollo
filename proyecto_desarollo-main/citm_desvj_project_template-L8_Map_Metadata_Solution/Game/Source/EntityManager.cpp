@@ -79,8 +79,6 @@ bool EntityManager::CleanUp()
 Entity* EntityManager::CreateEntity(EntityType type)
 {
 	Entity* entity = nullptr; 
-
-	//L03: DONE 3a: Instantiate entity according to the type and add the new entity to the list of Entities
 	switch (type)
 	{
 	case EntityType::PLAYER:

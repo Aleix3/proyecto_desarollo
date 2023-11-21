@@ -116,12 +116,6 @@ bool Map::Update(float dt)
     return ret;
 }
 
-
-
-
-
-
-// L08: DONE 2: Implement function to the Tileset based on a tile id
 TileSet* Map::GetTilesetFromTileId(int gid) const
 {
     TileSet* set = NULL;
@@ -142,7 +136,6 @@ bool Map::CleanUp()
 {
     LOG("Unloading map");
 
-    // L05: DONE 2: Make sure you clean up any memory allocated from tilesets/map
     ListItem<TileSet*>* tileset;
     tileset = mapData.tilesets.start;
     
@@ -153,7 +146,6 @@ bool Map::CleanUp()
 
     mapData.tilesets.Clear();
 
-    // L06: DONE 2: clean up all layer data
     ListItem<MapLayer*>* layerItem;
     layerItem = mapData.layers.start;
 
@@ -171,9 +163,6 @@ bool Map::Load(SString mapFileName)
 {
     bool ret = true;
 
-    // L05: DONE 3: Implement LoadMap to load the map properties
-    // retrieve the paremeters of the <map> node and save it into map data
-
     pugi::xml_document mapFileXML;
     pugi::xml_parse_result result = mapFileXML.load_file(mapFileName.GetString());
 
@@ -190,7 +179,6 @@ bool Map::Load(SString mapFileName)
         mapData.tilewidth = mapFileXML.child("map").attribute("tilewidth").as_int();
         mapData.tileheight = mapFileXML.child("map").attribute("tileheight").as_int();
 
-        // L05: DONE 4: Implement the LoadTileSet function to load the tileset properties
        // Iterate the Tileset
         for (pugi::xml_node tilesetNode = mapFileXML.child("map").child("tileset"); tilesetNode != NULL; tilesetNode = tilesetNode.next_sibling("tileset")) {
 
@@ -214,11 +202,7 @@ bool Map::Load(SString mapFileName)
             mapData.tilesets.Add(tileset);
 
         }
-
-        // L06: DONE 3: Iterate all layers in the TMX and load each of them
         for (pugi::xml_node layerNode = mapFileXML.child("map").child("layer"); layerNode != NULL; layerNode = layerNode.next_sibling("layer")) {
-
-            // L06: DONE 4: Implement a function that loads a single layer layer
             //Load the attributes and saved in a new MapLayer
             MapLayer* mapLayer = new MapLayer();
             mapLayer->id = layerNode.attribute("id").as_int();
@@ -267,10 +251,7 @@ bool Map::Load(SString mapFileName)
 
 
         LoadColisions();
-        // L07 TODO 7: Assign collider type
-        
 
-        // L05: DONE 5: LOG all the data loaded iterate all tilesetsand LOG everything
         if (ret == true)
         {
             LOG("Successfully parsed map XML file :%s", mapFileName.GetString());
@@ -308,7 +289,6 @@ bool Map::Load(SString mapFileName)
     return ret;
 }
 
-// L06: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
 iPoint Map::MapToWorld(int x, int y) const
 {
     iPoint ret;
@@ -352,8 +332,6 @@ bool Map::LoadColisions()
     ListItem<MapLayer*>* mapLayer;
     mapLayer = mapData.layers.start;
 
-    // L06: DONE 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
-    
     // iterates the layers in the map
     while (mapLayer != NULL) {
         //Check if the property Draw exist get the value, if it's true draw the lawyer
@@ -370,8 +348,6 @@ bool Map::LoadColisions()
 
                         {
                             int gid = mapLayer->data->Get(i, j);
-
-                            //L08: DONE 3: Obtain the tile set using GetTilesetFromTileId
                             //Get the Rect from the tileSetTexture;
                             TileSet* tileSet = GetTilesetFromTileId(gid);
                             SDL_Rect tileRect = tileSet->GetRect(gid);
@@ -379,9 +355,6 @@ bool Map::LoadColisions()
 
                             //Get the screen coordinates from the tile coordinates
                             iPoint mapCoord = MapToWorld(i, j);
-
-                            // L06: DONE 9: Complete the draw function
-                            /*app->render->DrawTexture(tileSet->texture, mapCoord.x, mapCoord.y, &tileRect);*/
 
                             LOG("Firstgid: %d    GID: %d", tileSet->firstgid, gid);
 

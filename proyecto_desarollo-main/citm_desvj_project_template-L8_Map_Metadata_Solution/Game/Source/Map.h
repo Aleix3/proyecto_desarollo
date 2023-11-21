@@ -7,7 +7,6 @@
 #include "Pathfinding.h"
 #include "PugiXml\src\pugixml.hpp"
 
-// L05: DONE 1: Create a struct needed to hold the information to Map node
 struct TileSet
 {
     int firstgid;
@@ -20,8 +19,6 @@ struct TileSet
     int columns;
 
     SDL_Texture* texture;
-
-    // L06: DONE 7: Implement the method that receives the gid and returns a Rect
 
     SDL_Rect GetRect(uint gid) {
         SDL_Rect rect = { 0 };
@@ -36,7 +33,6 @@ struct TileSet
     }
 };
 
-// L08: DONE 5: Add attributes to the property structure
 struct Properties
 {
     struct Property
@@ -69,7 +65,6 @@ struct Properties
 
 struct MapLayer
 {
-    // L06: DONE 1: Add the info to the MapLayer Struct
     int id;
     SString name;
     int width;
@@ -77,7 +72,6 @@ struct MapLayer
     uint* tiles;
     Properties properties;
 
-    // L06: DONE 6: Short function to get the gid value of x,y
     uint Get(int x, int y) const
     {
         return tiles[(y * width) + x];
@@ -92,12 +86,8 @@ struct MapData
     int tileheight;
     List<TileSet*> tilesets;
 
-    // L06: DONE 2: Add a list/array of layers to the map
     List<MapLayer*> layers;
 };
-
-// L05: DONE 2: Create a struct to hold information for a TileSet
-// Ignore Terrain Types and Tile Types for now, but we want the image!
 
 class Map : public Module
 {
@@ -123,13 +113,8 @@ public:
     // Load new map
     bool Load(SString mapFileName);
 
-    // L06: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
     iPoint MapToWorld(int x, int y) const;
-
-    // L08: TODO 2: Implement function to the Tileset based on a tile id
     TileSet* GetTilesetFromTileId(int gid) const;
-
-    // L06: TODO 6: Load a group of properties 
     bool LoadProperties(pugi::xml_node& node, Properties& properties);
 
     bool LoadColisions();
@@ -144,7 +129,6 @@ public:
     bool died = false;
 
 private:
-    // L05: DONE 1: Declare a variable data of the struct MapData
     MapData mapData;
     bool mapLoaded;
 };

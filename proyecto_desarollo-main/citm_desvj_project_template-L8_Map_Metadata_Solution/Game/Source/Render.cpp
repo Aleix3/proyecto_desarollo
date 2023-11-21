@@ -28,7 +28,6 @@ bool Render::Awake(pugi::xml_node config)
 
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
 
-	// L04: DONE 6: Load the VSYNC status from config.xml and adapt the code to set it on / off
 	if (config.child("vsync").attribute("value").as_bool()) {
 		flags |= SDL_RENDERER_PRESENTVSYNC;
 		LOG("Using vsync");
