@@ -151,15 +151,6 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		}
 
 	}
-	
-	
-
-	
-
-	
-
-	
-	
 	return ret;
 }
 

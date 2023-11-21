@@ -39,12 +39,6 @@ public:
 
 	bool CleanUp();
 
-	//bool IsOnGround();
-
-	//bool IsJumping();
-
-	//void EndContact(PhysBody* physA, PhysBody* physB);
-
 	// L07 TODO 6: Define OnCollision function for the player. 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
@@ -79,6 +73,8 @@ public:
 	int jumpCount = 0;
 	bool left = false;
 	bool godmode;
+	bool tocasuelo = true;
+	bool die = false;
 	
 };
 

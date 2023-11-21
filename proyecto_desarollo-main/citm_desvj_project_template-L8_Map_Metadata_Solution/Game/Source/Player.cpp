@@ -86,8 +86,7 @@ bool Player::Start() {
 
 	return true;
 }
-bool tocasuelo = true;
-bool die = false;
+
 
 bool Player::Update(float dt) {
 
@@ -115,67 +114,11 @@ bool Player::Update(float dt) {
 
         if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
             position.x += 6;
-        
-
-        
     }
     else
     {
-        
-            if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-                velocity.x = -0.2 * dt;
-                currentAnimation = &runAnim;
-                left = true;
-            }
-            else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-                velocity.x = 0.2 * dt;
-                currentAnimation = &runAnim;
-                left = false;
-            }
-        
-        
-        else {
-            velocity.x = 0; // Detén al jugador cuando no se presiona ninguna tecla de movimiento
-        }
-
-        if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumpCount < 2)//&& isOnGround) {
-        {
-            jumpCount++;
-            velocity.y = -jumpSpeed;
-            pbody->body->SetLinearVelocity(velocity);
-            currentAnimation = &jumpAnim;
-            tocasuelo == false;
-        }
-        if (velocity.y < 0 && tocasuelo == true)
-        {
-            currentAnimation = &jumpAnim;
-        }
-
-
-
-        //if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-        //{
-        //    velocity.x = -dashSpeed;
-        //}
-
-        //if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-        //{
-        //    velocity.x = dashSpeed;
-        //}
-
-
-
-
-
-        pbody->body->SetLinearVelocity(velocity);
-        b2Transform pbodyPos = pbody->body->GetTransform();
-
-        position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
-        position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 15;
-
         if (die == true)
         {
-
             currentAnimation = &dieAnim;
             if (dieAnim.HasFinished())
             {
@@ -188,6 +131,42 @@ bool Player::Update(float dt) {
                 die = false;
                 dieAnim.Reset();
             }
+        }
+        else
+        {
+            if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+                velocity.x = -0.2 * dt;
+                currentAnimation = &runAnim;
+                left = true;
+            }
+            else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+                velocity.x = 0.2 * dt;
+                currentAnimation = &runAnim;
+                left = false;
+            }
+            else {
+                velocity.x = 0; // Detén al jugador cuando no se presiona ninguna tecla de movimiento
+            }
+
+            if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumpCount < 2)//&& isOnGround) {
+            {
+                jumpCount++;
+                velocity.y = -jumpSpeed;
+                pbody->body->SetLinearVelocity(velocity);
+                currentAnimation = &jumpAnim;
+                tocasuelo == false;
+            }
+
+            if (velocity.y < 0 && tocasuelo == true)
+            {
+                currentAnimation = &jumpAnim;
+            }
+
+            pbody->body->SetLinearVelocity(velocity);
+            b2Transform pbodyPos = pbody->body->GetTransform();
+
+            position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
+            position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 15;
         }
     }
     if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && jumpCount < 2)//&& isOnGround) {
@@ -213,15 +192,11 @@ bool Player::Update(float dt) {
     currentAnimation->Update();
 
     SDL_Rect rect = currentAnimation->GetCurrentFrame();
-    
-    
-        app->render->DrawTexture(texture, position.x, position.y, &rect);
-    
+
+    app->render->DrawTexture(texture, position.x, position.y, &rect);
 
     return true;
 }
-
-
 
 bool Player::CleanUp()
 {
