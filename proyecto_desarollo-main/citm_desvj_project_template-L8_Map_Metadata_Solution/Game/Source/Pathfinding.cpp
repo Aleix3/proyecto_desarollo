@@ -83,6 +83,7 @@ void PathFinding::ClearLastPath()
 int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	int ret = -1;
+	int iterations = 0;
 
 	// L13: TODO 1: if origin or destination are not walkable, return -1
 
@@ -112,16 +113,20 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			{
 				lastPath.Clear();
 
+				// Backtrack to create the final path
+				// Use the Pathnode::parent and Flip() the path when you are finish
 				const PathNode* pathNode = &node->data;
 
-				while (pathNode != NULL)
+				while (pathNode)
 				{
 					lastPath.PushBack(pathNode->pos);
 					pathNode = pathNode->parent;
-
 				}
 
 				lastPath.Flip();
+				ret = lastPath.Count();
+				LOG("Created path of %d steps in %d iterations", ret, iterations);
+				break;
 			}
 
 			// L13: TODO 4: Fill a list of all adjancent nodes. 
@@ -130,26 +135,39 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			PathList adjacent;
 			node->data.FindWalkableAdjacents(adjacent);
 
-			// L13: TODO 5: Iterate adjancent nodes:
-			ListItem<PathNode>* neighbour = adjacent.list.start;
-			while (neighbour != NULL)
+			ListItem<PathNode>* neighbourg = adjacent.list.start;
+			while (neighbourg != NULL)
 			{
+				// ignore nodes in the visited list
+				if (visited.Find(neighbourg->data.pos) == NULL) {
 
+					//add the neighbourg to the visited list
+					visited.list.Add(neighbourg->data);
 
-				// ignore the nodes already in the visited list
-				// if is not in the visited
-				if (visited.Find(neighbour->data.pos))
-				{
-					visited.list.Add(neighbour->data);
-				}
-					// add the neighbourg to the visited list
 					// If the neighbourgh is NOT found in the frontier list, calculate its F and add it to the frontier list
-					// If it is already in the frontier list, check if it is a better path (compare G)
-				neighbour = neighbour->next;
-			}
-		}
+					ListItem<PathNode>* neighbourgInFrontier = frontier.Find(neighbourg->data.pos);
+					if (neighbourgInFrontier == NULL)
+					{
+						neighbourg->data.CalculateF(destination);
+						frontier.list.Add(neighbourg->data);
+					}
+					else
+					{
+						// If it is already in the frontier list, check if it is a better path (compare G)
+						if (neighbourgInFrontier->data.g > neighbourg->data.g + 1)
+						{
+							neighbourgInFrontier->data.parent = neighbourg->data.parent;
+							neighbourgInFrontier->data.CalculateF(destination);
+						}
+					}
+				}
 
+				neighbourg = neighbourg->next;
+			}
+			++iterations;
+		}
 	}
+
 	return ret;
 }
 

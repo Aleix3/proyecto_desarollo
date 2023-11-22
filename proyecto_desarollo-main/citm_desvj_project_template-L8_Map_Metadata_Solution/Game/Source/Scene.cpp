@@ -120,6 +120,8 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 
+	iPoint playerMap = app->map->WorldToMap(player->position.x, player->position.y);
+
 	iPoint mousePos;
 	app->input->GetMousePosition(mousePos.x, mousePos.y);
 	iPoint mouseTile = app->map->WorldToMap(mousePos.x - app->render->camera.x,
@@ -135,9 +137,15 @@ bool Scene::PostUpdate()
 	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
 		player->godmode = true;
 		player->position = iPoint(highlightedTileWorld.x, highlightedTileWorld.y);
-		app->map->pathfinding->CreatePath(origin, mouseTile);
+		
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		app->map->pathfinding->CreatePath(origin, playerMap);
+
+	}
+	
 	// L13: Get the latest calculated path and draw
 	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
 	for (uint i = 0; i < path->Count(); ++i)
