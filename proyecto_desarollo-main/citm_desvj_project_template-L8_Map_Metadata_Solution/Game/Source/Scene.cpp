@@ -53,7 +53,6 @@ bool Scene::Start()
 {
 	// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
 	img = app->tex->Load("Assets/Textures/test.png");
-	
 	//Music is commented so that you can add your own music
 	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 
@@ -76,7 +75,7 @@ bool Scene::PreUpdate()
 {
 	return true;
 }
-bool camaralibre = true;
+bool camaralibre = false;
 
 // Called each loop iteration
 bool Scene::Update(float dt)
@@ -105,8 +104,8 @@ bool Scene::Update(float dt)
 	}
 	else
 	{
-		app->render->camera.x = 2 * (-player->position.x) + 600;
-		app->render->camera.y = 2 * (-player->position.y) + 400;
+		app->render->camera.x = /*2 * */(-player->position.x) + 600;
+		app->render->camera.y = /*2 * */(-player->position.y) + 400;
 	}
 
 	// Get the mouse position and obtain the map coordinate
@@ -140,7 +139,7 @@ bool Scene::PostUpdate()
 		
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) //Aqui meter la distancia del enemy al player
 	{
 		app->map->pathfinding->CreatePath(origin, playerMap);
 
