@@ -36,14 +36,14 @@ bool Map::Start() {
     mapPath += name;
     Load(mapPath);
 
-    ////Initialize pathfinding 
-    //pathfinding = new PathFinding();
+    //Initialize pathfinding 
+    pathfinding = new PathFinding();
 
-    ////Initialize the navigation map
-    //uchar* navigationMap = NULL;
-    //CreateNavigationMap(mapData.width, mapData.height, &navigationMap);
-    //pathfinding->SetNavigationMap((uint)mapData.width, (uint)mapData.height, navigationMap);
-    //RELEASE_ARRAY(navigationMap);
+    //Initialize the navigation map
+    uchar* navigationMap = NULL;
+    CreateNavigationMap(mapData.width, mapData.height, &navigationMap);
+    pathfinding->SetNavigationMap((uint)mapData.width, (uint)mapData.height, navigationMap);
+    RELEASE_ARRAY(navigationMap);
 
     return true;
 }
@@ -308,6 +308,20 @@ bool Map::Load(SString mapFileName)
                 LOG("Layer width : %d Layer height : %d", mapLayer->data->width, mapLayer->data->height);
                 mapLayer = mapLayer->next;
             }
+        }
+
+        // Find the navigation layer
+        ListItem<MapLayer*>* mapLayerItem;
+        mapLayerItem = mapData.layers.start;
+        navigationLayer = mapLayerItem->data;
+
+        //Search the layer in the map that contains information for navigation
+        while (mapLayerItem != NULL) {
+            if (mapLayerItem->data->properties.GetProperty("Navigation") != NULL && mapLayerItem->data->properties.GetProperty("Navigation")->value) {
+                navigationLayer = mapLayerItem->data;
+                break;
+            }
+            mapLayerItem = mapLayerItem->next;
         }
 
         if (mapFileXML) mapFileXML.reset();
