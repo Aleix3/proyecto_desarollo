@@ -82,98 +82,30 @@ bool Enemy::Update(float dt) {
     currentAnimation = &idleAnim;
 
     b2Vec2 velocity = pbody->body->GetLinearVelocity();
-
-    if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+    if (die == true)
     {
-        godmode = true;
-    }
-    if (godmode == true)
-    {
-        if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-            position.y -= 6;
-
-        if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-            position.x -= 6;
-
-        if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-            position.y += 6;
-
-        if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-            position.x += 6;
+        currentAnimation = &dieAnim;
+        if (dieAnim.HasFinished())
+        {
+            position.x = 250;
+            position.y = 672;
+            app->physics->DestroyBody(pbody);
+            pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
+            pbody->listener = this;
+            pbody->ctype = ColliderType::PLAYER;
+            die = false;
+            dieAnim.Reset();
+        }
     }
     else
     {
-        if (die == true)
-        {
-            currentAnimation = &dieAnim;
-            if (dieAnim.HasFinished())
-            {
-                position.x = 250;
-                position.y = 672;
-                app->physics->DestroyBody(pbody);
-                pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
-                pbody->listener = this;
-                pbody->ctype = ColliderType::PLAYER;
-                die = false;
-                dieAnim.Reset();
-            }
-        }
-        else
-        {
-            if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-                velocity.x = -0.2 * dt;
-                currentAnimation = &runAnim;
-                left = true;
-            }
-            else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-                velocity.x = 0.2 * dt;
-                currentAnimation = &runAnim;
-                left = false;
-            }
-            else {
-                velocity.x = 0; // Detén al jugador cuando no se presiona ninguna tecla de movimiento
-            }
+        velocity.x = 0; // Detén al jugador cuando no se presiona ninguna tecla de movimiento
 
-            if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumpCount < 2)//&& isOnGround) {
-            {
-                jumpCount++;
-                velocity.y = -jumpSpeed;
-                pbody->body->SetLinearVelocity(velocity);
-                currentAnimation = &jumpAnim;
-                tocasuelo == false;
-            }
+        pbody->body->SetLinearVelocity(velocity);
+        b2Transform pbodyPos = pbody->body->GetTransform();
 
-            if (velocity.y < 0 && tocasuelo == true)
-            {
-                currentAnimation = &jumpAnim;
-            }
-
-            pbody->body->SetLinearVelocity(velocity);
-            b2Transform pbodyPos = pbody->body->GetTransform();
-
-            position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
-            position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 15;
-        }
-    }
-    if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && jumpCount < 2)//&& isOnGround) {
-    {
-        position.x = 250;
-        position.y = 672;
-        app->physics->DestroyBody(pbody);
-        pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
-        pbody->listener = this;
-        pbody->ctype = ColliderType::PLAYER;
-    }
-    if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
-    {
-        godmode = false;
-        position.x = 250;
-        position.y = 672;
-        app->physics->DestroyBody(pbody);
-        pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
-        pbody->listener = this;
-        pbody->ctype = ColliderType::PLAYER;
-
+        position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
+        position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 15;
     }
     currentAnimation->Update();
 
@@ -186,6 +118,7 @@ bool Enemy::Update(float dt) {
 
 bool Enemy::CleanUp()
 {
+    app->tex->UnLoad(texture);
     return true;
 }
 
@@ -205,6 +138,9 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
         die = true;
         break;
     case ColliderType::UNKNOWN:
+        LOG("Collision UNKNOWN");
+        break;
+    case ColliderType::PLAYER:
         LOG("Collision UNKNOWN");
         break;
     default:

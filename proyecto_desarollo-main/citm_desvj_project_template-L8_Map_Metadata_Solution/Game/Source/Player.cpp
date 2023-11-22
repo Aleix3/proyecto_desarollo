@@ -186,6 +186,7 @@ bool Player::Update(float dt) {
 
 bool Player::CleanUp()
 {
+    app->tex->UnLoad(texture);
     return true;
 }
 
@@ -201,6 +202,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
         app->audio->PlayFx(pickCoinFxId);
         break;
     case ColliderType::DIE:
+        LOG("Collision DIE");
+        die = true;
+        break;
+    case ColliderType::ENEMY:
         LOG("Collision DIE");
         die = true;
         break;
