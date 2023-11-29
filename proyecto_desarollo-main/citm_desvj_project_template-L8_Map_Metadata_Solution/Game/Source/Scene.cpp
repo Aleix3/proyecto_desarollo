@@ -104,12 +104,15 @@ bool Scene::Update(float dt)
 	}
 	else
 	{
-		app->render->camera.x = /*2 * */(-player->position.x) + 600;
-		app->render->camera.y = /*2 * */(-player->position.y) + 400;
+		app->render->camera.x = 2 * (-player->position.x) + 600;
+		app->render->camera.y = 2 * (-player->position.y) + 400;
 	}
 
-	// Get the mouse position and obtain the map coordinate
 	
+	
+	// L14: TODO 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
 
 	return true;
 }
@@ -119,15 +122,16 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 
+	// Get the mouse position and obtain the map coordinate
 	iPoint playerMap = app->map->WorldToMap(player->position.x, player->position.y);
 
 	iPoint mousePos;
 	app->input->GetMousePosition(mousePos.x, mousePos.y);
-	iPoint mouseTile = app->map->WorldToMap(mousePos.x - app->render->camera.x,
-		mousePos.y - app->render->camera.y);
+	iPoint mouseTile = app->map->WorldToMap((mousePos.x - app->render->camera.x) / 2,
+											(mousePos.y - app->render->camera.y) / 2);
 
 	// Render a texture where the mouse is over to highlight the tile, use the texture 'mouseTileTex'
-	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
+	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x , mouseTile.y);
 	app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);
 
 	iPoint origin = iPoint(3, 3);
