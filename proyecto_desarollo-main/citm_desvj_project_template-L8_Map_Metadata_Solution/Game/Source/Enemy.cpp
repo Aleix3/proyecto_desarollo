@@ -14,8 +14,12 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
     name.Create("EnemySamurai");
 
-    idleAnim.PushBack({ 23, 21, 18, 27 });
-    //idleAnim.PushBack({ 37, 3, 22, 28 });
+    idleAnim.PushBack({ 23, 20, 18, 27 });
+    idleAnim.PushBack({ 87, 20, 18, 27 });
+    idleAnim.PushBack({ 151, 20, 18, 27 });
+    idleAnim.PushBack({ 215, 20, 18, 27 });
+    idleAnim.PushBack({ 279, 20, 18, 27 });
+    idleAnim.PushBack({ 343, 20, 18, 27 });
     idleAnim.speed = 0.05f;
 }
 
@@ -52,10 +56,10 @@ bool Enemy::Update(float dt) {
         position.x = 300;
         position.y = 672;
         app->physics->DestroyBody(pbody);
-       pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
-            pbody->listener = this;
-            pbody->ctype = ColliderType::ENEMY;
-            die = false;
+        pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
+        pbody->listener = this;
+        pbody->ctype = ColliderType::ENEMY;
+        die = false;
     }
     b2Transform pbodyPos = pbody->body->GetTransform();
 
