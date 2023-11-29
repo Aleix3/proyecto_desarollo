@@ -4,6 +4,7 @@
 #include "App.h"
 #include "Textures.h"
 #include "Scene.h"
+#include "Enemy.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -88,7 +89,7 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		entity = new Item();
 		break;
 	case EntityType::ENEMY:
-		entity = new Item();
+		entity = new Enemy();
 		break;
 	default:
 		break;

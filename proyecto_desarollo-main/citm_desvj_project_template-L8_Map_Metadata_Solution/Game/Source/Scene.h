@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Player.h"
+#include "Enemy.h"
 
 struct SDL_Texture;
 
@@ -44,6 +45,7 @@ private:
 
 	//L03: DONE 3b: Declare a Player attribute
 	Player* player;
+	Enemy* enemy;
 
 };
 

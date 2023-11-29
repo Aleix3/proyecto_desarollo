@@ -19,7 +19,7 @@
 
   <scene>
     <player x="250" y="672" texturePath="Assets/Textures/character/Character.png" coinfxpath="Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg"/>
-    <player x="250" y="672" texturePath="Assets/Textures/character/Character-flip.png"/>
+    <EnemySamurai x="300" y="672" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
     <map path="Assets/Maps/" name="MapTemplate.tmx"/>
     <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
