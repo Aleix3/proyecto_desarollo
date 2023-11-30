@@ -138,7 +138,7 @@ bool Scene::PostUpdate()
 	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x , mouseTile.y);
 	app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);
 
-	iPoint origin = iPoint(3, 3);
+	iPoint origin = app->map->WorldToMap(enemy->position.x, enemy->position.y);
 
 	//If mouse button is pressed modify player position
 	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
