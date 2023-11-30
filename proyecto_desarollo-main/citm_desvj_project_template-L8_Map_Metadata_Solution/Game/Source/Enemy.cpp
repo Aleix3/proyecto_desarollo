@@ -14,15 +14,53 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
     name.Create("EnemySamurai");
 
-    idleAnim.PushBack({ 23, 20, 18, 27 });
+    /*idleAnim.PushBack({ 23, 20, 18, 27 });
     idleAnim.PushBack({ 87, 20, 18, 27 });
     idleAnim.PushBack({ 151, 20, 18, 27 });
     idleAnim.PushBack({ 215, 20, 18, 27 });
     idleAnim.PushBack({ 279, 20, 18, 27 });
     idleAnim.PushBack({ 343, 20, 18, 27 });
-    idleAnim.speed = 0.05f;
-}
+    idleAnim.speed = 0.05f;*/
+     
+    walkAnim.PushBack({ 18,  274,  26, 27 });
+    walkAnim.PushBack({ 19,  338,  25, 27 });
+    walkAnim.PushBack({ 81,  274,  26, 27 });
+    walkAnim.PushBack({ 83,  338,  24, 27 });
+    walkAnim.PushBack({ 146, 274,  25, 27 });
+    walkAnim.PushBack({ 148, 338,  23, 27 });
+    walkAnim.PushBack({ 210, 274,  26, 27 });
+    walkAnim.PushBack({ 212, 338,  24, 27 });
+    walkAnim.speed = 0.035f; 
 
+    dieAnim.PushBack({ 20,  469, 22, 27 });
+    dieAnim.PushBack({ 84,  470, 23, 27 });
+    dieAnim.PushBack({ 148, 469, 24, 27 });
+    dieAnim.PushBack({ 212, 469, 24, 27 });
+    dieAnim.PushBack({ 276, 469, 24, 27 });
+    dieAnim.PushBack({ 340 , 469, 24, 27 });
+    dieAnim.PushBack({ 404, 469, 24, 27 });
+    dieAnim.PushBack({ 468 , 469, 24, 27 });
+    dieAnim.PushBack({ 532, 469, 24, 27 });
+    dieAnim.PushBack({ 596, 469, 24, 27 });
+    dieAnim.PushBack({ 660 , 469, 24, 27 });
+    dieAnim.PushBack({ 725 , 469, 24, 27 });
+    dieAnim.PushBack({ 789, 469, 23, 27 });
+    dieAnim.PushBack({ 853, 469, 23, 27 });
+    dieAnim.speed = 0.085f;
+
+    attackAnim.PushBack({ 20, 213, 40, 27 });
+    attackAnim.PushBack({ 83, 214, 43, 26 });
+    attackAnim.PushBack({ 147, 214, 45, 26 });
+    attackAnim.PushBack({ 215, 20, 18, 27 });
+    attackAnim.speed = 0.09f;
+     
+    attackbAnim.PushBack({ 20, 151, 24, 25 });
+    attackbAnim.PushBack({ 77, 153, 47, 23 });
+    attackbAnim.PushBack({ 136, 152, 55, 24 });
+    attackbAnim.PushBack({ 200, 152, 56, 24 });
+    attackbAnim.speed = 0.09f;
+} 
+ 
 Enemy::~Enemy() {
 
 }

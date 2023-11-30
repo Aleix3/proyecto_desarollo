@@ -45,6 +45,10 @@ public:
 	Animation* currentAnimation = nullptr;
 
 	Animation idleAnim;
+	Animation dieAnim;
+	Animation walkAnim; 
+	Animation attackAnim;
+	Animation attackbAnim;
 
 
 	float speed = 0.2f;
