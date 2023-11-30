@@ -14,13 +14,13 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
     name.Create("EnemySamurai");
 
-    /*idleAnim.PushBack({ 23, 20, 18, 27 });
+    idleAnim.PushBack({ 23, 20, 18, 27 });
     idleAnim.PushBack({ 87, 20, 18, 27 });
     idleAnim.PushBack({ 151, 20, 18, 27 });
     idleAnim.PushBack({ 215, 20, 18, 27 });
     idleAnim.PushBack({ 279, 20, 18, 27 });
     idleAnim.PushBack({ 343, 20, 18, 27 });
-    idleAnim.speed = 0.05f;*/
+    idleAnim.speed = 0.05f;
      
     walkAnim.PushBack({ 18,  274,  26, 27 });
     walkAnim.PushBack({ 19,  338,  25, 27 });
