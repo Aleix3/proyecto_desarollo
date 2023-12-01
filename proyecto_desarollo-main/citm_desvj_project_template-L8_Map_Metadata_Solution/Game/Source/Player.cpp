@@ -179,7 +179,12 @@ bool Player::Update(float dt) {
 
     SDL_Rect rect = currentAnimation->GetCurrentFrame();
 
-    app->render->DrawTexture(texture, position.x, position.y, &rect);
+    if (left) {
+        app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_HORIZONTAL, &rect);
+    }
+    else {
+        app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_NONE, &rect);
+    }
 
     return true;
 }
@@ -191,6 +196,8 @@ bool Player::CleanUp()
 }
 
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
+
+
     switch (physB->ctype)
     {
     case ColliderType::PLATFORM:
@@ -200,6 +207,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
     case ColliderType::ITEM:
         LOG("Collision ITEM");
         app->audio->PlayFx(pickCoinFxId);
+        app->entityManager->DestroyEntity(physB->listener);
+        physB->body->SetActive(false);
+        app->scene->visible = false;
+
         break;
     case ColliderType::DIE:
         LOG("Collision DIE");

@@ -36,6 +36,8 @@ public:
 
 	Player* GetPlayer();
 
+	bool visible = true;
+
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;

@@ -63,6 +63,7 @@ public:
 	int jumpCount = 0;
 	bool tocasuelo = true;
 	bool die = false;
+	bool faceleft;
 
 };
 

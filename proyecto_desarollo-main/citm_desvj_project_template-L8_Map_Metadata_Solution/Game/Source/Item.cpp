@@ -33,6 +33,7 @@ bool Item::Start() {
 	app->tex->GetSize(texture, texW, texH);
 	pbody = app->physics->CreateCircle(position.x + texH / 2, position.y + texH / 2, texH / 2, bodyType::DYNAMIC);
 	pbody->ctype = ColliderType::ITEM;
+	
 
 	return true;
 }
@@ -43,7 +44,15 @@ bool Item::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2;
 	position.y = METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2;
 
-	app->render->DrawTexture(texture, position.x, position.y);
+	if (app->scene->visible == false)
+	{
+
+	}
+	
+	else
+	{
+		app->render->DrawTexture(texture, position.x, position.y);
+	}
 
 	return true;
 }

@@ -9,6 +9,7 @@
 #include "Point.h"
 #include "Physics.h"
 #include "map.h"
+#include "player.h"
 
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
@@ -80,6 +81,7 @@ bool Enemy::Start() {
     pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
     pbody->listener = this;
     pbody->ctype = ColliderType::ENEMY;
+    
     return true;
 }
 
@@ -88,7 +90,29 @@ bool Enemy::Update(float dt) {
 
     currentAnimation = &idleAnim;
 
-    b2Vec2 velocity = pbody->body->GetLinearVelocity();
+    if (app->scene->GetPlayer()->position.x > position.x)
+    {
+        faceleft = false;
+    }
+
+    if (app->scene->GetPlayer()->position.x < position.x)
+    {
+        faceleft = true;
+    }
+
+    b2Vec2 velocity2 = pbody->body->GetLinearVelocity();
+
+    if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+        velocity2.x = -0.2 * dt;
+        
+    }
+
+    if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+        velocity2.x = 0.2 * dt;
+
+    }
+
+    
     if (die == true)
     {
         position.x = 300;
@@ -99,6 +123,7 @@ bool Enemy::Update(float dt) {
         pbody->ctype = ColliderType::ENEMY;
         die = false;
     }
+    pbody->body->SetLinearVelocity(velocity2);
     b2Transform pbodyPos = pbody->body->GetTransform();
 
     position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
@@ -108,7 +133,15 @@ bool Enemy::Update(float dt) {
 
     SDL_Rect rect = currentAnimation->GetCurrentFrame();
 
-    app->render->DrawTexture(texture, position.x, position.y, &rect);
+
+    
+    if (faceleft) {
+        app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_HORIZONTAL, &rect);
+    }
+    else {
+        app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_NONE, &rect);
+    }
+    
 
     return true;
 }

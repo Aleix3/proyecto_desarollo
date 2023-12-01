@@ -87,6 +87,7 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		break;
 	case EntityType::ITEM:
 		entity = new Item();
+		
 		break;
 	case EntityType::ENEMY:
 		entity = new Enemy();
@@ -107,12 +108,14 @@ void EntityManager::DestroyEntity(Entity* entity)
 	for (item = entities.start; item != NULL; item = item->next)
 	{
 		if (item->data == entity) entities.Del(item);
+		
 	}
 }
 
 void EntityManager::AddEntity(Entity* entity)
 {
 	if ( entity != nullptr) entities.Add(entity);
+	
 }
 
 bool EntityManager::Update(float dt)
