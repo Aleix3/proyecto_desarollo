@@ -18,7 +18,7 @@ Player::Player() : Entity(EntityType::PLAYER)
     runAnim.PushBack({ 37,35,  22, 28 });
     runAnim.PushBack({ 68, 36, 23, 27 });
     runAnim.PushBack({ 101, 35, 22, 28 });
-    runAnim.speed = 0.17f;
+    runAnim.speed = 0.10f;
 
     idleAnim.PushBack({ 4, 4, 23, 27 });
     idleAnim.PushBack({ 37, 3, 22, 28 });
@@ -48,6 +48,17 @@ Player::Player() : Entity(EntityType::PLAYER)
     dieAnim.PushBack({ 290, 206, 29, 17 });
     dieAnim.speed = 0.17f;
     dieAnim.loop = false;
+
+    dashAnim.PushBack({ 4, 165, 23, 27 });
+    dashAnim.PushBack({ 36, 164, 23, 27 });
+    dashAnim.PushBack({ 70, 165, 20, 26 });
+    dashAnim.PushBack({ 105, 167, 17, 19 });
+    dashAnim.PushBack({ 137, 167, 18, 19 });
+    dashAnim.PushBack({ 166, 166, 21, 25 });
+    dashAnim.PushBack({ 196, 166, 26, 26 });
+    dashAnim.PushBack({ 228, 164, 23, 27 });
+    dashAnim.speed = 0.17f;
+    dashAnim.loop = false;
 
 }
 
@@ -142,6 +153,30 @@ bool Player::Update(float dt) {
                 currentAnimation = &jumpAnim;
                 tocasuelo == false;
             }
+
+            if (dash)
+            {
+                currentAnimation = &dashAnim;
+                if (dashAnim.HasFinished())
+                {
+                    dash = false;
+                    dashAnim.Reset();
+                }
+            }
+
+            if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && left == false) {
+                velocity.x = velocity.x + 100;
+                dash = true;
+                
+            }
+
+            if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && left == true) {
+                velocity.x = velocity.x - 100;
+                dash = true;
+
+            }
+
+            
 
             if (velocity.y < 0 && tocasuelo == true)
             {

@@ -134,6 +134,12 @@ bool App::Update()
 	if(ret == true)
 		ret = PostUpdate();
 
+	float interpolationFactor = 0.1f;
+
+	// Interpolación lineal para suavizar el movimiento de la cámara
+	app->render->camera.x = app->render->camera.x + (app->render->targetCameraX - app->render->camera.x) * interpolationFactor;
+	app->render->camera.y = app->render->camera.y + (app->render->targetCameraY - app->render->camera.y) * interpolationFactor;
+
 	FinishUpdate();
 	return ret;
 }

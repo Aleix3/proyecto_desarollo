@@ -49,6 +49,7 @@ public:
 	Animation idleAnim;
 	Animation jumpAnim;
 	Animation dieAnim;
+	Animation dashAnim;
 
 	float speed = 0.2f;
 	SDL_Texture* texture = NULL;
@@ -67,7 +68,8 @@ public:
 	bool godmode;
 	bool tocasuelo = true;
 	bool die = false;
-	
+	bool dash = false;
+
 };
 
 #endif // __PLAYER_H__

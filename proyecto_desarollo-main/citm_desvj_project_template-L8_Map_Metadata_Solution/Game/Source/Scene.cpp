@@ -108,8 +108,13 @@ bool Scene::Update(float dt)
 	}
 	else
 	{
-		app->render->camera.x = 2 * (-player->position.x) + 600;
-		app->render->camera.y = 2 * (-player->position.y) + 400;
+		/*app->render->camera.x = 2 * (-player->position.x) + 600;
+		app->render->camera.y = 2 * (-player->position.y) + 400;*/
+
+		app->render->targetCameraX = 2 * (-player->position.x) + 600;
+		app->render->targetCameraY = 2 * (-player->position.y) + 400;
+
+
 	}
 
 	
