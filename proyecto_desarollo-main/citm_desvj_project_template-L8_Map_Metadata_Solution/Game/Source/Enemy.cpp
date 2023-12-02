@@ -9,7 +9,7 @@
 #include "Point.h"
 #include "Physics.h"
 #include "map.h"
-#include "player.h"
+#include "Pathfinding.h"
 
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
@@ -48,18 +48,21 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
     dieAnim.PushBack({ 789, 469, 23, 27 });
     dieAnim.PushBack({ 853, 469, 23, 27 });
     dieAnim.speed = 0.085f;
+    dieAnim.loop = false;
 
     attackAnim.PushBack({ 20, 213, 40, 27 });
     attackAnim.PushBack({ 83, 214, 43, 26 });
     attackAnim.PushBack({ 147, 214, 45, 26 });
     attackAnim.PushBack({ 215, 20, 18, 27 });
     attackAnim.speed = 0.09f;
-     
+    
+    //Animacion de ataque cuando el enemigo esta atras suya
     attackbAnim.PushBack({ 20, 151, 24, 25 });
     attackbAnim.PushBack({ 77, 153, 47, 23 });
     attackbAnim.PushBack({ 136, 152, 55, 24 });
     attackbAnim.PushBack({ 200, 152, 56, 24 });
     attackbAnim.speed = 0.09f;
+    attackbAnim.loop = false;
 } 
  
 Enemy::~Enemy() {
@@ -89,15 +92,64 @@ bool Enemy::Start() {
 bool Enemy::Update(float dt) {
 
     currentAnimation = &idleAnim;
+    currentState = EnemyState::SEARCHING;
+    app->map->pathfinding->ClearLastPath();;
 
     if (app->scene->GetPlayer()->position.x > position.x)
     {
         faceleft = false;
+
+        // Perseguir
+        if (app->scene->GetPlayer()->position.x < position.x + 200 && (abs(app->scene->GetPlayer()->position.y > position.y - 10)))
+        {
+            currentState = EnemyState::CHASING;
+
+            iPoint playerMap = app->map->WorldToMap(app->scene->GetPlayer()->position.x, app->scene->GetPlayer()->position.y);
+            iPoint origin = app->map->WorldToMap(position.x, position.y);
+            app->map->pathfinding->CreatePath(origin, playerMap);
+
+
+
+
+            // Atacar
+            if (app->scene->GetPlayer()->position.x < position.x + 30)
+            {
+                currentState = EnemyState::ATACKING;
+                currentAnimation = &attackAnim;
+            }
+
+        }
+
     }
 
     if (app->scene->GetPlayer()->position.x < position.x)
     {
         faceleft = true;
+
+        // Perseguir
+        if (app->scene->GetPlayer()->position.x > position.x - 200 && (abs(app->scene->GetPlayer()->position.y > position.y - 10)))
+        {
+            currentState = EnemyState::CHASING;
+
+            iPoint playerMap = app->map->WorldToMap(app->scene->GetPlayer()->position.x, app->scene->GetPlayer()->position.y);
+            iPoint origin = app->map->WorldToMap(position.x, position.y);
+            app->map->pathfinding->CreatePath(origin, playerMap);
+
+
+
+
+            // Atacar
+            if (app->scene->GetPlayer()->position.x > position.x - 30)
+            {
+                currentState = EnemyState::ATACKING;
+                currentAnimation = &attackAnim;
+            }
+        }
+    }
+
+    if (currentState == EnemyState::ATACKING && currentAnimation->HasFinished() && (app->scene->GetPlayer()->die = false))
+    {
+        currentAnimation->Reset();
     }
 
     b2Vec2 velocity2 = pbody->body->GetLinearVelocity();

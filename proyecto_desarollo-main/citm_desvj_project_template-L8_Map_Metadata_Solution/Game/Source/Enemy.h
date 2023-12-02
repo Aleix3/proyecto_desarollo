@@ -14,7 +14,8 @@ enum class EnemyState {
 	IDLE,
 	JUMPING,
 	ATACKING,
-	FOLLOWING,
+	CHASING,
+	SEARCHING,
 	DYING
 	// Añadir mas estados para el personaje
 };
