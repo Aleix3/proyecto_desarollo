@@ -165,7 +165,7 @@ bool Enemy::Update(float dt) {
     }
 
     
-    if (die == true)
+    if (currentState == EnemyState::DYING)
     {
         position.x = 300;
         position.y = 672;
@@ -212,14 +212,14 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
         break;
     case ColliderType::DIE:
         LOG("Collision DIE");
-        die = true;
+        currentState = EnemyState::DYING;
         break;
     case ColliderType::UNKNOWN:
         LOG("Collision UNKNOWN");
         break;
     case ColliderType::PLAYER:
         LOG("Collision UNKNOWN");
-        die = true;
+        currentState = EnemyState::DYING;
         break;
     default:
         break;
