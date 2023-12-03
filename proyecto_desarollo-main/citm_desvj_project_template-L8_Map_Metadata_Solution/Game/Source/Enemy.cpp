@@ -93,7 +93,8 @@ bool Enemy::Update(float dt) {
 
     currentAnimation = &idleAnim;
     currentState = EnemyState::SEARCHING;
-    app->map->pathfinding->ClearLastPath();;
+    app->map->pathfinding->ClearLastPath();
+    b2Vec2 velocity2 = pbody->body->GetLinearVelocity();
 
     if (app->scene->GetPlayer()->position.x > position.x)
     {
@@ -108,18 +109,13 @@ bool Enemy::Update(float dt) {
             iPoint origin = app->map->WorldToMap(position.x, position.y);
             app->map->pathfinding->CreatePath(origin, playerMap);
 
-
-
-
             // Atacar
             if (app->scene->GetPlayer()->position.x < position.x + 30)
             {
                 currentState = EnemyState::ATACKING;
                 currentAnimation = &attackAnim;
             }
-
         }
-
     }
 
     if (app->scene->GetPlayer()->position.x < position.x)
@@ -135,9 +131,6 @@ bool Enemy::Update(float dt) {
             iPoint origin = app->map->WorldToMap(position.x, position.y);
             app->map->pathfinding->CreatePath(origin, playerMap);
 
-
-
-
             // Atacar
             if (app->scene->GetPlayer()->position.x > position.x - 30)
             {
@@ -147,12 +140,53 @@ bool Enemy::Update(float dt) {
         }
     }
 
+    // El apthfinding pero mal
+    //if (currentState == EnemyState::CHASING)
+    //{
+    //    if (app->map->pathfinding != NULL)
+    //    {
+    //        const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+    //        if (path != NULL)
+    //        {
+    //            //DynArray<iPoint> pathCopy = *path;
+    // 
+    //            //if (pathCopy.Count() > 0)
+    //            //{
+    //            //    iPoint* nextPointPtr = pathCopy.At(0);
+    //            //    if (nextPointPtr != NULL)
+    //            //    {
+    //            //        iPoint nextPoint = *nextPointPtr;
+
+    //            //        iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
+
+    //            //        // Calcula la direccion hacia el siguiente punto
+    //            //        fPoint direction;
+    //            //        direction.x = nextPos.x - position.x;
+    //            //        direction.y = nextPos.y - position.y;
+
+    //            //        // Normaliza la direccion
+    //            //        float length = sqrt(direction.x * direction.x + direction.y * direction.y);
+    //            //        if (length != 0) // Evita la división por cero
+    //            //        {
+    //            //            direction.x /= length;
+    //            //            direction.y /= length;
+
+    //            //            // Mueve al enemigo en la direccion del siguiente punto
+    //            //            position.x += speed * direction.x;
+    //            //            position.y += speed * direction.y;
+    //            //        }
+    //            //    }
+    //            //}
+    //        }
+    //    }
+    //}
+
     if (currentState == EnemyState::ATACKING && currentAnimation->HasFinished() && (app->scene->GetPlayer()->die = false))
     {
         currentAnimation->Reset();
     }
 
-    b2Vec2 velocity2 = pbody->body->GetLinearVelocity();
+
 
     if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
         velocity2.x = -0.2 * dt;

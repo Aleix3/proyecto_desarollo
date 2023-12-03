@@ -116,12 +116,6 @@ bool Map::Update(float dt)
         mapLayer = mapLayer->next;
     }
 
-    
-
-
-    
-
-
     return ret;
 }
 
