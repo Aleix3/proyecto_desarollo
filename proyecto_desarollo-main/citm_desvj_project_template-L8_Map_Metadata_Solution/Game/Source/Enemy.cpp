@@ -123,9 +123,11 @@ bool Enemy::Update(float dt) {
 
                             iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
 
-                            if (position.x + 20< app->scene->GetPlayer()->position.x)
+                            if (position.x + 20 < app->scene->GetPlayer()->position.x)
                             {
+                                currentAnimation = &walkAnim;
                                 velocity2.x = 0.2 * dt;
+                                
                             }
                             /*else
                             {
@@ -174,7 +176,9 @@ bool Enemy::Update(float dt) {
 
                             if (position.x > app->scene->GetPlayer()->position.x + 20)
                             {
+                                currentAnimation = &walkAnim;
                                 velocity2.x = -0.2 * dt;
+
                             }
                             /*else
                             {
