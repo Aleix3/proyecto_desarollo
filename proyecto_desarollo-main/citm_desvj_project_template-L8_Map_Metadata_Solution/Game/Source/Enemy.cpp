@@ -81,7 +81,7 @@ bool Enemy::Start() {
     texture = app->tex->Load(config.attribute("texturePath").as_string());
     app->tex->GetSize(texture, texW, texH);
 
-    pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
+    pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::STATIC);
     pbody->listener = this;
     pbody->ctype = ColliderType::ENEMY;
     
@@ -109,6 +109,24 @@ bool Enemy::Update(float dt) {
             iPoint origin = app->map->WorldToMap(position.x, position.y);
             app->map->pathfinding->CreatePath(origin, playerMap);
 
+            //if (app->map->pathfinding != NULL)
+            //{
+            //    const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+            //    {
+            //        DynArray<iPoint> pathCopy = *path; // El problema es la coversion de esto
+
+            //        if (pathCopy.Count() > 0)
+            //        {
+            //            iPoint* nextPointPtr = pathCopy.At(0);
+            //            {
+            //                iPoint nextPoint = *nextPointPtr;
+
+            //                iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
+            //            }
+            //        }
+            //    }
+            //}
+
             // Atacar
             if (app->scene->GetPlayer()->position.x < position.x + 30)
             {
@@ -131,6 +149,8 @@ bool Enemy::Update(float dt) {
             iPoint origin = app->map->WorldToMap(position.x, position.y);
             app->map->pathfinding->CreatePath(origin, playerMap);
 
+
+
             // Atacar
             if (app->scene->GetPlayer()->position.x > position.x - 30)
             {
@@ -140,43 +160,23 @@ bool Enemy::Update(float dt) {
         }
     }
 
-    // El apthfinding pero mal
     //if (currentState == EnemyState::CHASING)
     //{
     //    if (app->map->pathfinding != NULL)
     //    {
     //        const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-    //        if (path != NULL)
     //        {
-    //            //DynArray<iPoint> pathCopy = *path;
+    //            DynArray<iPoint> pathCopy = *path;
     // 
-    //            //if (pathCopy.Count() > 0)
-    //            //{
-    //            //    iPoint* nextPointPtr = pathCopy.At(0);
-    //            //    if (nextPointPtr != NULL)
-    //            //    {
-    //            //        iPoint nextPoint = *nextPointPtr;
+    //            if (pathCopy.Count() > 0)
+    //            {
+    //                iPoint* nextPointPtr = pathCopy.At(0);
+    //                {
+    //                    iPoint nextPoint = *nextPointPtr;
 
-    //            //        iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
-
-    //            //        // Calcula la direccion hacia el siguiente punto
-    //            //        fPoint direction;
-    //            //        direction.x = nextPos.x - position.x;
-    //            //        direction.y = nextPos.y - position.y;
-
-    //            //        // Normaliza la direccion
-    //            //        float length = sqrt(direction.x * direction.x + direction.y * direction.y);
-    //            //        if (length != 0) // Evita la división por cero
-    //            //        {
-    //            //            direction.x /= length;
-    //            //            direction.y /= length;
-
-    //            //            // Mueve al enemigo en la direccion del siguiente punto
-    //            //            position.x += speed * direction.x;
-    //            //            position.y += speed * direction.y;
-    //            //        }
-    //            //    }
-    //            //}
+    //                    iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
+    //                }
+    //            }
     //        }
     //    }
     //}
