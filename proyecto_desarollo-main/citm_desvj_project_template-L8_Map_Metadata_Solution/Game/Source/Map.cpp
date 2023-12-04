@@ -387,7 +387,7 @@ bool Map::LoadColisions()
         
         
             
-            if (mapLayer->data->properties.GetProperty("Draw") != NULL && mapLayer->data->properties.GetProperty("Draw")->value == false) {
+            if (mapLayer->data->properties.GetProperty("Draw") != NULL && mapLayer->data->properties.GetProperty("Draw")->value == false && mapLayer->data->properties.GetProperty("Navigation") != NULL && mapLayer->data->properties.GetProperty("Navigation")->value == false) {
                 //iterate all tiles in a layer
 
 

@@ -81,7 +81,7 @@ bool Enemy::Start() {
     texture = app->tex->Load(config.attribute("texturePath").as_string());
     app->tex->GetSize(texture, texW, texH);
 
-    pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::STATIC);
+    pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
     pbody->listener = this;
     pbody->ctype = ColliderType::ENEMY;
     
@@ -109,23 +109,32 @@ bool Enemy::Update(float dt) {
             iPoint origin = app->map->WorldToMap(position.x, position.y);
             app->map->pathfinding->CreatePath(origin, playerMap);
 
-            //if (app->map->pathfinding != NULL)
-            //{
-            //    const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-            //    {
-            //        DynArray<iPoint> pathCopy = *path; // El problema es la coversion de esto
+            if (app->map->pathfinding != NULL)
+            {
+                const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
+                {
+                    //DynArray<iPoint> pathCopy = *path; // El problema es la coversion de esto
 
-            //        if (pathCopy.Count() > 0)
-            //        {
-            //            iPoint* nextPointPtr = pathCopy.At(0);
-            //            {
-            //                iPoint nextPoint = *nextPointPtr;
+                    if (pathCopy->Count() > 0)
+                    {
+                        const iPoint* nextPointPtr = pathCopy->At(0);
+                        {
+                            iPoint nextPoint = *nextPointPtr;
 
-            //                iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
-            //            }
-            //        }
-            //    }
-            //}
+                            iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
+
+                            if (position.x + 20< app->scene->GetPlayer()->position.x)
+                            {
+                                velocity2.x = 0.2 * dt;
+                            }
+                            /*else
+                            {
+                                velocity2.x = 0;
+                            }*/
+                        }
+                    }
+                }
+            }
 
             // Atacar
             if (app->scene->GetPlayer()->position.x < position.x + 30)
@@ -141,7 +150,7 @@ bool Enemy::Update(float dt) {
         faceleft = true;
 
         // Perseguir
-        if (app->scene->GetPlayer()->position.x > position.x - 200 && (abs(app->scene->GetPlayer()->position.y > position.y - 10)))
+        if (app->scene->GetPlayer()->position.x > position.x - 200 && (abs(app->scene->GetPlayer()->position.y > position.y - 10) ))
         {
             currentState = EnemyState::CHASING;
 
@@ -149,13 +158,43 @@ bool Enemy::Update(float dt) {
             iPoint origin = app->map->WorldToMap(position.x, position.y);
             app->map->pathfinding->CreatePath(origin, playerMap);
 
+            if (app->map->pathfinding != NULL)
+            {
+                const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
+                {
+                    //DynArray<iPoint> pathCopy = *path; // El problema es la coversion de esto
+
+                    if (pathCopy->Count() > 0)
+                    {
+                        const iPoint* nextPointPtr = pathCopy->At(0);
+                        {
+                            iPoint nextPoint = *nextPointPtr;
+
+                            iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
+
+                            if (position.x > app->scene->GetPlayer()->position.x + 20)
+                            {
+                                velocity2.x = -0.2 * dt;
+                            }
+                            /*else
+                            {
+                                velocity2.x = 0;
+                            }*/
+                        }
+                    }
+                }
+            }
+
 
 
             // Atacar
             if (app->scene->GetPlayer()->position.x > position.x - 30)
             {
-                currentState = EnemyState::ATACKING;
-                currentAnimation = &attackAnim;
+                
+                    currentState = EnemyState::ATACKING;
+                    currentAnimation = &attackAnim;
+                
+                
             }
         }
     }
@@ -199,21 +238,26 @@ bool Enemy::Update(float dt) {
     }
 
     
-    if (currentState == EnemyState::DYING)
+    if (die == true)
     {
-        position.x = 300;
-        position.y = 672;
+        position.x = 700;
+        position.y = 690;
         app->physics->DestroyBody(pbody);
         pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
         pbody->listener = this;
         pbody->ctype = ColliderType::ENEMY;
         die = false;
     }
-    pbody->body->SetLinearVelocity(velocity2);
-    b2Transform pbodyPos = pbody->body->GetTransform();
 
-    position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
-    position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 11;
+    else
+    {
+        pbody->body->SetLinearVelocity(velocity2);
+        b2Transform pbodyPos = pbody->body->GetTransform();
+
+        position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
+        position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 11;
+    }
+    
 
     currentAnimation->Update();
 
@@ -246,7 +290,7 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
         break;
     case ColliderType::DIE:
         LOG("Collision DIE");
-        currentState = EnemyState::DYING;
+        die = true;
         break;
     case ColliderType::UNKNOWN:
         LOG("Collision UNKNOWN");

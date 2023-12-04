@@ -165,13 +165,13 @@ bool Player::Update(float dt) {
             }
 
             if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && left == false) {
-                velocity.x = velocity.x + 100;
+                velocity.x = velocity.x + 200;
                 dash = true;
                 
             }
 
             if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && left == true) {
-                velocity.x = velocity.x - 100;
+                velocity.x = velocity.x - 200;
                 dash = true;
 
             }
