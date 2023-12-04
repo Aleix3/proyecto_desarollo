@@ -9,6 +9,7 @@
 #include "Point.h"
 #include "Physics.h"
 #include "map.h"
+#include "Enemy.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -92,7 +93,7 @@ bool Player::Update(float dt) {
 
     currentAnimation = &idleAnim;
 
-    b2Vec2 velocity = pbody->body->GetLinearVelocity();
+    velocity = pbody->body->GetLinearVelocity();
 
     if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
     {

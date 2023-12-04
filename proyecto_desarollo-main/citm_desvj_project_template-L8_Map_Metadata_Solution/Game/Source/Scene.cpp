@@ -186,3 +186,9 @@ Player* Scene::GetPlayer()
 {
 	return player;
 }
+
+Enemy* Scene::GetEnemy()
+{
+	return enemy;
+}
+

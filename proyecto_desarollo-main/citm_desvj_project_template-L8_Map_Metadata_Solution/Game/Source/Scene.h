@@ -36,6 +36,8 @@ public:
 
 	Player* GetPlayer();
 
+	Enemy* GetEnemy();
+
 	bool visible = true;
 
 private:

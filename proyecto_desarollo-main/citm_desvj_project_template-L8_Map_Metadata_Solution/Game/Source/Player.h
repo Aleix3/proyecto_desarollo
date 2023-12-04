@@ -60,6 +60,7 @@ public:
 	int pickCoinFxId;
 
 	PhysBody* pbody;
+	b2Vec2 velocity;
 
 	float jumpSpeed = 5.0f;
 	float dashSpeed = 100.0f;
@@ -69,7 +70,7 @@ public:
 	bool tocasuelo = true;
 	bool die = false;
 	bool dash = false;
-
+	bool isDying = false;
 };
 
 #endif // __PLAYER_H__
