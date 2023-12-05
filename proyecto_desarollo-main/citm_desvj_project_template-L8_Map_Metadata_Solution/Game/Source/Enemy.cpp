@@ -94,14 +94,15 @@ bool Enemy::Update(float dt) {
     currentAnimation = &idleAnim;
     currentState = EnemyState::SEARCHING;
     app->map->pathfinding->ClearLastPath();
-    b2Vec2 velocity2 = pbody->body->GetLinearVelocity();
+    velocity2 = pbody->body->GetLinearVelocity();
+    velocity2.x = 0.0;
 
     if (app->scene->GetPlayer()->position.x > position.x)
     {
         faceleft = false;
 
         // Perseguir
-        if (app->scene->GetPlayer()->position.x < position.x + 200 && (abs(app->scene->GetPlayer()->position.y > position.y - 10)))
+        if (app->scene->GetPlayer()->position.x < position.x + 200 && abs(app->scene->GetPlayer()->position.y - position.y) < 10)
         {
             currentState = EnemyState::CHASING;
 
@@ -113,8 +114,6 @@ bool Enemy::Update(float dt) {
             {
                 const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
                 {
-                    //DynArray<iPoint> pathCopy = *path; // El problema es la coversion de esto
-
                     if (pathCopy->Count() > 0)
                     {
                         const iPoint* nextPointPtr = pathCopy->At(0);
@@ -127,12 +126,7 @@ bool Enemy::Update(float dt) {
                             {
                                 currentAnimation = &walkAnim;
                                 velocity2.x = 0.2 * dt;
-                                
                             }
-                            /*else
-                            {
-                                velocity2.x = 0;
-                            }*/
                         }
                     }
                 }
@@ -152,7 +146,7 @@ bool Enemy::Update(float dt) {
         faceleft = true;
 
         // Perseguir
-        if (app->scene->GetPlayer()->position.x > position.x - 200 && (abs(app->scene->GetPlayer()->position.y > position.y - 10) ))
+        if (app->scene->GetPlayer()->position.x > position.x - 200 && abs(app->scene->GetPlayer()->position.y - position.y) < 10)
         {
             currentState = EnemyState::CHASING;
 
@@ -164,8 +158,6 @@ bool Enemy::Update(float dt) {
             {
                 const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
                 {
-                    //DynArray<iPoint> pathCopy = *path; // El problema es la coversion de esto
-
                     if (pathCopy->Count() > 0)
                     {
                         const iPoint* nextPointPtr = pathCopy->At(0);
@@ -180,16 +172,10 @@ bool Enemy::Update(float dt) {
                                 velocity2.x = -0.2 * dt;
 
                             }
-                            /*else
-                            {
-                                velocity2.x = 0;
-                            }*/
                         }
                     }
                 }
             }
-
-
 
             // Atacar
             if (app->scene->GetPlayer()->position.x > position.x - 30)
@@ -202,27 +188,6 @@ bool Enemy::Update(float dt) {
             }
         }
     }
-
-    //if (currentState == EnemyState::CHASING)
-    //{
-    //    if (app->map->pathfinding != NULL)
-    //    {
-    //        const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-    //        {
-    //            DynArray<iPoint> pathCopy = *path;
-    // 
-    //            if (pathCopy.Count() > 0)
-    //            {
-    //                iPoint* nextPointPtr = pathCopy.At(0);
-    //                {
-    //                    iPoint nextPoint = *nextPointPtr;
-
-    //                    iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
 
     if (currentState == EnemyState::ATACKING && currentAnimation->HasFinished() && (app->scene->GetPlayer()->die = false))
     {

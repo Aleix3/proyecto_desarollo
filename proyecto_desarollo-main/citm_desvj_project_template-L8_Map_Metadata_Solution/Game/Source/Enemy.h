@@ -57,6 +57,7 @@ public:
 	pugi::xml_node config;
 	uint texW, texH;
 
+	b2Vec2 velocity2;
 	PhysBody* pbody;
 
 	float jumpSpeed = 5.0f;
@@ -65,6 +66,8 @@ public:
 	bool tocasuelo = true;
 	bool die = false;
 	bool faceleft;
+	float patrolTime = 0.0f;
+	float patrolInterval = 3.0f;
 
 };
 
