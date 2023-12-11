@@ -50,16 +50,20 @@ Player::Player() : Entity(EntityType::PLAYER)
     dieAnim.speed = 0.17f;
     dieAnim.loop = false;
 
-    dashAnim.PushBack({ 4, 165, 23, 27 });
-    dashAnim.PushBack({ 36, 164, 23, 27 });
-    dashAnim.PushBack({ 70, 165, 20, 26 });
-    dashAnim.PushBack({ 105, 167, 17, 19 });
-    dashAnim.PushBack({ 137, 167, 18, 19 });
-    dashAnim.PushBack({ 166, 166, 21, 25 });
-    dashAnim.PushBack({ 196, 166, 26, 26 });
-    dashAnim.PushBack({ 228, 164, 23, 27 });
-    dashAnim.speed = 0.17f;
-    dashAnim.loop = false;
+    dashAnim1.PushBack({ 4, 165, 23, 27 });
+    dashAnim1.PushBack({ 36, 164, 23, 27 });
+    dashAnim1.PushBack({ 70, 165, 20, 26 });
+    dashAnim1.PushBack({ 105, 167, 17, 19 });
+
+    dashAnim1.speed = 0.17f;
+    dashAnim1.loop = false;
+
+    dashAnim2.PushBack({ 137, 167, 18, 19 });
+    dashAnim2.PushBack({ 166, 166, 21, 25 });
+    dashAnim2.PushBack({ 196, 166, 26, 26 });
+    dashAnim2.PushBack({ 228, 164, 23, 27 });
+    dashAnim2.speed = 0.17f;
+    dashAnim2.loop = false;
 
 }
 
@@ -157,22 +161,45 @@ bool Player::Update(float dt) {
 
             if (dash)
             {
-                currentAnimation = &dashAnim;
-                if (dashAnim.HasFinished())
+                currentAnimation = &dashAnim1;
+                if (dashAnim1.HasFinished())
                 {
+                    if (left == false)
+                    {
+                        velocity.x = velocity.x + 200;
+                        dash2 = true;
+                    }
+
+                    if (left == true)
+                    {
+                        velocity.x = velocity.x - 200;
+                        dash2 = true;
+                    }
+
                     dash = false;
-                    dashAnim.Reset();
+                    dashAnim1.Reset();
+                }
+            }
+
+            if (dash2)
+            {
+                currentAnimation = &dashAnim2;
+
+                if (dashAnim2.HasFinished())
+                {
+                    dash2 = false;
+                    dashAnim2.Reset();
                 }
             }
 
             if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && left == false) {
-                velocity.x = velocity.x + 200;
+                
                 dash = true;
                 
             }
 
             if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && left == true) {
-                velocity.x = velocity.x - 200;
+                
                 dash = true;
 
             }

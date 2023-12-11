@@ -147,10 +147,10 @@ bool Scene::PostUpdate()
 	iPoint origin = app->map->WorldToMap(enemy->position.x, enemy->position.y);
 
 	//If mouse button is pressed modify player position
-	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+	/*if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
 		player->godmode = true;
 		player->position = iPoint(highlightedTileWorld.x, highlightedTileWorld.y);
-	}
+	}*/
 
 	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) //Aqui meter la distancia del enemy al player
 	{

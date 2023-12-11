@@ -49,7 +49,8 @@ public:
 	Animation idleAnim;
 	Animation jumpAnim;
 	Animation dieAnim;
-	Animation dashAnim;
+	Animation dashAnim1;
+	Animation dashAnim2;
 
 	float speed = 0.2f;
 	SDL_Texture* texture = NULL;
@@ -71,6 +72,7 @@ public:
 	bool die = false;
 	bool dash = false;
 	bool isDying = false;
+	bool dash2 = false;
 };
 
 #endif // __PLAYER_H__
