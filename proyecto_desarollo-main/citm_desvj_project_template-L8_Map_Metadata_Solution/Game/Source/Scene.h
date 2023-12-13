@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "EnemySamurai.h"
 
 struct SDL_Texture;
 
@@ -36,7 +37,7 @@ public:
 
 	Player* GetPlayer();
 
-	Enemy* GetEnemy();
+	EnemySamurai* GetEnemySamurai();
 
 	bool visible = true;
 
@@ -52,7 +53,7 @@ private:
 
 	//L03: DONE 3b: Declare a Player attribute
 	Player* player;
-	Enemy* enemy;
+	EnemySamurai* enemySamurai;
 
 };
 

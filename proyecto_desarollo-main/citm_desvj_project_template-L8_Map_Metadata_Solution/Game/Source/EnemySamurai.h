@@ -1,35 +1,17 @@
-#ifndef __ENEMY_H__
-#define __ENEMY_H__
+#ifndef __ENEMYSAMURAI_H__
+#define __ENEMYSAMURAI_H__
 
-#include "Entity.h"
-#include "Point.h"
-#include "Animation.h"
-#include "SDL/include/SDL.h"
-#include "Physics.h"
-#include <map>
+#include "Enemy.h"
 
 struct SDL_Texture;
 
-enum class EnemyState {
-	IDLE,
-	JUMPING,
-	ATACKING,
-	CHASING,
-	SEARCHING,
-	DYING
-	// Añadir mas estados para el personaje
-};
-
-class Enemy : public Entity
+class EnemySamurai : public Enemy
 {
 public:
 
-	EnemyState currentState;
-	std::map<EnemyState, Animation> animations;
+	EnemySamurai();
 
-	Enemy();
-
-	virtual ~Enemy();
+	virtual ~EnemySamurai();
 
 	bool Awake();
 

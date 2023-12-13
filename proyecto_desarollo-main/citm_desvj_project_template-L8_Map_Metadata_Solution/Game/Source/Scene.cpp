@@ -38,9 +38,10 @@ bool Scene::Awake(pugi::xml_node config)
 
 	for (pugi::xml_node enemyNode = config.child("EnemySamurai"); enemyNode; enemyNode = enemyNode.next_sibling("EnemySamurai"))
 	{
-		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy->parameters = enemyNode;
+		enemySamurai = (EnemySamurai*)app->entityManager->CreateEntity(EntityType::ENEMYSAMURAI);
+		enemySamurai->parameters = enemyNode;
 	}
+
 	//Get the map name from the config file and assigns the value in the module
 	app->map->name = config.child("map").attribute("name").as_string();
 	app->map->path = config.child("map").attribute("path").as_string();
@@ -192,8 +193,8 @@ Player* Scene::GetPlayer()
 	return player;
 }
 
-Enemy* Scene::GetEnemy()
+EnemySamurai* Scene::GetEnemySamurai()
 {
-	return enemy;
+	return enemySamurai;
 }
 

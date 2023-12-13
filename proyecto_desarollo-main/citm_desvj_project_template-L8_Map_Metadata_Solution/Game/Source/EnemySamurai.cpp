@@ -10,8 +10,10 @@
 #include "Physics.h"
 #include "map.h"
 #include "Pathfinding.h"
+#include "EnemySamurai.h"
 
-Enemy::Enemy() : Entity(EntityType::ENEMY)
+
+EnemySamurai::EnemySamurai() : Enemy()
 {
     name.Create("EnemySamurai");
 
@@ -65,20 +67,21 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
     attackbAnim.loop = false;
 } 
  
-Enemy::~Enemy() {
+EnemySamurai::~EnemySamurai() {
 
 }
 
-bool Enemy::Awake() {
+bool EnemySamurai::Awake() {
 
-    position = iPoint(config.attribute("x").as_int(), config.attribute("y").as_int());
+    position.x = parameters.attribute("x").as_int();
+    position.y = parameters.attribute("y").as_int();
 
     return true;
 }
 
-bool Enemy::Start() {
+bool EnemySamurai::Start() {
 
-    texture = app->tex->Load(config.attribute("texturePath").as_string());
+    texture = app->tex->Load(parameters.attribute("texturePath").as_string());
     app->tex->GetSize(texture, texW, texH);
 
     pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
@@ -89,7 +92,23 @@ bool Enemy::Start() {
 }
 
 
-bool Enemy::Update(float dt) {
+bool EnemySamurai::Update(float dt) {
+
+    iPoint origin = app->map->WorldToMap(position.x, position.y);
+
+    if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) //Aqui meter la distancia del enemy al player
+    {
+        app->map->pathfinding->CreatePath(origin, app->scene->playerMap);
+
+    }
+
+    const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+
+    for (uint i = 0; i < path->Count(); ++i)
+    {
+        iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+        app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y);
+    }
 
     currentAnimation = &idleAnim;
     currentState = EnemyState::SEARCHING;
@@ -125,7 +144,7 @@ bool Enemy::Update(float dt) {
                             if (position.x + 20 < app->scene->GetPlayer()->position.x)
                             {
                                 currentAnimation = &walkAnim;
-                                velocity2.x = 0.2 * dt;
+                                velocity2.x = 0.1 * dt;
                             }
                         }
                     }
@@ -169,7 +188,7 @@ bool Enemy::Update(float dt) {
                             if (position.x > app->scene->GetPlayer()->position.x + 20)
                             {
                                 currentAnimation = &walkAnim;
-                                velocity2.x = -0.2 * dt;
+                                velocity2.x = -0.1 * dt;
 
                             }
                         }
@@ -245,13 +264,13 @@ bool Enemy::Update(float dt) {
     return true;
 }
 
-bool Enemy::CleanUp()
+bool EnemySamurai::CleanUp()
 {
     app->tex->UnLoad(texture);
     return true;
 }
 
-void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
+void EnemySamurai::OnCollision(PhysBody* physA, PhysBody* physB) {
     switch (physB->ctype)
     {
     case ColliderType::PLATFORM:
