@@ -40,12 +40,15 @@ public:
 
 	bool visible = true;
 
+	iPoint playerMap;
+
+	SDL_Texture* mouseTileTex = nullptr;
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;
 	uint texW, texH;
 	uint windowW, windowH;
-	SDL_Texture* mouseTileTex = nullptr;
+	
 
 	//L03: DONE 3b: Declare a Player attribute
 	Player* player;

@@ -32,10 +32,15 @@ bool Scene::Awake(pugi::xml_node config)
 	//Assigns the XML node to a member in player
 	player->config = config.child("player");
 
-	enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-	//Assigns the XML node to a member in player
-	enemy->config = config.child("EnemySamurai");
+	//enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+	////Assigns the XML node to a member in player
+	//enemy->config = config.child("EnemySamurai");
 
+	for (pugi::xml_node enemyNode = config.child("EnemySamurai"); enemyNode; enemyNode = enemyNode.next_sibling("EnemySamurai"))
+	{
+		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+		enemy->parameters = enemyNode;
+	}
 	//Get the map name from the config file and assigns the value in the module
 	app->map->name = config.child("map").attribute("name").as_string();
 	app->map->path = config.child("map").attribute("path").as_string();
@@ -133,7 +138,7 @@ bool Scene::PostUpdate()
 {
 
 	// Get the mouse position and obtain the map coordinate
-	iPoint playerMap = app->map->WorldToMap(player->position.x, player->position.y);
+	playerMap = app->map->WorldToMap(player->position.x, player->position.y);
 
 	iPoint mousePos;
 	app->input->GetMousePosition(mousePos.x, mousePos.y);
@@ -144,27 +149,27 @@ bool Scene::PostUpdate()
 	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x , mouseTile.y);
 	app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);
 
-	iPoint origin = app->map->WorldToMap(enemy->position.x, enemy->position.y);
+	//iPoint origin = app->map->WorldToMap(enemy->position.x, enemy->position.y);
 
-	//If mouse button is pressed modify player position
-	/*if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
-		player->godmode = true;
-		player->position = iPoint(highlightedTileWorld.x, highlightedTileWorld.y);
-	}*/
+	////If mouse button is pressed modify player position
+	///*if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+	//	player->godmode = true;
+	//	player->position = iPoint(highlightedTileWorld.x, highlightedTileWorld.y);
+	//}*/
 
-	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) //Aqui meter la distancia del enemy al player
-	{
-		app->map->pathfinding->CreatePath(origin, playerMap);
+	//if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) //Aqui meter la distancia del enemy al player
+	//{
+	//	app->map->pathfinding->CreatePath(origin, playerMap);
 
-	}
-	
-	// L13: Get the latest calculated path and draw
-	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-	for (uint i = 0; i < path->Count(); ++i)
-	{
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
-	}
+	//}
+	//
+	//// L13: Get the latest calculated path and draw
+	//const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+	//for (uint i = 0; i < path->Count(); ++i)
+	//{
+	//	iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+	//	app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
+	//}
 
 	bool ret = true;
 

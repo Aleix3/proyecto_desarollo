@@ -68,6 +68,7 @@ public:
 	bool faceleft;
 	float patrolTime = 0.0f;
 	float patrolInterval = 3.0f;
+	const char* texturePath;
 
 };
 
