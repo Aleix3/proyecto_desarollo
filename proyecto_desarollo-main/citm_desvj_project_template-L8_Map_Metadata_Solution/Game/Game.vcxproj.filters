@@ -25,6 +25,7 @@
     <ClCompile Include="Source\EnemySamurai.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\Player.cpp" />
+    <ClCompile Include="Source\EnemyVulture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -75,6 +76,7 @@
     <ClInclude Include="Source\Entity.h" />
     <ClInclude Include="Source\EntityManager.h" />
     <ClInclude Include="Source\Player.h" />
+    <ClInclude Include="Source\EnemyVulture.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

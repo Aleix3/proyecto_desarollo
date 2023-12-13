@@ -12,6 +12,7 @@ enum class EntityType
 	ITEM,
 	ENEMY,
 	ENEMYSAMURAI,
+	ENEMYVULTURE,
 	UNKNOWN
 };
 

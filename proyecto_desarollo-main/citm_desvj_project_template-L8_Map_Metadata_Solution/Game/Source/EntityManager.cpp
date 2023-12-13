@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "Enemy.h"
 #include "EnemySamurai.h"
+#include "EnemyVulture.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -92,6 +93,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		break;
 	case EntityType::ENEMYSAMURAI:
 		entity = new EnemySamurai();
+		break;
+	case EntityType::ENEMYVULTURE:
+		entity = new EnemyVulture();
 		break;
 	default:
 		break;

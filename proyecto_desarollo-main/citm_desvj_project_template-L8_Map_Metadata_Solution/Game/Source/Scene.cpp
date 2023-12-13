@@ -26,20 +26,21 @@ bool Scene::Awake(pugi::xml_node config)
 	LOG("Loading Scene");
 	bool ret = true;
 
-	//L03: DONE 3b: Instantiate the player using the entity manager
-	//L04 DONE 7: Get player paremeters
 	player = (Player*) app->entityManager->CreateEntity(EntityType::PLAYER);
 	//Assigns the XML node to a member in player
 	player->config = config.child("player");
 
-	//enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-	////Assigns the XML node to a member in player
-	//enemy->config = config.child("EnemySamurai");
 
 	for (pugi::xml_node enemyNode = config.child("EnemySamurai"); enemyNode; enemyNode = enemyNode.next_sibling("EnemySamurai"))
 	{
 		enemySamurai = (EnemySamurai*)app->entityManager->CreateEntity(EntityType::ENEMYSAMURAI);
 		enemySamurai->parameters = enemyNode;
+	}
+
+	for (pugi::xml_node enemyNode = config.child("EnemyVulture"); enemyNode; enemyNode = enemyNode.next_sibling("EnemyVulture"))
+	{
+		enemyVulture = (EnemyVulture*)app->entityManager->CreateEntity(EntityType::ENEMYVULTURE);
+		enemyVulture->parameters = enemyNode;
 	}
 
 	//Get the map name from the config file and assigns the value in the module
