@@ -214,7 +214,7 @@ bool Player::Update(float dt) {
             pbody->body->SetLinearVelocity(velocity);
             b2Transform pbodyPos = pbody->body->GetTransform();
 
-            position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
+            position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 15;
             position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 15;
         }
     }

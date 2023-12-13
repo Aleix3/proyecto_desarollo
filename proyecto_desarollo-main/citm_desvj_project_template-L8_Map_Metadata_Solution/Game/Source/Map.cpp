@@ -422,6 +422,7 @@ bool Map::LoadColisions()
                             else if (gid == 49 + 1 )
                             {
                                 PhysBody* c2 = app->physics->CreateRectangle(mapCoord.x + 16, mapCoord.y + 16, 32, 32, STATIC);
+                                
                                 c2->ctype = ColliderType::DIE;
                             }
 

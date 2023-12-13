@@ -125,7 +125,7 @@ bool Enemy::Update(float dt) {
                             if (position.x + 20 < app->scene->GetPlayer()->position.x)
                             {
                                 currentAnimation = &walkAnim;
-                                velocity2.x = 0.2 * dt;
+                                velocity2.x = 0.1 * dt;
                             }
                         }
                     }
@@ -169,7 +169,7 @@ bool Enemy::Update(float dt) {
                             if (position.x > app->scene->GetPlayer()->position.x + 20)
                             {
                                 currentAnimation = &walkAnim;
-                                velocity2.x = -0.2 * dt;
+                                velocity2.x = -0.1 * dt;
 
                             }
                         }
