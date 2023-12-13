@@ -102,7 +102,7 @@ bool Enemy::Update(float dt) {
         faceleft = false;
 
         // Perseguir
-        if (app->scene->GetPlayer()->position.x < position.x + 200 && abs(app->scene->GetPlayer()->position.y - position.y) < 10)
+        if (app->scene->GetPlayer()->position.x < position.x + 200 && abs(app->scene->GetPlayer()->position.y - position.y) < 50)
         {
             currentState = EnemyState::CHASING;
 
@@ -146,7 +146,7 @@ bool Enemy::Update(float dt) {
         faceleft = true;
 
         // Perseguir
-        if (app->scene->GetPlayer()->position.x > position.x - 200 && abs(app->scene->GetPlayer()->position.y - position.y) < 10)
+        if (app->scene->GetPlayer()->position.x > position.x - 200 && abs(app->scene->GetPlayer()->position.y - position.y) < 50)
         {
             currentState = EnemyState::CHASING;
 
