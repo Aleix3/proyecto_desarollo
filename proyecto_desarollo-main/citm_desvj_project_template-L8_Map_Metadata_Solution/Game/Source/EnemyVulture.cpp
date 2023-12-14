@@ -22,10 +22,20 @@ EnemyVulture::EnemyVulture() : Enemy()
     idleAnim.PushBack({ 64, 0, 32, 32 });
     idleAnim.PushBack({ 96, 0, 32, 32 });
     idleAnim.PushBack({ 128, 0, 32, 32 });
+    idleAnim.speed = 0.05f;
     //idleAnim.PushBack({ 160, 0, 32, 32 });
     //idleAnim.PushBack({ 192, 0, 32, 32 });
     //idleAnim.PushBack({ 224, 0, 32, 32 });
-    idleAnim.speed = 0.05f;
+
+    flyAnim.PushBack({ 0, 0, 32, 32 });
+    flyAnim.PushBack({ 32, 0, 32, 32 });
+    flyAnim.PushBack({ 64, 0, 32, 32 });
+    flyAnim.PushBack({ 96, 0, 32, 32 });
+    flyAnim.PushBack({ 128, 0, 32, 32 });
+    flyAnim.PushBack({ 160, 0, 32, 32 });
+    flyAnim.PushBack({ 192, 0, 32, 32 });
+    flyAnim.PushBack({ 224, 0, 32, 32 });
+    flyAnim.speed = 0.05f;
 } 
  
 EnemyVulture::~EnemyVulture() {
@@ -72,141 +82,148 @@ bool EnemyVulture::Update(float dt) {
     }
 
     currentAnimation = &idleAnim;
-    //currentState = EnemyState::SEARCHING;
-    //app->map->pathfinding->ClearLastPath();
-    //velocity2 = pbody->body->GetLinearVelocity();
-    //velocity2.x = 0.0;
 
-    //if (app->scene->GetPlayer()->position.x > position.x)
-    //{
-    //    faceleft = false;
+    currentState = EnemyState::SEARCHING;
+    app->map->pathfinding->ClearLastPath();
+    velocity2 = pbody->body->GetLinearVelocity();
+    velocity2.x = 0.0;
 
-    //    // Perseguir
-    //    if (app->scene->GetPlayer()->position.x < position.x + 200 && abs(app->scene->GetPlayer()->position.y - position.y) < 50)
-    //    {
-    //        currentState = EnemyState::CHASING;
+    if (app->scene->GetPlayer()->position.x > position.x)
+    {
+        faceleft = false;
 
-    //        iPoint playerMap = app->map->WorldToMap(app->scene->GetPlayer()->position.x, app->scene->GetPlayer()->position.y);
-    //        iPoint origin = app->map->WorldToMap(position.x, position.y);
-    //        app->map->pathfinding->CreatePath(origin, playerMap);
+        // Perseguir
+        if (app->scene->GetPlayer()->position.x < position.x + 200)
+        {
+            currentState = EnemyState::CHASING;
 
-    //        if (app->map->pathfinding != NULL)
-    //        {
-    //            const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
-    //            {
-    //                if (pathCopy->Count() > 0)
-    //                {
-    //                    const iPoint* nextPointPtr = pathCopy->At(0);
-    //                    {
-    //                        iPoint nextPoint = *nextPointPtr;
+            iPoint playerMap = app->map->WorldToMap(app->scene->GetPlayer()->position.x, app->scene->GetPlayer()->position.y);
+            iPoint origin = app->map->WorldToMap(position.x, position.y);
+            app->map->pathfinding->CreatePath(origin, playerMap);
 
-    //                        iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
+            if (app->map->pathfinding != NULL)
+            {
+                const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
+                {
+                    if (pathCopy->Count() > 0)
+                    {
+                        const iPoint* nextPointPtr = pathCopy->At(0);
+                        {
+                            iPoint nextPoint = *nextPointPtr;
 
-    //                        if (position.x + 20 < app->scene->GetPlayer()->position.x)
-    //                        {
-    //                            currentAnimation = &walkAnim;
-    //                            velocity2.x = 0.1 * dt;
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        }
+                            iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
 
-    //        // Atacar
-    //        if (app->scene->GetPlayer()->position.x < position.x + 30)
-    //        {
-    //            currentState = EnemyState::ATACKING;
-    //            currentAnimation = &attackAnim;
-    //        }
-    //    }
-    //}
+                            if (position.x + 20 < app->scene->GetPlayer()->position.x)
+                            {
+                                currentAnimation = &flyAnim;
+                                velocity2.x = 0.1 * dt;
+                            }
+                        }
+                    }
+                }
+            }
 
-    //if (app->scene->GetPlayer()->position.x < position.x)
-    //{
-    //    faceleft = true;
+            // Atacar
+            /*if (app->scene->GetPlayer()->position.x < position.x + 30)
+            {
+                currentState = EnemyState::ATACKING;
+                currentAnimation = &attackAnim;
+            }*/
+        }
+    }
 
-    //    // Perseguir
-    //    if (app->scene->GetPlayer()->position.x > position.x - 200 && abs(app->scene->GetPlayer()->position.y - position.y) < 50)
-    //    {
-    //        currentState = EnemyState::CHASING;
+    if (app->scene->GetPlayer()->position.x < position.x)
+    {
+        faceleft = true;
 
-    //        iPoint playerMap = app->map->WorldToMap(app->scene->GetPlayer()->position.x, app->scene->GetPlayer()->position.y);
-    //        iPoint origin = app->map->WorldToMap(position.x, position.y);
-    //        app->map->pathfinding->CreatePath(origin, playerMap);
+        // Perseguir
+        if (app->scene->GetPlayer()->position.x > position.x - 200 /*&& abs(app->scene->GetPlayer()->position.y - position.y) < 50*/)
+        {
+            currentState = EnemyState::CHASING;
 
-    //        if (app->map->pathfinding != NULL)
-    //        {
-    //            const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
-    //            {
-    //                if (pathCopy->Count() > 0)
-    //                {
-    //                    const iPoint* nextPointPtr = pathCopy->At(0);
-    //                    {
-    //                        iPoint nextPoint = *nextPointPtr;
+            iPoint playerMap = app->map->WorldToMap(app->scene->GetPlayer()->position.x, app->scene->GetPlayer()->position.y);
+            iPoint origin = app->map->WorldToMap(position.x, position.y);
+            app->map->pathfinding->CreatePath(origin, playerMap);
 
-    //                        iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
+            if (app->map->pathfinding != NULL)
+            {
+                const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
+                {
+                    if (pathCopy->Count() > 0)
+                    {
+                        const iPoint* nextPointPtr = pathCopy->At(0);
+                        {
+                            iPoint nextPoint = *nextPointPtr;
 
-    //                        if (position.x > app->scene->GetPlayer()->position.x + 20)
-    //                        {
-    //                            currentAnimation = &walkAnim;
-    //                            velocity2.x = -0.1 * dt;
+                            iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
 
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        }
+                            if (position.x > app->scene->GetPlayer()->position.x + 20)
+                            {
+                                currentAnimation = &flyAnim;
+                                velocity2.x = -0.1 * dt;
 
-    //        // Atacar
-    //        if (app->scene->GetPlayer()->position.x > position.x - 30)
-    //        {
-    //            
-    //                currentState = EnemyState::ATACKING;
-    //                currentAnimation = &attackAnim;
-    //            
-    //            
-    //        }
-    //    }
-    //}
+                            }
+                        }
+                    }
+                }
+            }
 
-    //if (currentState == EnemyState::ATACKING && currentAnimation->HasFinished() && (app->scene->GetPlayer()->die = false))
-    //{
-    //    currentAnimation->Reset();
-    //}
+            // Atacar
+            /*if (app->scene->GetPlayer()->position.x > position.x - 30)
+            {
+                
+                    currentState = EnemyState::ATACKING;
+                    currentAnimation = &attackAnim;
+                
+                
+            }*/
+        }
+    }
+
+    if (currentState == EnemyState::ATACKING && currentAnimation->HasFinished() && (app->scene->GetPlayer()->die = false))
+    {
+        currentAnimation->Reset();
+    }
 
 
 
-    //if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-    //    velocity2.x = -0.2 * dt;
-    //    
-    //}
+    if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+        velocity2.x = -0.2 * dt;
+        
+    }
 
-    //if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-    //    velocity2.x = 0.2 * dt;
+    if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+        velocity2.x = 0.2 * dt;
 
-    //}
+    }
 
-    //
-    //if (die == true)
-    //{
-    //    position.x = 700;
-    //    position.y = 690;
-    //    app->physics->DestroyBody(pbody);
-    //    pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
-    //    pbody->listener = this;
-    //    pbody->ctype = ColliderType::ENEMY;
-    //    die = false;
-    //}
+    
+    if (die == true)
+    {
+        position.x = 700;
+        position.y = 690;
+        app->physics->DestroyBody(pbody);
+        pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
+        pbody->listener = this;
+        pbody->ctype = ColliderType::ENEMY;
+        die = false;
+    }
 
-    //else
-    //{
-    //    pbody->body->SetLinearVelocity(velocity2);
-    //    b2Transform pbodyPos = pbody->body->GetTransform();
+    else
+    {
+        pbody->body->SetLinearVelocity(velocity2);
+        b2Transform pbodyPos = pbody->body->GetTransform();
 
-    //    position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
-    //    position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 11;
-    //}
-    //
+        position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
+        position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 11;
+    }
+    
+
+    pbody->body->SetLinearVelocity(velocity2);
+    b2Transform pbodyPos = pbody->body->GetTransform();
+
+    position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
+    position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 11;
 
     currentAnimation->Update();
 
@@ -215,13 +232,14 @@ bool EnemyVulture::Update(float dt) {
 
     
     if (faceleft) {
-        app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_HORIZONTAL, &rect);
-    }
-    else {
         app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_NONE, &rect);
     }
+    else {
+        
+        app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_HORIZONTAL, &rect);
+    }
     
-
+    
     return true;
 }
 

@@ -21,7 +21,7 @@
     <player x="250" y="690" texturePath="Assets/Textures/character/Character.png" coinfxpath="Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg"/>
     <EnemySamurai x="700" y="690" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
     <EnemySamurai x="800" y="690" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
-    <EnemyVulture x="700" y="750" texturePath="Assets/Textures/enemies/vulture_spritesheet.png"/>
+    <EnemyVulture x="700" y="550" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
     <EnemyVulture x="800" y="750" texturePath="Assets/Textures/enemies/vulture_spritesheet.png"/>
     <map path="Assets/Maps/" name="MapTemplate.tmx"/>
     <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
