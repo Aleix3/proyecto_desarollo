@@ -152,19 +152,44 @@ bool EnemyVulture::Update(float dt) {
                     if (pathCopy->Count() > 0)
                     {
                         const iPoint* nextPointPtr = pathCopy->At(0);
+                        iPoint nextPoint = *nextPointPtr;
+
+                        iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
+
+                        // Calcula la dirección hacia el próximo punto
+                        float directionX = (nextPos.x - position.x);
+                        float directionY = (nextPos.y - position.y);
+                            
+                        // Normaliza la dirección para obtener un vector unitario
+                        float magnitude = sqrt(directionX * directionX + directionY * directionY);
+                        directionX /= magnitude;
+                        directionY /= magnitude;
+
+                        // Establece la velocidad basada en la dirección y una velocidad constante
+                        velocity2.x = directionX * 0.1 * dt;
+                        velocity2.y = directionY * 0.1 * dt;
+
+                        // Actualiza la posición del enemigo
+                        position.x += velocity2.x;
+                        position.y += velocity2.y;
+
+                        // Comprueba si el enemigo ha llegado al próximo punto
+                        float distance = sqrt(pow(nextPos.x - position.x, 2) + pow(nextPos.y - position.y, 2));
+                        if (distance < 2.0f)
                         {
-                            iPoint nextPoint = *nextPointPtr;
+                            // Elimina el primer punto del camino
+                            const DynArray<iPoint>& newPathCopy = [&]() -> const DynArray<iPoint>&{
+                                DynArray<iPoint> temp;
+                                for (uint i = 1; i < path->Count(); ++i) {
+                                    temp.PushBack(*(path->At(i)));
+                                }
+                                return temp;
+                            }();
 
-                            iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
-
-                            if (position.x > app->scene->GetPlayer()->position.x + 20)
-                            {
-                                currentAnimation = &flyAnim;
-                                velocity2.x = -0.1 * dt;
-
-                            }
-                        }
+                        // Actualiza la animación
+                        currentAnimation = &flyAnim;
                     }
+            }
                 }
             }
 
@@ -180,10 +205,10 @@ bool EnemyVulture::Update(float dt) {
         }
     }
 
-    if (currentState == EnemyState::ATACKING && currentAnimation->HasFinished() && (app->scene->GetPlayer()->die = false))
+    /*if (currentState == EnemyState::ATACKING && currentAnimation->HasFinished() && (app->scene->GetPlayer()->die = false))
     {
         currentAnimation->Reset();
-    }
+    }*/
 
 
 
@@ -198,6 +223,7 @@ bool EnemyVulture::Update(float dt) {
     }
 
     
+    
     if (die == true)
     {
         position.x = 700;
@@ -211,19 +237,17 @@ bool EnemyVulture::Update(float dt) {
 
     else
     {
+        
         pbody->body->SetLinearVelocity(velocity2);
         b2Transform pbodyPos = pbody->body->GetTransform();
-
         position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
         position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 11;
     }
     
 
-    pbody->body->SetLinearVelocity(velocity2);
-    b2Transform pbodyPos = pbody->body->GetTransform();
+    
 
-    position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
-    position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 11;
+    
 
     currentAnimation->Update();
 
