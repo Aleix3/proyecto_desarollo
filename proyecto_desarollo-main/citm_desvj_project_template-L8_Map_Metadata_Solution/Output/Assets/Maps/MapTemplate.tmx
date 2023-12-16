@@ -66,7 +66,7 @@
   <image source="../Textures/PLATAFORMA/Texture/TX Tileset Ground.png" width="512" height="512"/>
  </tileset>
  <tileset firstgid="1587" name="fondoo" tilewidth="32" tileheight="32" tilecount="120" columns="15">
-  <image source="../../../../../../../Background-Sky.png" width="480" height="272"/>
+  <image source="Background-Sky.png" width="480" height="272"/>
  </tileset>
  <layer id="14" name="Capa de patrones 4" width="504" height="64">
   <properties>
