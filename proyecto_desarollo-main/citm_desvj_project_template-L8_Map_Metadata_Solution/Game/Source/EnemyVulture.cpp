@@ -228,8 +228,8 @@ bool EnemyVulture::Update(float dt) {
     
     if (die == true)
     {
-        position.x = 700;
-        position.y = 690;
+        position.x = parameters.attribute("x").as_int();
+        position.y = parameters.attribute("y").as_int();
         app->physics->DestroyBody(pbody);
         pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
         pbody->listener = this;
