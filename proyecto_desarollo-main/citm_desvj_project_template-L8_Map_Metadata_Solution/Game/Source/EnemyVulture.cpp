@@ -234,6 +234,7 @@ bool EnemyVulture::Update(float dt) {
         pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
         pbody->listener = this;
         pbody->ctype = ColliderType::ENEMY;
+        pbody->body->SetGravityScale(0.0f);
         die = false;
     }
 

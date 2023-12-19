@@ -159,6 +159,19 @@ bool Player::Update(float dt) {
                 tocasuelo == false;
             }
 
+            if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+            {
+                b2Vec2 forceToApply(400.0f, 0.0f);
+                b2Vec2 pointOfApplication(position.x + 50, position.y + 50);
+
+                dispar = app->physics->CreateCircle(position.x + 50, position.y , 11, bodyType::DYNAMIC);
+                dispar->ctype = ColliderType::DIE;
+                dispar->body->SetGravityScale(0.0f);
+
+                dispar->body->ApplyForce(forceToApply, pointOfApplication, true);
+
+            }
+
             if (dash)
             {
                 currentAnimation = &dashAnim1;

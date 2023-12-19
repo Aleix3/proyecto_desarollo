@@ -31,11 +31,11 @@ bool Scene::Awake(pugi::xml_node config)
 	player->config = config.child("player");
 
 
-	/*for (pugi::xml_node enemyNode = config.child("EnemySamurai"); enemyNode; enemyNode = enemyNode.next_sibling("EnemySamurai"))
+	for (pugi::xml_node enemyNode = config.child("EnemySamurai"); enemyNode; enemyNode = enemyNode.next_sibling("EnemySamurai"))
 	{
 		enemySamurai = (EnemySamurai*)app->entityManager->CreateEntity(EntityType::ENEMYSAMURAI);
 		enemySamurai->parameters = enemyNode;
-	}*/
+	}
 
 	for (pugi::xml_node enemyNode = config.child("EnemyVulture"); enemyNode; enemyNode = enemyNode.next_sibling("EnemyVulture"))
 	{
