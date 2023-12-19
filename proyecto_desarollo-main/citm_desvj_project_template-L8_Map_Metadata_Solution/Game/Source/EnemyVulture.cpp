@@ -13,6 +13,7 @@
 #include "EnemyVulture.h"
 
 
+
 EnemyVulture::EnemyVulture() : Enemy()
 {
     name.Create("EnemyVulture");
@@ -104,21 +105,31 @@ bool EnemyVulture::Update(float dt) {
             if (app->map->pathfinding != NULL)
             {
                 const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
+                for (int i = 0; i < pathCopy->Count(); ++i)
                 {
-                    if (pathCopy->Count() > 0)
+                    const iPoint* nextPointPtr = pathCopy->At(i);
+                    iPoint nextPoint = *nextPointPtr;
+                    iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
+
+                    float directionVectorx = (nextPos.x - position.x);
+                    float directionVectory = (nextPos.y - position.y);
+
+                    float distance = sqrtf(static_cast<float>(directionVectorx * directionVectorx + directionVectory * directionVectory));
+
+                    if (distance > 0)
                     {
-                        const iPoint* nextPointPtr = pathCopy->At(0);
-                        {
-                            iPoint nextPoint = *nextPointPtr;
+                        directionVectorx /= distance;
+                        directionVectory /= distance;
 
-                            iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
 
-                            if (position.x + 20 < app->scene->GetPlayer()->position.x)
-                            {
-                                currentAnimation = &flyAnim;
-                                velocity2.x = 0.1 * dt;
-                            }
-                        }
+                        float constantSpeed = 0.1f;
+
+
+                        velocity2.x = directionVectorx * 0.1 * dt;
+                        velocity2.y = directionVectory * 0.1 * dt;
+
+
+                        currentAnimation = &flyAnim;
                     }
                 }
             }
@@ -148,50 +159,41 @@ bool EnemyVulture::Update(float dt) {
             if (app->map->pathfinding != NULL)
             {
                 const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
+                for (int i = 0; i < pathCopy->Count(); ++i)
                 {
-                    if (pathCopy->Count() > 0)
+                    const iPoint* nextPointPtr = pathCopy->At(i);
+                    iPoint nextPoint = *nextPointPtr;
+                    iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
+
+                    
+
+                    float directionVectorx = (nextPos.x - position.x);
+                    float directionVectory = (nextPos.y - position.y);
+
+                    float distance = sqrtf(static_cast<float>(directionVectorx * directionVectorx + directionVectory * directionVectory));
+
+                    if (distance > 0)
                     {
-                        const iPoint* nextPointPtr = pathCopy->At(0);
-                        iPoint nextPoint = *nextPointPtr;
+                        directionVectorx /= distance;
+                        directionVectory /= distance;
+                           
+                        
+                        float constantSpeed = 0.1f;
 
-                        iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
-
-                        // Calcula la dirección hacia el próximo punto
-                        float directionX = (nextPos.x - position.x);
-                        float directionY = (nextPos.y - position.y);
-                            
-                        // Normaliza la dirección para obtener un vector unitario
-                        float magnitude = sqrt(directionX * directionX + directionY * directionY);
-                        directionX /= magnitude;
-                        directionY /= magnitude;
-
-                        // Establece la velocidad basada en la dirección y una velocidad constante
-                        velocity2.x = directionX * 0.1 * dt;
-                        velocity2.y = directionY * 0.1 * dt;
-
-                        // Actualiza la posición del enemigo
-                        position.x += velocity2.x;
-                        position.y += velocity2.y;
-
-                        // Comprueba si el enemigo ha llegado al próximo punto
-                        float distance = sqrt(pow(nextPos.x - position.x, 2) + pow(nextPos.y - position.y, 2));
-                        if (distance < 2.0f)
-                        {
-                            // Elimina el primer punto del camino
-                            const DynArray<iPoint>& newPathCopy = [&]() -> const DynArray<iPoint>&{
-                                DynArray<iPoint> temp;
-                                for (uint i = 1; i < path->Count(); ++i) {
-                                    temp.PushBack(*(path->At(i)));
-                                }
-                                return temp;
-                            }();
-
-                        // Actualiza la animación
-                        currentAnimation = &flyAnim;
+                        
+                        position.y += directionVectory * constantSpeed * dt;
                     }
-            }
+
+                    
+                     velocity2.x = directionVectorx * 0.1 * dt;
+                     velocity2.y = directionVectory * 0.1 * dt;
+
+                   
+                    currentAnimation = &flyAnim;
                 }
             }
+            
+            
 
             // Atacar
             /*if (app->scene->GetPlayer()->position.x > position.x - 30)

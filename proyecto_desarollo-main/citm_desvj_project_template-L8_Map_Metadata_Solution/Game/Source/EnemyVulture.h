@@ -48,6 +48,8 @@ public:
 	float patrolTime = 0.0f;
 	float patrolInterval = 3.0f;
 
+	int directiony = 0;
+	int directionx = 0;
 };
 
 #endif // __PLAYER_H__
