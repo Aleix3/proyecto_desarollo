@@ -286,12 +286,16 @@ void EnemyVulture::OnCollision(PhysBody* physA, PhysBody* physB) {
         LOG("Collision DIE");
         die = true;
         break;
-    case ColliderType::UNKNOWN:
-        LOG("Collision UNKNOWN");
+    case ColliderType::ABILITY:
+        LOG("Collision ABILITY");
+        die = true;
         break;
     case ColliderType::PLAYER:
-        LOG("Collision UNKNOWN");
+        LOG("Collision PLAYER");
         app->scene->GetPlayer()->die = true;
+        break;
+    case ColliderType::UNKNOWN:
+        LOG("Collision UNKNOWN");
         break;
     default:
         break;

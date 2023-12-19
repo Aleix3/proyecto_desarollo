@@ -7,6 +7,7 @@
 #include "SDL/include/SDL.h"
 #include "Physics.h"
 #include <map>
+#include <chrono>
 
 struct SDL_Texture;
 
@@ -37,6 +38,8 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
+
+	bool Cooldown(float cooldown);
 
 public:
 
@@ -74,6 +77,8 @@ public:
 	bool dash = false;
 	bool isDying = false;
 	bool dash2 = false;
+
+	std::chrono::steady_clock::time_point ultimo_uso;
 };
 
 #endif // __PLAYER_H__

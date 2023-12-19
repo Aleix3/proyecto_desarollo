@@ -65,6 +65,8 @@ Player::Player() : Entity(EntityType::PLAYER)
     dashAnim2.speed = 0.17f;
     dashAnim2.loop = false;
 
+    ultimo_uso = std::chrono::steady_clock::now();
+
 }
 
 Player::~Player() {
@@ -159,7 +161,7 @@ bool Player::Update(float dt) {
                 tocasuelo == false;
             }
 
-            if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+            if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && Cooldown(5.0f))
             {
                 b2Vec2 forceToApply(400.0f, 0.0f);
                 b2Vec2 pointOfApplication(position.x + 50, position.y + 50);
@@ -301,5 +303,19 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
         break;
     default:
         break;
+    }
+}
+
+bool Player::Cooldown(float cooldown)
+{
+    auto ahora = std::chrono::steady_clock::now();
+    float tiempo_transcurrido = std::chrono::duration<float>(ahora - ultimo_uso).count();
+
+    if (tiempo_transcurrido >= cooldown) {
+        ultimo_uso = ahora; // reiniciar el contador
+        return true;
+    }
+    else {
+        return false;
     }
 }
