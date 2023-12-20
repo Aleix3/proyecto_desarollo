@@ -84,7 +84,7 @@ bool Player::Start() {
 
 	texture = app->tex->Load(config.attribute("texturePath").as_string());
 	app->tex->GetSize(texture, texW, texH);
-  
+    golpePlayer = app->audio->LoadFx("Assets/Audio/Fx/GolpealPlayer.wav");
 
 	pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
 	pbody->listener = this;
@@ -141,8 +141,16 @@ bool Player::Update(float dt) {
         if (die == true)
         {
             currentAnimation = &dieAnim;
+            if(comprovacionFX)
+            { 
+                app->audio->PlayFx(golpePlayer);
+                comprovacionFX = false;
+            }
+            
+
             if (dieAnim.HasFinished())
             {
+                comprovacionFX = true;
                 position.x = 250;
                 position.y = 672;
                 app->physics->DestroyBody(pbody);
