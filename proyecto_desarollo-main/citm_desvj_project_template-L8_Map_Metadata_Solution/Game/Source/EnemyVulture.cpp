@@ -233,17 +233,37 @@ bool EnemyVulture::Update(float dt) {
 
 
 
-        /*if (die == true)
+        if(die == true)
         {
-            position.x = parameters.attribute("x").as_int();
-            position.y = parameters.attribute("y").as_int();
+
+
+
             app->physics->DestroyBody(pbody);
+
+            position.x = -1000;
+            position.y = -1000;
+
+
+
+
             pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
             pbody->listener = this;
             pbody->ctype = ColliderType::ENEMY;
-            pbody->body->SetGravityScale(0.0f);
+
+
             die = false;
-        }*/
+        }
+
+        if (app->scene->GetPlayer()->die == true)
+        {
+            app->physics->DestroyBody(pbody);
+            position.x = parameters.attribute("x").as_int();
+            position.y = parameters.attribute("y").as_int();
+
+            pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
+            pbody->listener = this;
+            pbody->ctype = ColliderType::ENEMY;
+        }
 
         else
         {
@@ -254,26 +274,7 @@ bool EnemyVulture::Update(float dt) {
             position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 11;
         }
     }
-    if (die == true)
-    {
-
-
-
-        app->physics->DestroyBody(pbody);
-
-        position.x = parameters.attribute("x").as_int();
-        position.y = parameters.attribute("y").as_int();
-
-
-
-
-        pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
-        pbody->listener = this;
-        pbody->ctype = ColliderType::ENEMY;
-
-
-        die = false;
-    }
+    
     
 
     

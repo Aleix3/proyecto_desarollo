@@ -31,7 +31,7 @@
     <EnemyVulture x="1724" y="580" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
 	<EnemyVulture x="1521" y="1580" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
 	  <EnemyVulture x="402" y="306" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
-
+	  <EnemyVulture x="3744" y="952" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
 	  
 	  <map path="Assets/Maps/" name="MapTemplate.tmx"/>
     <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
