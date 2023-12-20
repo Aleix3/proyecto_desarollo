@@ -65,6 +65,8 @@ EnemySamurai::EnemySamurai() : Enemy()
     attackbAnim.PushBack({ 200, 152, 56, 24 });
     attackbAnim.speed = 0.09f;
     attackbAnim.loop = false;
+
+
 } 
  
 EnemySamurai::~EnemySamurai() {
@@ -84,6 +86,7 @@ bool EnemySamurai::Start() {
     texture = app->tex->Load(parameters.attribute("texturePath").as_string());
     app->tex->GetSize(texture, texW, texH);
 
+    attackFX = app->audio->LoadFx("Assets/Audio/Fx/Katana.wav");
     pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
     pbody->listener = this;
     pbody->ctype = ColliderType::ENEMY;
@@ -96,12 +99,6 @@ bool EnemySamurai::Update(float dt) {
 
     iPoint origin = app->map->WorldToMap(position.x, position.y);
 
-    //if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) //Aqui meter la distancia del enemy al player
-    //{
-    //    app->map->pathfinding->CreatePath(origin, app->scene->playerMap);
-
-    //}
-
     const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
 
     if (app->physics->debug)
@@ -112,12 +109,6 @@ bool EnemySamurai::Update(float dt) {
             app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y);
         }
     }
-    
-  
-
-    
-
-
         currentAnimation = &idleAnim;
         currentState = EnemyState::SEARCHING;
         app->map->pathfinding->ClearLastPath();
@@ -164,6 +155,17 @@ bool EnemySamurai::Update(float dt) {
                 {
                     currentState = EnemyState::ATACKING;
                     currentAnimation = &attackAnim;
+                    if (comprovacionFX)
+                    {
+                        app->audio->PlayFx(attackFX);
+                        comprovacionFX = false;
+                    }
+
+
+                    if (attackAnim.HasFinished())
+                    {
+                        comprovacionFX = true;
+                    }
                 }
             }
         }
@@ -207,11 +209,20 @@ bool EnemySamurai::Update(float dt) {
                 // Atacar
                 if (app->scene->GetPlayer()->position.x > position.x - 30)
                 {
-
                     currentState = EnemyState::ATACKING;
                     currentAnimation = &attackAnim;
 
+                    if (comprovacionFX)
+                    {
+                        app->audio->PlayFx(attackFX);
+                        comprovacionFX = false;
+                    }
 
+
+                    if (attackAnim.HasFinished())
+                    {
+                        comprovacionFX = true;
+                    }
                 }
             }
         }

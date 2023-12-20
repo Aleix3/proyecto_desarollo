@@ -55,6 +55,8 @@ public:
 	bool faceleft;
 	float patrolTime = 0.0f;
 	float patrolInterval = 3.0f;
+	bool comprovacionFX = true;
+	uint attackFX = 0;
 
 };
 

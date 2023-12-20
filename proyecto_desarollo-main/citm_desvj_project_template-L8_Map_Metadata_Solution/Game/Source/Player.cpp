@@ -84,7 +84,9 @@ bool Player::Start() {
 
 	texture = app->tex->Load(config.attribute("texturePath").as_string());
 	app->tex->GetSize(texture, texW, texH);
-    golpePlayer = app->audio->LoadFx("Assets/Audio/Fx/GolpealPlayer.wav");
+    golpePlayerFX = app->audio->LoadFx("Assets/Audio/Fx/GolpealPlayer.wav");
+    dashFX = app->audio->LoadFx("Assets/Audio/Fx/Dash.wav");
+    jumpFX = app->audio->LoadFx("Assets/Audio/Fx/Jump.wav");
 
 	pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
 	pbody->listener = this;
@@ -145,7 +147,7 @@ bool Player::Update(float dt) {
             currentAnimation = &dieAnim;
             if(comprovacionFX)
             { 
-                app->audio->PlayFx(golpePlayer);
+                app->audio->PlayFx(golpePlayerFX);
                 comprovacionFX = false;
             }
             
@@ -181,19 +183,27 @@ bool Player::Update(float dt) {
 
             if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumpCount < 2)//&& isOnGround) {
             {
+                comprovacionFX = true;
                 jumpCount++;
                 velocity.y = -jumpSpeed;
                 pbody->body->SetLinearVelocity(velocity);
                 currentAnimation = &jumpAnim;
+                if (comprovacionFX)
+                {
+                    app->audio->PlayFx(jumpFX);
+                    comprovacionFX = false;
+                }
                 tocasuelo == false;
             }
 
-
-
-            
-
             if (dash)
             {
+
+                if (comprovacionFX)
+                {
+                    app->audio->PlayFx(dashFX);
+                    comprovacionFX = false;
+                }
                 currentAnimation = &dashAnim1;
                 if (dashAnim1.HasFinished())
                 {
@@ -201,12 +211,14 @@ bool Player::Update(float dt) {
                     {
                         velocity.x = velocity.x + 200;
                         dash2 = true;
+                        comprovacionFX = true;
                     }
 
                     if (left == true)
                     {
                         velocity.x = velocity.x - 200;
                         dash2 = true;
+                        comprovacionFX = true;
                     }
 
                     dash = false;
@@ -216,12 +228,18 @@ bool Player::Update(float dt) {
 
             if (dash2)
             {
+                if (comprovacionFX)
+                {
+                    app->audio->PlayFx(dashFX);
+                    comprovacionFX = false;
+                }
                 currentAnimation = &dashAnim2;
 
                 if (dashAnim2.HasFinished())
                 {
                     dash2 = false;
                     dashAnim2.Reset();
+                    comprovacionFX = true;
                 }
             }
 
@@ -337,8 +355,6 @@ bool Player::LoadState(pugi::xml_node node) {
     position.x = node.child("position").attribute("x").as_float();
     position.y = node.child("position").attribute("y").as_float();
 
-    // Otros datos de carga si es necesario
-
     return true;
 }
 
@@ -346,8 +362,6 @@ bool Player::SaveState(pugi::xml_node node) {
     pugi::xml_node positionNode = node.append_child("position");
     positionNode.append_attribute("x").set_value(position.x);
     positionNode.append_attribute("y").set_value(position.y);
-
-    // Otros datos de guardado si es necesario
 
     return true;
 }
