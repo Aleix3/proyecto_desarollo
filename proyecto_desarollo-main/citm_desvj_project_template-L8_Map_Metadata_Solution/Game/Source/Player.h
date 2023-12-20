@@ -45,6 +45,7 @@ public:
 
 	Animation* currentAnimation = nullptr;
 	Animation* currentJumpAnim = nullptr;
+	Animation* currentFireAnim = nullptr;
 
 	Animation runAnim;
 	Animation walkAnim;
@@ -54,10 +55,11 @@ public:
 	Animation dieAnim;
 	Animation dashAnim1;
 	Animation dashAnim2;
+	Animation fireballAnim;
 
 	float speed = 0.2f;
 	SDL_Texture* texture = NULL;
-	SDL_Texture* textureleft = NULL;
+	SDL_Texture* texture2 = NULL;
 	pugi::xml_node config;
 	uint texW, texH;
 	uint texWl, texHl;
