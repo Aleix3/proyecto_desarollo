@@ -36,6 +36,7 @@ bool Ability::Start() {
 	fireballAnim.speed = 0.09f;
 	fireballAnim.loop = true;
 	
+	fireballFX = app->audio->LoadFx("Assets/Audio/Fx/FireBall.wav");
 
 	return true;
 }
@@ -47,6 +48,7 @@ bool Ability::Update(float dt)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && app->scene->GetPlayer()->Cooldown(5.0f))
 		{
+			app->audio->PlayFx(fireballFX);
 			arriba = true;
 			position = app->scene->GetPlayer()->position;
 			if (dispar != nullptr)
@@ -69,6 +71,7 @@ bool Ability::Update(float dt)
 
 	else if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && app->scene->GetPlayer()->Cooldown(5.0f))
 	{
+		app->audio->PlayFx(fireballFX);
 		arriba = false;
 		position = app->scene->GetPlayer()->position;
 		if (dispar != nullptr)

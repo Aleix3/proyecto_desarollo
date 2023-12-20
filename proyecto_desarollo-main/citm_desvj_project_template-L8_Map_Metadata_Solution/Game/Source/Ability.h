@@ -42,7 +42,7 @@ private:
 	Animation* currentAnimation = nullptr;
 	Animation fireballAnim;
 
-	
+	uint fireballFX = 0;
 
 	iPoint position;
 	bool renderable = true;
