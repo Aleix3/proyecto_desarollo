@@ -46,7 +46,7 @@ bool Ability::Update(float dt)
 	
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && app->scene->GetPlayer()->Cooldown(5.0f))
+		if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN && app->scene->GetPlayer()->Cooldown(5.0f))
 		{
 			app->audio->PlayFx(fireballFX);
 			arriba = true;
@@ -69,7 +69,7 @@ bool Ability::Update(float dt)
 		}
 	}
 
-	else if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && app->scene->GetPlayer()->Cooldown(5.0f))
+	else if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN && app->scene->GetPlayer()->Cooldown(5.0f))
 	{
 		app->audio->PlayFx(fireballFX);
 		arriba = false;
