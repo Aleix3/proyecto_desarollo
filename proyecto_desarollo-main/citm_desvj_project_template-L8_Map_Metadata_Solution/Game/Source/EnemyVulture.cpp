@@ -11,7 +11,7 @@
 #include "map.h"
 #include "Pathfinding.h"
 #include "EnemyVulture.h"
-
+#include "Ability.h"
 
 
 EnemyVulture::EnemyVulture() : Enemy()

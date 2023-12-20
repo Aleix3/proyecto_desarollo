@@ -47,6 +47,7 @@ bool Ability::Update(float dt)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && app->scene->GetPlayer()->Cooldown(5.0f))
 		{
+			arriba = true;
 			position = app->scene->GetPlayer()->position;
 			if (dispar != nullptr)
 			{
@@ -54,10 +55,11 @@ bool Ability::Update(float dt)
 			}
 			
 			b2Vec2 forceToApply(0.0f, -50.0f);
-			b2Vec2 pointOfApplication(position.x + 50, position.y + 50);
+			b2Vec2 pointOfApplication(position.x, position.y);
 
-			dispar = app->physics->CreateCircle(position.x + 50, position.y, 11, bodyType::DYNAMIC);
+			dispar = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
 			currentAnimation = &fireballAnim;
+			dispar->ctype = ColliderType::ABILITY;
 			dispar->body->SetGravityScale(0.0f);
 
 			dispar->body->ApplyForce(forceToApply, pointOfApplication, true);
@@ -67,6 +69,7 @@ bool Ability::Update(float dt)
 
 	else if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && app->scene->GetPlayer()->Cooldown(5.0f))
 	{
+		arriba = false;
 		position = app->scene->GetPlayer()->position;
 		if (dispar != nullptr)
 		{
@@ -75,10 +78,11 @@ bool Ability::Update(float dt)
 
 		if (app->scene->GetPlayer()->left == true)
 		{
+			left = true;
 			b2Vec2 forceToApply(-50.0f, 0.0f);
-			b2Vec2 pointOfApplication(position.x + 50, position.y + 50);
+			b2Vec2 pointOfApplication(position.x - 50, position.y);
 
-			dispar = app->physics->CreateCircle(position.x + 50, position.y, 11, bodyType::DYNAMIC);
+			dispar = app->physics->CreateCircle(position.x - 50, position.y, 11, bodyType::DYNAMIC);
 			currentAnimation = &fireballAnim;
 			dispar->ctype = ColliderType::ABILITY;
 			dispar->body->SetGravityScale(0.0f);
@@ -88,8 +92,9 @@ bool Ability::Update(float dt)
 
 		else
 		{
+			left = false;
 			b2Vec2 forceToApply(50.0f, 0.0f);
-			b2Vec2 pointOfApplication(position.x + 50, position.y + 50);
+			b2Vec2 pointOfApplication(position.x + 50, position.y);
 
 			dispar = app->physics->CreateCircle(position.x + 50, position.y, 11, bodyType::DYNAMIC);
 			currentAnimation = &fireballAnim;
@@ -104,8 +109,8 @@ bool Ability::Update(float dt)
 	if (dispar != nullptr)
 	{
 		b2Transform pbodyPos = dispar->body->GetTransform();
-		position.x = METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2;
-		position.y = METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2;
+		position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 16;
+		position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 16;
 	}
 
 	
@@ -114,13 +119,24 @@ bool Ability::Update(float dt)
 		currentAnimation->Update();
 		SDL_Rect rect = (currentAnimation->GetCurrentFrame());
 
-		if (app->scene->GetPlayer()->left) {
-			app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_HORIZONTAL, &rect);
+		if (arriba)
+		{
+			app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_NONE, &rect, 1, -90);
 		}
-		else {
-			app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_NONE, &rect);
+		else
+		{
+			if (left) {
+				app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_HORIZONTAL, &rect);
+			}
+			else {
+				app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_NONE, &rect);
+
+			}
 		}
+		
 	}
+
+	
 
 	return true;
 }

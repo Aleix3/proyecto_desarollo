@@ -237,8 +237,8 @@ bool Player::Update(float dt) {
             pbody->body->SetLinearVelocity(velocity);
             b2Transform pbodyPos = pbody->body->GetTransform();
 
-            position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 15;
-            position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 15;
+            position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 16;
+            position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 16;
         }
     }
     if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && jumpCount < 2)//&& isOnGround) {

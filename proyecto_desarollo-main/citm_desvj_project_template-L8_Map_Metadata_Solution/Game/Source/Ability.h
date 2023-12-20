@@ -27,6 +27,10 @@ public:
 public:
 
 	bool isPicked = false;
+	PhysBody* dispar;
+
+	bool arriba = false;
+	bool left = false;
 
 private:
 
@@ -36,7 +40,7 @@ private:
 	Animation* currentAnimation = nullptr;
 	Animation fireballAnim;
 
-	PhysBody* dispar;
+	
 
 	iPoint position;
 	bool renderable = true;
