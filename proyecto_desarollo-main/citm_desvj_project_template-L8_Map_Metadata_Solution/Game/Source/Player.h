@@ -80,6 +80,8 @@ public:
 	bool dash = false;
 	bool isDying = false;
 	bool dash2 = false;
+	bool comprovacionFX = true;
+	uint golpePlayer = 0;
 
 	std::chrono::steady_clock::time_point ultimo_uso;
 };
