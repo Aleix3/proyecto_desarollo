@@ -24,6 +24,8 @@ public:
 
 	bool CleanUp();
 
+	void OnCollision(PhysBody* physA, PhysBody* physB);
+
 public:
 
 	bool isPicked = false;
@@ -40,6 +42,7 @@ private:
 
 	iPoint position;
 	bool renderable = true;
+	bool direccionLanzamiento;
 };
 
 #endif // __ABILITY_H__

@@ -42,7 +42,7 @@ bool Ability::Start() {
 
 bool Ability::Update(float dt)
 {
-	
+
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && app->scene->GetPlayer()->Cooldown(5.0f))
@@ -68,39 +68,37 @@ bool Ability::Update(float dt)
 	else if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && app->scene->GetPlayer()->Cooldown(5.0f))
 	{
 		position = app->scene->GetPlayer()->position;
+		if (app->scene->GetPlayer()->left) direccionLanzamiento = false;
+		else {
+			direccionLanzamiento = true;
+		}
+
 		if (dispar != nullptr)
 		{
 			app->physics->DestroyBody(dispar);
 		}
 
-		if (app->scene->GetPlayer()->left == true)
-		{
-			b2Vec2 forceToApply(-50.0f, 0.0f);
+		b2Vec2 forceToApply;
+		if (direccionLanzamiento) {
+			forceToApply.Set(50.0f, 0.0f); // Derecha
+		}
+		else {
+			forceToApply.Set(-50.0f, 0.0f); // Izquierda
+		}
 			b2Vec2 pointOfApplication(position.x + 50, position.y + 50);
 
-			dispar = app->physics->CreateCircle(position.x + 50, position.y, 11, bodyType::DYNAMIC);
-			currentAnimation = &fireballAnim;
-			dispar->ctype = ColliderType::ABILITY;
-			dispar->body->SetGravityScale(0.0f);
-
-			dispar->body->ApplyForce(forceToApply, pointOfApplication, true);
-		}
-
-		else
-		{
-			b2Vec2 forceToApply(50.0f, 0.0f);
-			b2Vec2 pointOfApplication(position.x + 50, position.y + 50);
-
-			dispar = app->physics->CreateCircle(position.x + 50, position.y, 11, bodyType::DYNAMIC);
-			currentAnimation = &fireballAnim;
-			dispar->ctype = ColliderType::ABILITY;
-			dispar->body->SetGravityScale(0.0f);
-
-			dispar->body->ApplyForce(forceToApply, pointOfApplication, true);
-		}
+		dispar = app->physics->CreateCircle(position.x + 50, position.y, 11, bodyType::DYNAMIC);
+		currentAnimation = &fireballAnim;
+		dispar->ctype = ColliderType::ABILITY;
+		dispar->body->SetGravityScale(0.0f);
+		dispar->body->ApplyForce(forceToApply, pointOfApplication, true);
 
 
 	}
+
+
+		
+
 	if (dispar != nullptr)
 	{
 		b2Transform pbodyPos = dispar->body->GetTransform();
@@ -114,7 +112,7 @@ bool Ability::Update(float dt)
 		currentAnimation->Update();
 		SDL_Rect rect = (currentAnimation->GetCurrentFrame());
 
-		if (app->scene->GetPlayer()->left) {
+		if (direccionLanzamiento == false) {
 			app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_HORIZONTAL, &rect);
 		}
 		else {
@@ -130,3 +128,28 @@ bool Ability::CleanUp()
 	return true;
 }
 
+void Ability::OnCollision(PhysBody* physA, PhysBody* physB) {
+	switch (physB->ctype)
+	{
+	case ColliderType::PLATFORM:
+		LOG("Collision PLATFORM");
+		app->physics->DestroyBody(dispar);
+		break;
+	case ColliderType::DIE:
+		LOG("Collision DIE");
+		app->physics->DestroyBody(dispar);
+		break;
+	case ColliderType::ENEMY:
+		LOG("Collision ENEMY");
+		app->physics->DestroyBody(dispar);
+		break;
+	case ColliderType::PLAYER:
+		LOG("Collision PLAYER");
+		break;
+	case ColliderType::UNKNOWN:
+		LOG("Collision UNKNOWN");
+		break;
+	default:
+		break;
+	}
+}
