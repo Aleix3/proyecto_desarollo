@@ -23,6 +23,10 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
+	bool EnemyVulture::LoadState(pugi::xml_node node);
+
+	bool EnemyVulture::SaveState(pugi::xml_node node);
+
 public:
 
 	Animation* currentAnimation = nullptr;

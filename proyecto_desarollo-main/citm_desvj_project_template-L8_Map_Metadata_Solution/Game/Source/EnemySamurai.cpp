@@ -96,155 +96,178 @@ bool EnemySamurai::Update(float dt) {
 
     iPoint origin = app->map->WorldToMap(position.x, position.y);
 
-    if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) //Aqui meter la distancia del enemy al player
-    {
-        app->map->pathfinding->CreatePath(origin, app->scene->playerMap);
+    //if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) //Aqui meter la distancia del enemy al player
+    //{
+    //    app->map->pathfinding->CreatePath(origin, app->scene->playerMap);
 
-    }
+    //}
 
     const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
 
-    for (uint i = 0; i < path->Count(); ++i)
+    if (app->physics->debug)
     {
-        iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-        app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y);
-    }
-
-    currentAnimation = &idleAnim;
-    currentState = EnemyState::SEARCHING;
-    app->map->pathfinding->ClearLastPath();
-    velocity2 = pbody->body->GetLinearVelocity();
-    velocity2.x = 0.0;
-
-    if (app->scene->GetPlayer()->position.x > position.x)
-    {
-        faceleft = false;
-
-        // Perseguir
-        if (app->scene->GetPlayer()->position.x < position.x + 200 && abs(app->scene->GetPlayer()->position.y - position.y) < 50)
+        for (uint i = 0; i < path->Count(); ++i)
         {
-            currentState = EnemyState::CHASING;
-
-            iPoint playerMap = app->map->WorldToMap(app->scene->GetPlayer()->position.x, app->scene->GetPlayer()->position.y);
-            iPoint origin = app->map->WorldToMap(position.x, position.y);
-            app->map->pathfinding->CreatePath(origin, playerMap);
-
-            if (app->map->pathfinding != NULL)
-            {
-                const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
-                {
-                    if (pathCopy->Count() > 0)
-                    {
-                        const iPoint* nextPointPtr = pathCopy->At(0);
-                        {
-                            iPoint nextPoint = *nextPointPtr;
-
-                            iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
-
-                            if (position.x + 20 < app->scene->GetPlayer()->position.x)
-                            {
-                                currentAnimation = &walkAnim;
-                                velocity2.x = 0.1 * dt;
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Atacar
-            if (app->scene->GetPlayer()->position.x < position.x + 30)
-            {
-                currentState = EnemyState::ATACKING;
-                currentAnimation = &attackAnim;
-            }
+            iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+            app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y);
         }
     }
+    
+  
 
-    if (app->scene->GetPlayer()->position.x < position.x)
-    {
-        faceleft = true;
+    
 
-        // Perseguir
-        if (app->scene->GetPlayer()->position.x > position.x - 200 && abs(app->scene->GetPlayer()->position.y - position.y) < 50)
+
+        currentAnimation = &idleAnim;
+        currentState = EnemyState::SEARCHING;
+        app->map->pathfinding->ClearLastPath();
+        velocity2 = pbody->body->GetLinearVelocity();
+        velocity2.x = 0.0;
+
+        if (app->scene->GetPlayer()->position.x > position.x)
         {
-            currentState = EnemyState::CHASING;
+            faceleft = false;
 
-            iPoint playerMap = app->map->WorldToMap(app->scene->GetPlayer()->position.x, app->scene->GetPlayer()->position.y);
-            iPoint origin = app->map->WorldToMap(position.x, position.y);
-            app->map->pathfinding->CreatePath(origin, playerMap);
-
-            if (app->map->pathfinding != NULL)
+            // Perseguir
+            if (app->scene->GetPlayer()->position.x < position.x + 200 && abs(app->scene->GetPlayer()->position.y - position.y) < 50)
             {
-                const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
+                currentState = EnemyState::CHASING;
+
+                iPoint playerMap = app->map->WorldToMap(app->scene->GetPlayer()->position.x, app->scene->GetPlayer()->position.y);
+                iPoint origin = app->map->WorldToMap(position.x, position.y);
+                app->map->pathfinding->CreatePath(origin, playerMap);
+
+                if (app->map->pathfinding != NULL)
                 {
-                    if (pathCopy->Count() > 0)
+                    const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
                     {
-                        const iPoint* nextPointPtr = pathCopy->At(0);
+                        if (pathCopy->Count() > 0)
                         {
-                            iPoint nextPoint = *nextPointPtr;
-
-                            iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
-
-                            if (position.x > app->scene->GetPlayer()->position.x + 20)
+                            const iPoint* nextPointPtr = pathCopy->At(0);
                             {
-                                currentAnimation = &walkAnim;
-                                velocity2.x = -0.1 * dt;
+                                iPoint nextPoint = *nextPointPtr;
 
+                                iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
+
+                                if (position.x + 20 < app->scene->GetPlayer()->position.x)
+                                {
+                                    currentAnimation = &walkAnim;
+                                    velocity2.x = 0.1 * dt;
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            // Atacar
-            if (app->scene->GetPlayer()->position.x > position.x - 30)
-            {
-                
+                // Atacar
+                if (app->scene->GetPlayer()->position.x < position.x + 30)
+                {
                     currentState = EnemyState::ATACKING;
                     currentAnimation = &attackAnim;
-                
-                
+                }
             }
         }
-    }
 
-    if (currentState == EnemyState::ATACKING && currentAnimation->HasFinished() && (app->scene->GetPlayer()->die = false))
-    {
-        currentAnimation->Reset();
-    }
+        if (app->scene->GetPlayer()->position.x < position.x)
+        {
+            faceleft = true;
+
+            // Perseguir
+            if (app->scene->GetPlayer()->position.x > position.x - 200 && abs(app->scene->GetPlayer()->position.y - position.y) < 50)
+            {
+                currentState = EnemyState::CHASING;
+
+                iPoint playerMap = app->map->WorldToMap(app->scene->GetPlayer()->position.x, app->scene->GetPlayer()->position.y);
+                iPoint origin = app->map->WorldToMap(position.x, position.y);
+                app->map->pathfinding->CreatePath(origin, playerMap);
+
+                if (app->map->pathfinding != NULL)
+                {
+                    const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
+                    {
+                        if (pathCopy->Count() > 0)
+                        {
+                            const iPoint* nextPointPtr = pathCopy->At(0);
+                            {
+                                iPoint nextPoint = *nextPointPtr;
+
+                                iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
+
+                                if (position.x > app->scene->GetPlayer()->position.x + 20)
+                                {
+                                    currentAnimation = &walkAnim;
+                                    velocity2.x = -0.1 * dt;
+
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Atacar
+                if (app->scene->GetPlayer()->position.x > position.x - 30)
+                {
+
+                    currentState = EnemyState::ATACKING;
+                    currentAnimation = &attackAnim;
+
+
+                }
+            }
+        }
+
+        if (currentState == EnemyState::ATACKING && currentAnimation->HasFinished() && (app->scene->GetPlayer()->die = false))
+        {
+            currentAnimation->Reset();
+        }
 
 
 
-    if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-        velocity2.x = -0.2 * dt;
-        
-    }
+        if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+            velocity2.x = -0.2 * dt;
 
-    if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-        velocity2.x = 0.2 * dt;
+        }
 
-    }
+        if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+            velocity2.x = 0.2 * dt;
 
+        }
+
+        else
+        {
+            pbody->body->SetLinearVelocity(velocity2);
+            b2Transform pbodyPos = pbody->body->GetTransform();
+
+            position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
+            position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 11;
+        }
     
     if (die == true)
     {
+        
+
+
+        app->physics->DestroyBody(pbody);
+
         position.x = parameters.attribute("x").as_int();
         position.y = parameters.attribute("y").as_int();
-        app->physics->DestroyBody(pbody);
+        
+        
+        
+       
         pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
         pbody->listener = this;
         pbody->ctype = ColliderType::ENEMY;
+
+
         die = false;
     }
 
-    else
-    {
-        pbody->body->SetLinearVelocity(velocity2);
-        b2Transform pbodyPos = pbody->body->GetTransform();
+    
 
-        position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
-        position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 11;
-    }
+    
+
+    
     
 
     currentAnimation->Update();
@@ -287,6 +310,7 @@ void EnemySamurai::OnCollision(PhysBody* physA, PhysBody* physB) {
     case ColliderType::PLAYER:
         LOG("Collision PLAYER");
         app->scene->GetPlayer()->die = true;
+        dieplayer = true;
         break;
     case ColliderType::UNKNOWN:
         LOG("Collision UNKNOWN");
@@ -294,4 +318,23 @@ void EnemySamurai::OnCollision(PhysBody* physA, PhysBody* physB) {
     default:
         break;
     }
+}
+
+bool EnemySamurai::LoadState(pugi::xml_node node) {
+    position.x = node.child("position").attribute("x").as_float();
+    position.y = node.child("position").attribute("y").as_float();
+
+    // Otros datos de carga si es necesario
+
+    return true;
+}
+
+bool EnemySamurai::SaveState(pugi::xml_node node) {
+    pugi::xml_node positionNode = node.append_child("position");
+    positionNode.append_attribute("x").set_value(position.x);
+    positionNode.append_attribute("y").set_value(position.y);
+
+    // Otros datos de guardado si es necesario
+
+    return true;
 }

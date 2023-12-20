@@ -20,10 +20,20 @@
   <scene>
     <player x="250" y="690" texturePath="Assets/Textures/character/Character.png" coinfxpath="Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg"/>
     <EnemySamurai x="700" y="690" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
-    <EnemySamurai x="800" y="690" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
-    <EnemyVulture x="700" y="550" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
-    <EnemyVulture x="800" y="750" texturePath="Assets/Textures/enemies/vulture_spritesheet.png"/>
-    <map path="Assets/Maps/" name="MapTemplate.tmx"/>
+    <EnemySamurai x="1070" y="484" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
+	<EnemySamurai x="1776" y="1252" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
+	<EnemySamurai x="1087" y="1508" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
+	<EnemySamurai x="1724" y="1956" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
+	<EnemySamurai x="2496" y="1624" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
+	<EnemySamurai x="2886" y="1150" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
+	  
+	
+    <EnemyVulture x="1724" y="580" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
+	<EnemyVulture x="1521" y="1580" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
+	  <EnemyVulture x="402" y="306" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
+
+	  
+	  <map path="Assets/Maps/" name="MapTemplate.tmx"/>
     <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>

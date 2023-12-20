@@ -41,6 +41,10 @@ public:
 
 	bool Cooldown(float cooldown);
 
+	bool Player::LoadState(pugi::xml_node node);
+
+	bool Player::SaveState(pugi::xml_node node);
+
 public:
 
 	Animation* currentAnimation = nullptr;

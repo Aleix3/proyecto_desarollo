@@ -95,6 +95,8 @@ bool Player::Start() {
 
 bool Player::Update(float dt) {
 
+    printf("%i,%i \n", position.x, position.y);
+
     currentAnimation = &idleAnim;
 
     velocity = pbody->body->GetLinearVelocity();
@@ -262,6 +264,7 @@ bool Player::Update(float dt) {
         app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_NONE, &rect);
     }
 
+    
     return true;
 }
 
@@ -320,4 +323,23 @@ bool Player::Cooldown(float cooldown)
     else {
         return false;
     }
+}
+
+bool Player::LoadState(pugi::xml_node node) {
+    position.x = node.child("position").attribute("x").as_float();
+    position.y = node.child("position").attribute("y").as_float();
+
+    // Otros datos de carga si es necesario
+
+    return true;
+}
+
+bool Player::SaveState(pugi::xml_node node) {
+    pugi::xml_node positionNode = node.append_child("position");
+    positionNode.append_attribute("x").set_value(position.x);
+    positionNode.append_attribute("y").set_value(position.y);
+
+    // Otros datos de guardado si es necesario
+
+    return true;
 }

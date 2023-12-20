@@ -94,6 +94,8 @@ bool Scene::Update(float dt)
 	//L02 DONE 3: Make the camera movement independent of framerate
 	float camSpeed = 1;
 
+	
+
 	if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN && app->physics->debug == true)
 	{
 		camaralibre = !camaralibre; // Esto alternará el valor de camaralibre cada vez que se presione la tecla C en modo debug
@@ -126,6 +128,7 @@ bool Scene::Update(float dt)
 
 	
 	
+	
 	// L14: TODO 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
@@ -148,8 +151,9 @@ bool Scene::PostUpdate()
 											(mousePos.y - app->render->camera.y) / 2);
 
 	// Render a texture where the mouse is over to highlight the tile, use the texture 'mouseTileTex'
-	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x , mouseTile.y);
-	app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);
+
+	/*iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x , mouseTile.y);
+	app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);*/
 
 	//iPoint origin = app->map->WorldToMap(enemy->position.x, enemy->position.y);
 

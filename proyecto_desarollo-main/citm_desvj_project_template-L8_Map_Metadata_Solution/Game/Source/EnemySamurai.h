@@ -23,6 +23,9 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
+	bool EnemySamurai::LoadState(pugi::xml_node node);
+	bool EnemySamurai::SaveState(pugi::xml_node node);
+
 public:
 
 	Animation* currentAnimation = nullptr;
@@ -47,6 +50,8 @@ public:
 	int jumpCount = 0;
 	bool tocasuelo = true;
 	bool die = false;
+	bool muerto = false;
+	bool dieplayer = false;
 	bool faceleft;
 	float patrolTime = 0.0f;
 	float patrolInterval = 3.0f;

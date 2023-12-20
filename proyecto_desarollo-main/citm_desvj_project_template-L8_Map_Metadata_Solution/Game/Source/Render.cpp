@@ -1,7 +1,7 @@
 #include "App.h"
 #include "Window.h"
 #include "Render.h"
-
+#include "Scene.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -279,6 +279,29 @@ bool Render::LoadState(pugi::xml_node node) {
 	camera.x = node.child("camera").attribute("x").as_int();
 	camera.y = node.child("camera").attribute("y").as_int();
 
+
+	app->scene->GetPlayer()->LoadState(node.child("player"));
+
+
+	for (pugi::xml_node enemyNode = node.child("EnemySamurai"); enemyNode; enemyNode = enemyNode.next_sibling("EnemySamurai")) {
+		// Crear una instancia de EnemyVulture directamente en el entityManager
+		app->scene->enemySamurai = (EnemySamurai*)app->entityManager->CreateEntity(EntityType::ENEMYSAMURAI);
+
+		
+			// Carga la posición del enemigo desde el nodo XML
+		app->scene->enemySamurai->parameters = enemyNode;
+		
+	}
+
+	// Iterar sobre los nodos de enemigos y cargar sus posiciones
+	for (pugi::xml_node enemyNode = node.child("EnemyVulture"); enemyNode; enemyNode = enemyNode.next_sibling("EnemyVulture")) {
+		// Crear una instancia de EnemyVulture directamente en el entityManager
+		app->scene->enemyVulture = (EnemyVulture*)app->entityManager->CreateEntity(EntityType::ENEMYVULTURE);
+		app->scene->enemyVulture->parameters = enemyNode;
+
+
+	}
+
 	return true;
 }
 
@@ -289,6 +312,19 @@ bool Render::SaveState(pugi::xml_node node) {
 	pugi::xml_node camNode = node.append_child("camera");
 	camNode.append_attribute("x").set_value(camera.x);
 	camNode.append_attribute("y").set_value(camera.y);
+
+	app->scene->GetPlayer()->SaveState(node.append_child("player"));
+
+	// Iterar sobre los enemigos y guardar su información
+
+	for (ListItem<Entity*>* item = app->entityManager->entities.start; item != NULL; item = item->next) {
+		Entity* entity = item->data;
+		if (entity->GetType() == EntityType::ENEMYVULTURE) {
+			pugi::xml_node enemyNode = node.append_child("EnemyVulture");
+			// Guardar la información del enemigo
+			dynamic_cast<EnemyVulture*>(entity)->SaveState(enemyNode);
+		}
+	}
 
 	return true;
 }

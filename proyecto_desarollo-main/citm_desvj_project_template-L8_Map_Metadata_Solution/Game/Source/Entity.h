@@ -76,7 +76,10 @@ public:
 
 	};
 
-
+	EntityType GetType() const
+	{
+		return type;
+	}
 
 public:
 

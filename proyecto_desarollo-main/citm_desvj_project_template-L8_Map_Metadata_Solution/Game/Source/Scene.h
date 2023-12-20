@@ -44,6 +44,10 @@ public:
 
 	iPoint playerMap;
 
+	EnemySamurai* enemySamurai;
+
+	EnemyVulture* enemyVulture;
+
 	SDL_Texture* mouseTileTex = nullptr;
 private:
 	SDL_Texture* img;
@@ -54,8 +58,8 @@ private:
 
 	//L03: DONE 3b: Declare a Player attribute
 	Player* player;
-	EnemySamurai* enemySamurai;
-	EnemyVulture* enemyVulture;
+	
+	
 
 };
 
