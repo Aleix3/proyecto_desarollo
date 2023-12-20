@@ -161,18 +161,61 @@ bool Player::Update(float dt) {
                 tocasuelo == false;
             }
 
-            if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && Cooldown(5.0f))
+            if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
             {
-                b2Vec2 forceToApply(400.0f, 0.0f);
-                b2Vec2 pointOfApplication(position.x + 50, position.y + 50);
+                if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && Cooldown(5.0f))
+                {
+                    if (dispar != nullptr)
+                    {
+                        app->physics->DestroyBody(dispar);
+                    }
 
-                dispar = app->physics->CreateCircle(position.x + 50, position.y , 11, bodyType::DYNAMIC);
-                dispar->ctype = ColliderType::DIE;
-                dispar->body->SetGravityScale(0.0f);
+                    b2Vec2 forceToApply(0.0f, -400.0f);
+                    b2Vec2 pointOfApplication(position.x + 50, position.y + 50);
 
-                dispar->body->ApplyForce(forceToApply, pointOfApplication, true);
+                    dispar = app->physics->CreateCircle(position.x + 50, position.y, 11, bodyType::DYNAMIC);
+                    dispar->ctype = ColliderType::ABILITY;
+                    dispar->body->SetGravityScale(0.0f);
+
+                    dispar->body->ApplyForce(forceToApply, pointOfApplication, true);
+                }
+            }
+
+            else if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && Cooldown(5.0f))
+            {
+                if (dispar != nullptr)
+                {
+                    app->physics->DestroyBody(dispar);
+                }
+
+                if (left == true)
+                {
+                    b2Vec2 forceToApply(-400.0f, 0.0f);
+                    b2Vec2 pointOfApplication(position.x + 50, position.y + 50);
+
+                    dispar = app->physics->CreateCircle(position.x + 50, position.y, 11, bodyType::DYNAMIC);
+                    dispar->ctype = ColliderType::ABILITY;
+                    dispar->body->SetGravityScale(0.0f);
+
+                    dispar->body->ApplyForce(forceToApply, pointOfApplication, true);
+                }
+                
+                else
+                {
+                    b2Vec2 forceToApply(400.0f, 0.0f);
+                    b2Vec2 pointOfApplication(position.x + 50, position.y + 50);
+
+                    dispar = app->physics->CreateCircle(position.x + 50, position.y, 11, bodyType::DYNAMIC);
+                    dispar->ctype = ColliderType::ABILITY;
+                    dispar->body->SetGravityScale(0.0f);
+
+                    dispar->body->ApplyForce(forceToApply, pointOfApplication, true);
+                }
+                
 
             }
+
+            
 
             if (dash)
             {
@@ -297,6 +340,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
     case ColliderType::ENEMY:
         LOG("Collision DIE");
         die = true;
+        break;
+    case ColliderType::ABILITY:
+        LOG("Collision ABILITY");
+        
         break;
     case ColliderType::UNKNOWN:
         LOG("Collision UNKNOWN");
