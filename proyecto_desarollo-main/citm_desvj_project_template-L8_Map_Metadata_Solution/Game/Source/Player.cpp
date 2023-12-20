@@ -65,13 +65,6 @@ Player::Player() : Entity(EntityType::PLAYER)
     dashAnim2.speed = 0.17f;
     dashAnim2.loop = false;
 
-    fireballAnim.PushBack({ 384,480,32,32 });
-    fireballAnim.PushBack({ 416,480,32,32 });
-    fireballAnim.PushBack({ 448,480,32,32 });
-    fireballAnim.PushBack({ 480,480,32,32 });
-    fireballAnim.speed = 0.5f;
-    fireballAnim.loop = false;
-
     ultimo_uso = std::chrono::steady_clock::now();
 
 }
@@ -91,9 +84,7 @@ bool Player::Start() {
 
 	texture = app->tex->Load(config.attribute("texturePath").as_string());
 	app->tex->GetSize(texture, texW, texH);
-    
-    texture2 = app->tex->Load("Textures/character/Free  Effect Bullet Impact Explosion 32x32 V1/Fuego.png");
-    app->tex->GetSize(texture2, texW, texH);
+  
 
 	pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
 	pbody->listener = this;
@@ -105,7 +96,6 @@ bool Player::Start() {
 bool Player::Update(float dt) {
 
     currentAnimation = &idleAnim;
-    currentFireAnim = &fireballAnim;
 
     velocity = pbody->body->GetLinearVelocity();
     if (godmode == true)
@@ -188,61 +178,7 @@ bool Player::Update(float dt) {
                 tocasuelo == false;
             }
 
-            if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-            {
-                if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && Cooldown(5.0f))
-                {
-                    currentFireAnim = &fireballAnim;
-                    if (dispar != nullptr)
-                    {
-                        app->physics->DestroyBody(dispar);
-                    }
 
-                    b2Vec2 forceToApply(0.0f, -400.0f);
-                    b2Vec2 pointOfApplication(position.x + 50, position.y + 50);
-
-                    dispar = app->physics->CreateCircle(position.x + 50, position.y, 11, bodyType::DYNAMIC);
-                    dispar->ctype = ColliderType::ABILITY;
-                    dispar->body->SetGravityScale(0.0f);
-
-                    dispar->body->ApplyForce(forceToApply, pointOfApplication, true);
-                }
-            }
-
-            else if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && Cooldown(5.0f))
-            {
-                currentFireAnim = &fireballAnim;
-                if (dispar != nullptr)
-                {
-                    app->physics->DestroyBody(dispar);
-                }
-
-                if (left == true)
-                {
-                    b2Vec2 forceToApply(-400.0f, 0.0f);
-                    b2Vec2 pointOfApplication(position.x + 50, position.y + 50);
-
-                    dispar = app->physics->CreateCircle(position.x + 50, position.y, 11, bodyType::DYNAMIC);
-                    dispar->ctype = ColliderType::ABILITY;
-                    dispar->body->SetGravityScale(0.0f);
-
-                    dispar->body->ApplyForce(forceToApply, pointOfApplication, true);
-                }
-                
-                else
-                {
-                    b2Vec2 forceToApply(400.0f, 0.0f);
-                    b2Vec2 pointOfApplication(position.x + 50, position.y + 50);
-
-                    dispar = app->physics->CreateCircle(position.x + 50, position.y, 11, bodyType::DYNAMIC);
-                    dispar->ctype = ColliderType::ABILITY;
-                    dispar->body->SetGravityScale(0.0f);
-
-                    dispar->body->ApplyForce(forceToApply, pointOfApplication, true);
-                }
-                
-
-            }
 
             
 
@@ -316,18 +252,14 @@ bool Player::Update(float dt) {
     }
     
     currentAnimation->Update();
-    currentFireAnim->Update();
 
     SDL_Rect rect = currentAnimation->GetCurrentFrame();
-    SDL_Rect rect2 = currentFireAnim->GetCurrentFrame();
 
     if (left) {
         app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_HORIZONTAL, &rect);
-        app->render->DrawTexture2(texture2, position.x, position.y, SDL_FLIP_HORIZONTAL, &rect2);
     }
     else {
         app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_NONE, &rect);
-        app->render->DrawTexture2(texture2, position.x, position.y, SDL_FLIP_NONE, &rect2);
     }
 
     return true;
