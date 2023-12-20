@@ -108,11 +108,30 @@ bool Player::Update(float dt) {
     currentFireAnim = &fireballAnim;
 
     velocity = pbody->body->GetLinearVelocity();
-
-    if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+    if (godmode == true)
     {
-        godmode = true;
+        if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+        {
+            
+            position.x = 250;
+            position.y = 672;
+            app->physics->DestroyBody(pbody);
+            pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
+            pbody->listener = this;
+            pbody->ctype = ColliderType::PLAYER;
+            
+        }
+
+
+
     }
+    
+        if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+        {
+            godmode = !godmode;
+        }
+    
+    
     if (godmode == true )
     {
         if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
@@ -295,17 +314,7 @@ bool Player::Update(float dt) {
         pbody->listener = this;
         pbody->ctype = ColliderType::PLAYER;
     }
-    if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
-    {
-        godmode = false;
-        position.x = 250;
-        position.y = 672;
-        app->physics->DestroyBody(pbody);
-        pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
-        pbody->listener = this;
-        pbody->ctype = ColliderType::PLAYER;
-
-    }
+    
     currentAnimation->Update();
     currentFireAnim->Update();
 

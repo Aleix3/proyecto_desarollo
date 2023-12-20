@@ -28,7 +28,7 @@ bool Scene::Awake(pugi::xml_node config)
 
 	player = (Player*) app->entityManager->CreateEntity(EntityType::PLAYER);
 	//Assigns the XML node to a member in player
-	player->config = config.child("player");
+	player->config = config.child("player");  
 
 
 	for (pugi::xml_node enemyNode = config.child("EnemySamurai"); enemyNode; enemyNode = enemyNode.next_sibling("EnemySamurai"))

@@ -94,7 +94,7 @@ bool EnemyVulture::Update(float dt) {
         faceleft = false;
 
         // Perseguir
-        if (app->scene->GetPlayer()->position.x < position.x + 200)
+        if (app->scene->GetPlayer()->position.x < position.x + 200 && app->scene->GetPlayer()->position.y < position.y + 200 && app->scene->GetPlayer()->position.y > position.y - 200)
         {
             currentState = EnemyState::CHASING;
 
@@ -148,7 +148,7 @@ bool EnemyVulture::Update(float dt) {
         faceleft = true;
 
         // Perseguir
-        if (app->scene->GetPlayer()->position.x > position.x - 200 /*&& abs(app->scene->GetPlayer()->position.y - position.y) < 50*/)
+        if (app->scene->GetPlayer()->position.x > position.x - 200 && app->scene->GetPlayer()->position.y < position.y + 200 && app->scene->GetPlayer()->position.y > position.y - 200)
         {
             currentState = EnemyState::CHASING;
 
