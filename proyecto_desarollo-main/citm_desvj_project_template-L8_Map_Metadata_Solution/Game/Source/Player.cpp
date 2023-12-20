@@ -92,7 +92,7 @@ bool Player::Start() {
 	texture = app->tex->Load(config.attribute("texturePath").as_string());
 	app->tex->GetSize(texture, texW, texH);
     
-    texture2 = app->tex->Load("Textures/character/Free  Effect Bullet Impact Explosion 32x32 V1.png");
+    texture2 = app->tex->Load("Textures/character/Free  Effect Bullet Impact Explosion 32x32 V1/Fuego.png");
     app->tex->GetSize(texture2, texW, texH);
 
 	pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
@@ -177,7 +177,6 @@ bool Player::Update(float dt) {
                     if (dispar != nullptr)
                     {
                         app->physics->DestroyBody(dispar);
-                        currentFireAnim = nullptr;
                     }
 
                     b2Vec2 forceToApply(0.0f, -400.0f);
@@ -197,7 +196,6 @@ bool Player::Update(float dt) {
                 if (dispar != nullptr)
                 {
                     app->physics->DestroyBody(dispar);
-                    currentFireAnim = nullptr;
                 }
 
                 if (left == true)
