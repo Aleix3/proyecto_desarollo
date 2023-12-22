@@ -68,6 +68,8 @@ public:
 
 	PhysBody* pbody;
 
+	PhysBody* rectangle;
+
 	b2Vec2 velocity;
 
 	float jumpSpeed = 5.0f;

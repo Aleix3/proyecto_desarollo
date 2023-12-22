@@ -97,7 +97,6 @@ bool Player::Start() {
 
 bool Player::Update(float dt) {
 
-    printf("%i,%i \n", position.x, position.y);
 
     currentAnimation = &idleAnim;
 
