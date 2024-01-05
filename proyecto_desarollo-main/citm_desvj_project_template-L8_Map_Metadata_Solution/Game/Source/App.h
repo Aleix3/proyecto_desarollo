@@ -20,6 +20,7 @@ class EntityManager;
 class Map;
 class Physics;
 class Ability;
+class GuiManager;
 
 class App
 {
@@ -98,6 +99,7 @@ public:
 	Map* map;
 	Physics* physics;
 	Ability* ability;
+	GuiManager* guiManager;
 private:
 
 	int argc;

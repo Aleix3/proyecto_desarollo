@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Physics.h"
 #include "Ability.h"
+#include "GuiManager.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -35,6 +36,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map();
 	entityManager = new EntityManager();
 	ability = new Ability();
+	guiManager = new GuiManager();
 
 	AddModule(win);
 	AddModule(input);
@@ -45,6 +47,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(entityManager);
 	AddModule(ability);
+	AddModule(guiManager);
+
 	// Render last to swap buffer
 	AddModule(render);
 

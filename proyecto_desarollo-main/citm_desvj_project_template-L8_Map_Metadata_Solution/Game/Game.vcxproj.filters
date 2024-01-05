@@ -27,6 +27,8 @@
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\EnemyVulture.cpp" />
     <ClCompile Include="Source\Ability.cpp" />
+    <ClCompile Include="Source\GuiControlButton.cpp" />
+    <ClCompile Include="Source\GuiManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -79,6 +81,9 @@
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\EnemyVulture.h" />
     <ClInclude Include="Source\Ability.h" />
+    <ClInclude Include="Source\GuiControlButton.h" />
+    <ClInclude Include="Source\GuiManager.h" />
+    <ClInclude Include="Source\GuiControl.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

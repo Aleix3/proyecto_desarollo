@@ -6,6 +6,8 @@
 #include "Enemy.h"
 #include "EnemySamurai.h"
 #include "EnemyVulture.h"
+#include "GuiControl.h"
+#include "GuiControlButton.h"
 
 struct SDL_Texture;
 
@@ -40,6 +42,8 @@ public:
 
 	EnemySamurai* GetEnemySamurai();
 
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 	bool visible = true;
 
 	iPoint playerMap;
@@ -59,7 +63,7 @@ private:
 	//L03: DONE 3b: Declare a Player attribute
 	Player* player;
 	
-	
+	GuiControlButton* gcButtom;
 
 };
 

@@ -7,6 +7,8 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Item.h"
+#include "GuiControl.h"
+#include "GuiManager.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -77,6 +79,9 @@ bool Scene::Start()
 	textPosY = (float)windowH / 2 - (float)texH / 2;
 
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
+
+	SDL_Rect btPos = { windowW / 2 - 60,80, 120,20 };
+	gcButtom = (GuiControlButton*) app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);
 
 	return true;
 }
@@ -205,4 +210,10 @@ EnemySamurai* Scene::GetEnemySamurai()
 {
 	return enemySamurai;
 }
+bool Scene::OnGuiMouseClickEvent(GuiControl* control)
+{
+	// L15: DONE 5: Implement the OnGuiMouseClickEvent method
+	LOG("Press Gui Control: %d", control->id);
 
+	return true;
+}
