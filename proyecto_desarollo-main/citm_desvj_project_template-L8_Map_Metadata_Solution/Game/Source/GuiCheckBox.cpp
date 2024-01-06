@@ -26,6 +26,7 @@ GuiCheckBox::~GuiCheckBox()
 bool GuiCheckBox::Update(float dt)
 {
 	img = app->tex->Load("Assets/Textures/Menu/bg.png");
+	img2 = app->tex->Load("Assets/Textures/Menu/bg2.png");
 
 	return false;
 }
@@ -38,12 +39,14 @@ bool GuiCheckBox::PostUpdate()
 		// L15: DONE 3: Update the state of the GUiButton according to the mouse position
 		app->input->GetMousePosition(mouseX, mouseY);
 
+		SDL_Rect bounds2 = { bounds.x + 430, bounds.y - 375, bounds.w + 20, bounds.h + 20 };
+
 		mouseX *= 2;
 
 		mouseY *= 2;
 
 		//If the position of the mouse if inside the bounds of the button 
-		if (mouseX > bounds.x && mouseX < bounds.x + bounds.w && mouseY > bounds.y && mouseY < bounds.y + bounds.h) {
+		if (mouseX > bounds2.x && mouseX < bounds2.x + bounds2.w && mouseY > bounds2.y && mouseY < bounds2.y + bounds2.h) {
 
 			state = GuiControlState::FOCUSED;
 
@@ -53,32 +56,57 @@ bool GuiCheckBox::PostUpdate()
 
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
 				NotifyObserver();
-				click = true;
+				click = !click;
 			}
 		}
 		else {
 			state = GuiControlState::NORMAL;
 		}
-
-		//L15: DONE 4: Draw the button according the GuiControl State
-		switch (state)
+		if (!click)
 		{
-		case GuiControlState::DISABLED:
-			/*app->render->DrawRectangle(bounds, 200, 200, 200, 255, true, false);*/
-			break;
-		case GuiControlState::NORMAL:
-			app->render->DrawTexture(img, bounds.x - 300, bounds.y+400);
-			break;
-		case GuiControlState::FOCUSED:
-			app->render->DrawRectangle(bounds, 0, 0, 20, 255, true, false);
-			break;
-		case GuiControlState::PRESSED:
-			app->render->DrawRectangle(bounds, 0, 255, 0, 255, true, false);
-			break;
+			switch (state)
+			{
+			case GuiControlState::DISABLED:
+				/*app->render->DrawRectangle(bounds, 200, 200, 200, 255, true, false);*/
+				break;
+			case GuiControlState::NORMAL:
+				app->render->DrawTexture(img, bounds.x, bounds.y);
+				break;
+			case GuiControlState::FOCUSED:
+				app->render->DrawTexture(img, bounds.x, bounds.y);
+				break;
+			case GuiControlState::PRESSED:
+				app->render->DrawTexture(img, bounds.x, bounds.y);
+				break;
+			}
+			app->render->DrawText(text.GetString(), bounds.x + 200, bounds.y - 375, bounds.w, bounds.h);
 		}
+		if (click)
+		{
+			switch (state)
+			{
+			case GuiControlState::DISABLED:
+				/*app->render->DrawRectangle(bounds, 200, 200, 200, 255, true, false);*/
+				break;
+			case GuiControlState::NORMAL:
+				app->render->DrawTexture(img2, bounds.x, bounds.y);
+				break;
+			case GuiControlState::FOCUSED:
+				app->render->DrawTexture(img2, bounds.x, bounds.y);
+				break;
+			case GuiControlState::PRESSED:
+				app->render->DrawTexture(img2, bounds.x, bounds.y);
+				break;
+			}
+			app->render->DrawText(text.GetString(), bounds.x + 200, bounds.y - 375, bounds.w, bounds.h);
+		}
+		//L15: DONE 4: Draw the button according the GuiControl State
+		
 
-		/*app->render->DrawText(text.GetString(), bounds.x, bounds.y, bounds.w, bounds.h);*/
+		
 
+		
+		
 	}
 
 	else

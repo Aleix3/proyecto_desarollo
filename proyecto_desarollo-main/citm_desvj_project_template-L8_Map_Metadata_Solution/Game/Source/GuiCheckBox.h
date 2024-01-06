@@ -29,6 +29,7 @@ private:
 	bool drawBasic = false;
 
 	SDL_Texture* img;
+	SDL_Texture* img2;
 };
 
 #endif // __GUICHECKBOX_H__

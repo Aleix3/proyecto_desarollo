@@ -205,8 +205,8 @@ bool Scene::Update(float dt)
 
 	if (menuusettings && contadormenusettings == 0)
 	{
-		SDL_Rect vSyncpos = { player->position.x + 300,player->position.y - 360, 230,30 };
-		vsync = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "EXIT", vSyncpos, this);
+		SDL_Rect vSyncpos = { player->position.x + 70,player->position.y - 110, 200, 50 };
+		vsync = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "VSYNC", vSyncpos, this);
 		contadormenusettings++;
 		
 	}
@@ -224,7 +224,15 @@ bool Scene::Update(float dt)
 		}
 		
 	}
+	if (vsync != nullptr && vsync->click == true)
+	{
+		vsyncActive = true;
+	}
 
+	if (vsync != nullptr && vsync->click == false)
+	{
+		vsyncActive = false;
+	}
 	return true;
 }
 
@@ -274,7 +282,7 @@ bool Scene::PostUpdate()
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
-	if (menuu)
+	if (menuu || menuusettings)
 		app->render->DrawTexture(menu, player->position.x - 100, player->position.y - 200);
 	
 

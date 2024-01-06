@@ -51,6 +51,8 @@ public:
 
 	bool menuusettings = false;
 
+	bool vsyncActive = false;
+
 	iPoint playerMap;
 
 	EnemySamurai* enemySamurai;
