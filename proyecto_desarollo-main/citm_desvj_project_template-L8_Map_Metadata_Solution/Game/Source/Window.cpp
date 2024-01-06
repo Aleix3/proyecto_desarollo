@@ -1,6 +1,6 @@
 #include "Window.h"
 #include "App.h"
-
+#include"Scene.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -38,7 +38,7 @@ bool Window::Awake(pugi::xml_node config)
 		bool fullscreen = config.child("fullscreen").attribute("value").as_bool(false);
 		bool borderless = config.child("borderless").attribute("value").as_bool(false);
 		bool resizable = config.child("resizable").attribute("value").as_bool(false);
-		bool fullscreen_window = config.child("fullscreen_window").attribute("value").as_bool(false);
+		bool fullscreen_window = app->scene->fullScreenActive;
 
 		width = config.child("resolution").attribute("width").as_int(640);
 		height = config.child("resolution").attribute("height").as_int(480);

@@ -159,6 +159,7 @@ bool Scene::Update(float dt)
 
 	if (menuu && contadormenu == 0)
 	{
+		app->entityManager->active = false;
 		SDL_Rect btPos = { player->position.x + 300,player->position.y - 560, 230,30 };
 		gcButtom = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "RESUME", btPos, this);
 
@@ -206,6 +207,7 @@ bool Scene::Update(float dt)
 
 	if (menuusettings && contadormenusettings == 0)
 	{
+		
 		SDL_Rect vSyncpos = { player->position.x + 70,player->position.y - 110, 200, 50 };
 		vsync = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "VSYNC", vSyncpos, this);
 
@@ -214,6 +216,10 @@ bool Scene::Update(float dt)
 
 		contadormenusettings++;
 		
+	}
+	if (menuusettings)
+	{
+		app->entityManager->active = false;
 	}
 	if (!menuusettings)
 	{
