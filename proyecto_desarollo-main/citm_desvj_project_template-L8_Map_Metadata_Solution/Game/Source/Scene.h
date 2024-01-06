@@ -8,7 +8,7 @@
 #include "EnemyVulture.h"
 #include "GuiControl.h"
 #include "GuiControlButton.h"
-#include "GuiControllScore.h"
+#include "GuiCheckBox.h"
 
 struct SDL_Texture;
 
@@ -62,15 +62,13 @@ public:
 	EnemyVulture* enemyVulture;
 
 	SDL_Texture* mouseTileTex = nullptr;
-
-	int score;
 private:
 	SDL_Texture* img;
 	SDL_Texture* menu;
 	float textPosX, textPosY = 0;
 	uint texW, texH;
 	uint windowW, windowH;
-
+	
 
 	//L03: DONE 3b: Declare a Player attribute
 	Player* player;

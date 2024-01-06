@@ -9,8 +9,6 @@
 #include "Item.h"
 #include "GuiControl.h"
 #include "GuiManager.h"
-#include "EnemySamurai.h"
-#include "EnemyVulture.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -84,9 +82,7 @@ bool Scene::Start()
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
 	SDL_Rect btPos = { windowW / 2 - 60,80, 120,20 };
-	gcButtom = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);
-
-	score = 0;
+	/*gcButtom = (GuiControlButton*) app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);*/
 
 	return true;
 
@@ -109,15 +105,15 @@ bool Scene::Update(float dt)
 	//L02 DONE 3: Make the camera movement independent of framerate
 	float camSpeed = 1;
 
-	if (app->scene->enemySamurai->die == true) score += 50;
-	if (app->scene->enemyVulture->die == true) score += 50;
+	
+
 	if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN && app->physics->debug == true)
 	{
 		camaralibre = !camaralibre; // Esto alternará el valor de camaralibre cada vez que se presione la tecla C en modo debug
 	}
 	if (app->scene->GetPlayer()->die)
 	{
-		score -= 100;
+		app->scene->GetPlayer()->die == false;
 	}
 	if (camaralibre == true)
 	{
@@ -295,10 +291,10 @@ bool Scene::PostUpdate()
 	//for (uint i = 0; i < path->Count(); ++i)
 	//{
 	//	iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-	//	app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
+		
 	//}
 
-	bool ret = true;
+	
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;

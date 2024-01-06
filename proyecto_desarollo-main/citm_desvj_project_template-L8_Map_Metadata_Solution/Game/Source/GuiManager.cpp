@@ -4,7 +4,6 @@
 
 #include "GuiControlButton.h"
 #include "GuiCheckBox.h"
-#include "GuiControllScore.h"
 #include "Audio.h"
 
 GuiManager::GuiManager() :Module()
@@ -32,9 +31,7 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 		break;
 	case GuiControlType::CHECKBOX:
 		guiControl = new GuiCheckBox(id, bounds, text);
-		break;
-	case GuiControlType::VALUEBOX:
-		guiControl = new GuiControlScore(id, bounds);
+		
 		break;
 	}
 

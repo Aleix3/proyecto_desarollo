@@ -246,14 +246,21 @@ bool EnemySamurai::Update(float dt) {
 
         if (die == true)
         {
+
+
+
             app->physics->DestroyBody(pbody);
 
             position.x = -1000;
             position.y = -1000;
 
+
+
+
             pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
             pbody->listener = this;
             pbody->ctype = ColliderType::ENEMY;
+
 
             die = false;
         }
