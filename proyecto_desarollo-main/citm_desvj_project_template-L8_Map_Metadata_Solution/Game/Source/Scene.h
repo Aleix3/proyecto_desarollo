@@ -53,6 +53,8 @@ public:
 
 	bool vsyncActive = false;
 
+	bool fullScreenActive = false;
+
 	iPoint playerMap;
 
 	EnemySamurai* enemySamurai;
@@ -75,7 +77,7 @@ private:
 	GuiControlButton* exit;
 	GuiControlButton* settings;
 	GuiCheckBox* vsync;
-
+	GuiCheckBox* fullScreen;
 	bool ret = true;
 
 };

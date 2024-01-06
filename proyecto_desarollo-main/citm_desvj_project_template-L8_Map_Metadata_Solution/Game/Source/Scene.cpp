@@ -207,6 +207,10 @@ bool Scene::Update(float dt)
 	{
 		SDL_Rect vSyncpos = { player->position.x + 70,player->position.y - 110, 200, 50 };
 		vsync = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "VSYNC", vSyncpos, this);
+
+		SDL_Rect FullScreen = { player->position.x + 70,player->position.y, 200, 50 };
+		fullScreen = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "FULLSCREEN", FullScreen, this);
+
 		contadormenusettings++;
 		
 	}
@@ -218,6 +222,7 @@ bool Scene::Update(float dt)
 
 			
 			vsync->state = GuiControlState::DISABLED;
+			fullScreen->state = GuiControlState::DISABLED;
 			menuu = true;
 			contadormenusettings = 0;
 			
@@ -232,6 +237,11 @@ bool Scene::Update(float dt)
 	if (vsync != nullptr && vsync->click == false)
 	{
 		vsyncActive = false;
+	}
+
+	if (fullScreen != nullptr && fullScreen->click == true)
+	{
+		fullScreenActive = true;
 	}
 	return true;
 }

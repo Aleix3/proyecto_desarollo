@@ -78,8 +78,8 @@ bool GuiCheckBox::PostUpdate()
 			case GuiControlState::PRESSED:
 				app->render->DrawTexture(img, bounds.x, bounds.y);
 				break;
-			}
-			app->render->DrawText(text.GetString(), bounds.x + 200, bounds.y - 375, bounds.w, bounds.h);
+			}app->render->DrawText(text.GetString(), bounds.x + 200, bounds.y - 375, bounds.w, bounds.h)
+			/*app->render->DrawText(text.GetString(), bounds.x + 200, bounds.y - 375, bounds.w, bounds.h)*/;
 		}
 		if (click)
 		{
