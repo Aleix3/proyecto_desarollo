@@ -8,6 +8,7 @@
 #include "EnemyVulture.h"
 #include "GuiControl.h"
 #include "GuiControlButton.h"
+#include "GuiCheckBox.h"
 
 struct SDL_Texture;
 
@@ -46,6 +47,10 @@ public:
 
 	bool visible = true;
 
+	bool menuu = false;
+
+	bool menuusettings = false;
+
 	iPoint playerMap;
 
 	EnemySamurai* enemySamurai;
@@ -55,6 +60,7 @@ public:
 	SDL_Texture* mouseTileTex = nullptr;
 private:
 	SDL_Texture* img;
+	SDL_Texture* menu;
 	float textPosX, textPosY = 0;
 	uint texW, texH;
 	uint windowW, windowH;
@@ -64,6 +70,11 @@ private:
 	Player* player;
 	
 	GuiControlButton* gcButtom;
+	GuiControlButton* exit;
+	GuiControlButton* settings;
+	GuiCheckBox* vsync;
+
+	bool ret = true;
 
 };
 

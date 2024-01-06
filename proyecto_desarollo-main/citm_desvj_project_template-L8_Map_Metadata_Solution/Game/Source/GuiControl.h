@@ -51,8 +51,22 @@ public:
 		texture = NULL;
 	}
 
+	virtual ~GuiControl()
+    {
+        if (texture != nullptr)
+        {
+            SDL_DestroyTexture(texture);
+            texture = nullptr;
+        }
+    }
+
 	// Called each loop iteration
 	virtual bool Update(float dt)
+	{
+		return true;
+	}
+
+	virtual bool PostUpdate()
 	{
 		return true;
 	}

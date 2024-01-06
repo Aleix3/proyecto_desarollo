@@ -64,8 +64,9 @@ bool Scene::Awake(pugi::xml_node config)
 // Called before the first frame
 bool Scene::Start()
 {
-	// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
+	
 	img = app->tex->Load("Assets/Textures/test.png");
+	menu = app->tex->Load("Assets/Textures/Menu/elements2.png");
 	//Music is commented so that you can add your own music
 	app->audio->PlayMusic("Assets/Audio/Music/Interloper.ogg");
 
@@ -81,9 +82,11 @@ bool Scene::Start()
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
 	SDL_Rect btPos = { windowW / 2 - 60,80, 120,20 };
-	gcButtom = (GuiControlButton*) app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);
+	/*gcButtom = (GuiControlButton*) app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);*/
 
 	return true;
+
+	
 }
 
 // Called each loop iteration
@@ -93,6 +96,9 @@ bool Scene::PreUpdate()
 }
 bool camaralibre = false;
 
+int contadormenu = 0;
+
+int contadormenusettings = 0;
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
@@ -112,16 +118,16 @@ bool Scene::Update(float dt)
 	if (camaralibre == true)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-			app->render->camera.y += (int)ceil(camSpeed * dt);
+			app->render->targetCameraY += (int)ceil(camSpeed * dt);
 
 		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-			app->render->camera.y -= (int)ceil(camSpeed * dt);
+			app->render->targetCameraY -= (int)ceil(camSpeed * dt);
 
 		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-			app->render->camera.x += (int)ceil(camSpeed * dt);
+			app->render->targetCameraX += (int)ceil(camSpeed * dt);
 
 		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-			app->render->camera.x -= (int)ceil(camSpeed * dt);
+			app->render->targetCameraX -= (int)ceil(camSpeed * dt);
 	}
 	else
 	{
@@ -140,6 +146,84 @@ bool Scene::Update(float dt)
 	// L14: TODO 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
+
+
+	if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	{
+		app->entityManager->active = !app->entityManager->active;
+
+		menuu = !menuu;
+	}
+	
+	
+
+	if (menuu && contadormenu == 0)
+	{
+		SDL_Rect btPos = { player->position.x + 300,player->position.y - 560, 230,30 };
+		gcButtom = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "RESUME", btPos, this);
+
+		SDL_Rect ExitPos = { player->position.x + 300,player->position.y - 160, 230,30 };
+		exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", ExitPos, this);
+
+		SDL_Rect SettingsPos = { player->position.x + 300,player->position.y - 360, 230,30 };
+		settings = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "SETTINGS", SettingsPos, this);
+
+		
+
+		contadormenu++;
+	}
+
+	if (!menuu)
+	{
+		if (gcButtom != nullptr)
+		{
+
+
+			gcButtom->state = GuiControlState::DISABLED;
+			exit->state = GuiControlState::DISABLED;
+			settings->state = GuiControlState::DISABLED;
+			contadormenu = 0;
+		}
+		
+	}
+	if(gcButtom != nullptr && gcButtom->click == true)
+	{
+		menuu = false;
+		gcButtom->click = true;
+	}
+
+	if (exit != nullptr && exit->click == true)
+	{
+		ret = false;
+	}
+
+	if (settings != nullptr && settings->click == true)
+	{
+		menuu = false;
+		menuusettings = true;
+	}
+
+	if (menuusettings && contadormenusettings == 0)
+	{
+		SDL_Rect vSyncpos = { player->position.x + 300,player->position.y - 360, 230,30 };
+		vsync = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "EXIT", vSyncpos, this);
+		contadormenusettings++;
+		
+	}
+	if (!menuusettings)
+	{
+		if (vsync != nullptr)
+		{
+
+
+			
+			vsync->state = GuiControlState::DISABLED;
+			menuu = true;
+			contadormenusettings = 0;
+			
+		}
+		
+	}
 
 	return true;
 }
@@ -182,13 +266,17 @@ bool Scene::PostUpdate()
 	//for (uint i = 0; i < path->Count(); ++i)
 	//{
 	//	iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-	//	app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
+		
 	//}
 
-	bool ret = true;
+	
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+
+	if (menuu)
+		app->render->DrawTexture(menu, player->position.x - 100, player->position.y - 200);
+	
 
 	return ret;
 }

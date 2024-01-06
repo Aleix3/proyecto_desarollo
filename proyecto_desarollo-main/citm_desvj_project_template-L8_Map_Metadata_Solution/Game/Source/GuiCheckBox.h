@@ -1,18 +1,18 @@
-#ifndef __GUICONTROLBUTTON_H__
-#define __GUICONTROLBUTTON_H__
+#ifndef __GUICHECKBOX_H__
+#define __GUICHECKBOX_H__
 
 #include "GuiControl.h"
 
 #include "Point.h"
 #include "SString.h"
 
-class GuiControlButton : public GuiControl
+class GuiCheckBox : public GuiControl
 {
 
 public:
 
-	GuiControlButton(uint32 id, SDL_Rect bounds, const char* text);
-	virtual ~GuiControlButton();
+	GuiCheckBox(uint32 id, SDL_Rect bounds, const char* text);
+	virtual ~GuiCheckBox();
 
 	// Called each loop iteration
 	bool Update(float dt);
@@ -27,6 +27,8 @@ private:
 
 	bool canClick = true;
 	bool drawBasic = false;
+
+	SDL_Texture* img;
 };
 
-#endif // __GUICONTROLBUTTON_H__
+#endif // __GUICHECKBOX_H__

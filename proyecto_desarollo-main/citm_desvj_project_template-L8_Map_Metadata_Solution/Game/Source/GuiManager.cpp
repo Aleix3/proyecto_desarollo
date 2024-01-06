@@ -3,6 +3,7 @@
 #include "Textures.h"
 
 #include "GuiControlButton.h"
+#include "GuiCheckBox.h"
 #include "Audio.h"
 
 GuiManager::GuiManager() :Module()
@@ -28,6 +29,10 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	case GuiControlType::BUTTON:
 		guiControl = new GuiControlButton(id, bounds, text);
 		break;
+	case GuiControlType::CHECKBOX:
+		guiControl = new GuiCheckBox(id, bounds, text);
+		
+		break;
 	}
 
 	//Set the observer
@@ -52,6 +57,19 @@ bool GuiManager::Update(float dt)
 
 	return true;
 }
+bool GuiManager::PostUpdate()
+{
+
+	ListItem<GuiControl*>* control = guiControlsList.start;
+
+	while (control != nullptr)
+	{
+		control->data->PostUpdate();
+		control = control->next;
+	}
+
+	return true;
+}
 
 bool GuiManager::CleanUp()
 {
@@ -67,5 +85,20 @@ bool GuiManager::CleanUp()
 	return false;
 }
 
+bool GuiManager::DestroyGuiControl(GuiControl* control)
+{
+	if (control != nullptr)
+	{
+		// Remove the control from the list
+		guiControlsList.Del(guiControlsList.At(guiControlsList.Find(control)));
+
+		// Clean up resources and delete the control
+		delete control;
+
+		return true;
+	}
+
+	return false;
+}
 
 

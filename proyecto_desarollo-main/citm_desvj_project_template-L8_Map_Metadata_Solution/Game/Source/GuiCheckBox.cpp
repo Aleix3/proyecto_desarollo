@@ -1,9 +1,12 @@
-#include "GuiControlButton.h"
+#include "GuiCheckBox.h"
 #include "Render.h"
 #include "App.h"
 #include "Audio.h"
+#include "App.h"
+#include "Textures.h"
+#include "Scene.h"
 
-GuiControlButton::GuiControlButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
+GuiCheckBox::GuiCheckBox(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
 	this->bounds = bounds;
 	this->text = text;
@@ -11,21 +14,23 @@ GuiControlButton::GuiControlButton(uint32 id, SDL_Rect bounds, const char* text)
 	canClick = true;
 	drawBasic = false;
 	click = false;
-}
 
-GuiControlButton::~GuiControlButton()
-{
-
-}
-
-bool GuiControlButton::Update(float dt)
-{
 	
+}
+
+GuiCheckBox::~GuiCheckBox()
+{
+
+}
+
+bool GuiCheckBox::Update(float dt)
+{
+	img = app->tex->Load("Assets/Textures/Menu/bg.png");
 
 	return false;
 }
 
-bool GuiControlButton::PostUpdate()
+bool GuiCheckBox::PostUpdate()
 {
 
 	if (state != GuiControlState::DISABLED)
@@ -62,7 +67,7 @@ bool GuiControlButton::PostUpdate()
 			/*app->render->DrawRectangle(bounds, 200, 200, 200, 255, true, false);*/
 			break;
 		case GuiControlState::NORMAL:
-			app->render->DrawRectangle(bounds, 0, 0, 255, 255, true, false);
+			app->render->DrawTexture(img, bounds.x - 300, bounds.y+400);
 			break;
 		case GuiControlState::FOCUSED:
 			app->render->DrawRectangle(bounds, 0, 0, 20, 255, true, false);
@@ -72,7 +77,7 @@ bool GuiControlButton::PostUpdate()
 			break;
 		}
 
-		app->render->DrawText(text.GetString(), bounds.x, bounds.y, bounds.w, bounds.h);
+		/*app->render->DrawText(text.GetString(), bounds.x, bounds.y, bounds.w, bounds.h);*/
 
 	}
 
