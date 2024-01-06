@@ -11,7 +11,7 @@ class GuiCheckBox : public GuiControl
 
 public:
 
-	GuiCheckBox(uint32 id, SDL_Rect bounds, const char* text);
+	GuiCheckBox(uint32 id, SDL_Rect bounds, SDL_Rect bounds2, const char* text);
 	virtual ~GuiCheckBox();
 
 	// Called each loop iteration

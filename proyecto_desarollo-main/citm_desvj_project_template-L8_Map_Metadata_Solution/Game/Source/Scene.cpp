@@ -161,13 +161,13 @@ bool Scene::Update(float dt)
 	{
 		app->entityManager->active = false;
 		SDL_Rect btPos = { player->position.x + 300,player->position.y - 560, 230,30 };
-		gcButtom = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "RESUME", btPos, this);
+		gcButtom = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "RESUME", btPos, { 0,0,0,0 }, this);
 
 		SDL_Rect ExitPos = { player->position.x + 300,player->position.y - 160, 230,30 };
-		exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", ExitPos, this);
+		exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", ExitPos, { 0,0,0,0 }, this);
 
 		SDL_Rect SettingsPos = { player->position.x + 300,player->position.y - 360, 230,30 };
-		settings = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "SETTINGS", SettingsPos, this);
+		settings = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "SETTINGS", SettingsPos, { 0,0,0,0 }, this);
 
 		
 
@@ -209,10 +209,10 @@ bool Scene::Update(float dt)
 	{
 		
 		SDL_Rect vSyncpos = { player->position.x + 70,player->position.y - 110, 200, 50 };
-		vsync = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "VSYNC", vSyncpos, this);
+		vsync = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "VSYNC", vSyncpos, { 425,-375,20,20 }, this);
 
 		SDL_Rect FullScreen = { player->position.x + 70,player->position.y, 200, 50 };
-		fullScreen = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "FULLSCREEN", FullScreen, this);
+		fullScreen = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "FULLSCREEN", FullScreen, { 425,-270,0,0 }, this);
 
 		contadormenusettings++;
 		
@@ -246,10 +246,18 @@ bool Scene::Update(float dt)
 		vsyncActive = false;
 	}
 
-	if (fullScreen != nullptr && fullScreen->click == true)
+	if (fullScreen != nullptr && fullScreen->click == true && fullScreenActive == false)
 	{
 		fullScreenActive = true;
+		app->win->ToggleFullscreen();
 	}
+
+	if (fullScreen != nullptr && fullScreen->click == false && fullScreenActive == true)
+	{
+		fullScreenActive = false;
+		app->win->ToggleFullscreen();
+	}
+	
 	return true;
 }
 

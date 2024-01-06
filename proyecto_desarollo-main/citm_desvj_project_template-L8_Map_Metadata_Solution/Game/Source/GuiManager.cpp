@@ -19,7 +19,7 @@ bool GuiManager::Start()
 }
 
 // L15: DONE1: Implement CreateGuiControl function that instantiates a new GUI control and add it to the list of controls
-GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, SDL_Rect bounds, Module* observer, SDL_Rect sliderBounds)
+GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, SDL_Rect bounds, SDL_Rect bounds2, Module* observer, SDL_Rect sliderBounds)
 {
 	GuiControl* guiControl = nullptr;
 
@@ -30,7 +30,7 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 		guiControl = new GuiControlButton(id, bounds, text);
 		break;
 	case GuiControlType::CHECKBOX:
-		guiControl = new GuiCheckBox(id, bounds, text);
+		guiControl = new GuiCheckBox(id, bounds,bounds2, text);
 		
 		break;
 	}

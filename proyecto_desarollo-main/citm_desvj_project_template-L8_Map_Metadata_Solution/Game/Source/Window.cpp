@@ -35,7 +35,7 @@ bool Window::Awake(pugi::xml_node config)
 		// Create window
 		Uint32 flags = SDL_WINDOW_SHOWN;
 
-		bool fullscreen = config.child("fullscreen").attribute("value").as_bool(false);
+		bool fullscreen = app->scene->fullScreenActive;
 		bool borderless = config.child("borderless").attribute("value").as_bool(false);
 		bool resizable = config.child("resizable").attribute("value").as_bool(false);
 		bool fullscreen_window = app->scene->fullScreenActive;
@@ -65,6 +65,8 @@ bool Window::Awake(pugi::xml_node config)
 
 	return ret;
 }
+
+
 
 // Called before quitting
 bool Window::CleanUp()
@@ -99,3 +101,20 @@ uint Window::GetScale() const
 {
 	return scale;
 }
+void Window::ToggleFullscreen()
+{
+	// Toggle the fullscreen state
+	fullscreen = !fullscreen;
+
+	// Set the fullscreen mode
+	if (fullscreen)
+	{
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+	}
+	else
+	{
+		SDL_SetWindowFullscreen(window, 0);  // 0 means exiting fullscreen
+	}
+}
+
+// Example usage in your code (e.g., responding to a user input or game state change)
