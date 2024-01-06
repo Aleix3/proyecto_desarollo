@@ -175,6 +175,7 @@ bool Scene::Update(float dt)
 
 	if (!menuu)
 	{
+		app->entityManager->active = true;
 		if (gcButtom != nullptr)
 		{
 
