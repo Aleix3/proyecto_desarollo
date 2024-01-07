@@ -147,6 +147,8 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
 
+	uint windowWidth, windowHeight;
+	app->win->GetWindowSize(windowWidth, windowHeight);
 
 	if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 	{
@@ -159,31 +161,47 @@ bool Scene::Update(float dt)
 
 	if (menuu && contadormenu == 0)
 	{
+		contadormenu++;
+		if (gcButtom != nullptr)
+		{
+			gcButtom->state = GuiControlState::NORMAL;
+			exit->state = GuiControlState::NORMAL;
+			settings->state = GuiControlState::NORMAL;
+		}
+		
+		
+		else
+		{
+			SDL_Rect btPos = { windowWidth / 2 - 100,windowHeight / 2 - 200, 230,30 };
+			gcButtom = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "RESUME", btPos, { 0,0,0,0 }, this);
+
+			SDL_Rect ExitPos = { windowWidth / 2 - 100,windowHeight / 2 + 100, 230,30 };
+			exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", ExitPos, { 0,0,0,0 }, this);
+
+			SDL_Rect SettingsPos = { windowWidth / 2 - 100,windowHeight / 2 - 60, 230,30 };
+			settings = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "SETTINGS", SettingsPos, { 0,0,0,0 }, this);
+		}
+		
 		app->entityManager->active = false;
-		SDL_Rect btPos = { player->position.x + 300,player->position.y - 560, 230,30 };
-		gcButtom = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "RESUME", btPos, { 0,0,0,0 }, this);
-
-		SDL_Rect ExitPos = { player->position.x + 300,player->position.y - 160, 230,30 };
-		exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", ExitPos, { 0,0,0,0 }, this);
-
-		SDL_Rect SettingsPos = { player->position.x + 300,player->position.y - 360, 230,30 };
-		settings = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "SETTINGS", SettingsPos, { 0,0,0,0 }, this);
-
 		
 
-		contadormenu++;
+		
 	}
 
 	if (!menuu)
 	{
-		app->entityManager->active = true;
+		
 		if (gcButtom != nullptr)
 		{
-
+			app->entityManager->active = true;
 
 			gcButtom->state = GuiControlState::DISABLED;
 			exit->state = GuiControlState::DISABLED;
 			settings->state = GuiControlState::DISABLED;
+			gcButtom = nullptr;
+			exit = nullptr;
+			settings = nullptr;
+			
 			contadormenu = 0;
 		}
 		
@@ -191,7 +209,7 @@ bool Scene::Update(float dt)
 	if(gcButtom != nullptr && gcButtom->click == true)
 	{
 		menuu = false;
-		gcButtom->click = true;
+		
 	}
 
 	if (exit != nullptr && exit->click == true)
@@ -207,12 +225,14 @@ bool Scene::Update(float dt)
 
 	if (menuusettings && contadormenusettings == 0)
 	{
+		SDL_Rect cruzpos = { windowWidth / 2 + 150,windowHeight / 2 - 300, 50,50 };
+		cruz = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "X", cruzpos, { 0,0,0,2 }, this);
 		
-		SDL_Rect vSyncpos = { player->position.x + 70,player->position.y - 110, 200, 50 };
-		vsync = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "VSYNC", vSyncpos, { 425,-375,20,20 }, this);
+		SDL_Rect vSyncpos = { windowWidth / 2 - 335,windowHeight / 2 +200, 200, 50 };
+		vsync = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "VSYNC", vSyncpos, { 425,-355,20,20 }, this);
 
-		SDL_Rect FullScreen = { player->position.x + 70,player->position.y, 200, 50 };
-		fullScreen = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "FULLSCREEN", FullScreen, { 425,-270,0,0 }, this);
+		SDL_Rect FullScreen = { windowWidth / 2 - 335,windowHeight / 2 + 300, 200, 50 };
+		fullScreen = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "FULLSCREEN", FullScreen, { 425,-260,0,0 }, this);
 
 		contadormenusettings++;
 		
@@ -225,13 +245,17 @@ bool Scene::Update(float dt)
 	{
 		if (vsync != nullptr)
 		{
+			menuu = true;
 
-
-			
 			vsync->state = GuiControlState::DISABLED;
 			fullScreen->state = GuiControlState::DISABLED;
-			menuu = true;
+			cruz->state = GuiControlState::DISABLED;
+			vsync = nullptr;
+			fullScreen = nullptr;
+			cruz = nullptr;
+			
 			contadormenusettings = 0;
+			
 			
 		}
 		
@@ -256,6 +280,11 @@ bool Scene::Update(float dt)
 	{
 		fullScreenActive = false;
 		app->win->ToggleFullscreen();
+	}
+	if (cruz != nullptr && cruz->click == true)
+	{
+		menuusettings = false;
+		
 	}
 	
 	return true;

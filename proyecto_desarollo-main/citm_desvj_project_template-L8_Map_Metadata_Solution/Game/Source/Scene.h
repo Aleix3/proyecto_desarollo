@@ -78,6 +78,7 @@ private:
 	GuiControlButton* settings;
 	GuiCheckBox* vsync;
 	GuiCheckBox* fullScreen;
+	GuiControlButton* cruz;
 	bool ret = true;
 
 };
