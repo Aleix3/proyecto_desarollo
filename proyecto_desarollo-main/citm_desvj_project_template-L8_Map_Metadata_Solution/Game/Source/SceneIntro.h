@@ -1,5 +1,5 @@
-#ifndef __SCENE_H__
-#define __SCENE_H__
+#ifndef __SCENEINTRO_H__
+#define __SCENEINTRO_H__
 
 #include "Module.h"
 #include "Player.h"
@@ -12,14 +12,14 @@
 
 struct SDL_Texture;
 
-class Scene : public Module
+class SceneIntro : public Module
 {
 public:
 
-	Scene();
+	SceneIntro();
 
 	// Destructor
-	virtual ~Scene();
+	virtual ~SceneIntro();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node config);
@@ -39,15 +39,16 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	Player* GetPlayer();
+	
 
-	EnemySamurai* GetEnemySamurai();
+	
 
-	bool OnGuiMouseClickEvent(GuiControl* control);
+	
+private:
 
 	bool visible = true;
 
-	bool menuu = false;
+	bool menuu = true;
 
 	bool menuusettings = false;
 
@@ -55,14 +56,6 @@ public:
 
 	bool fullScreenActive = false;
 
-	iPoint playerMap;
-
-	EnemySamurai* enemySamurai;
-
-	EnemyVulture* enemyVulture;
-
-	SDL_Texture* mouseTileTex = nullptr;
-private:
 	SDL_Texture* img;
 	SDL_Texture* menu;
 	float textPosX, textPosY = 0;

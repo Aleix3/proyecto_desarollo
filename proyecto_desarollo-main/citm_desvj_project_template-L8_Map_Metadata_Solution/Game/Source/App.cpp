@@ -9,6 +9,8 @@
 #include "Physics.h"
 #include "Ability.h"
 #include "GuiManager.h"
+#include "SceneIntro.h"
+
 
 #include "Defs.h"
 #include "Log.h"
@@ -37,11 +39,13 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	entityManager = new EntityManager();
 	ability = new Ability();
 	guiManager = new GuiManager();
+	sceneintro = new SceneIntro();
 
 	AddModule(win);
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(sceneintro);
 	AddModule(physics);
 	AddModule(scene);
 	AddModule(map);

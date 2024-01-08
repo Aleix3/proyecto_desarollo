@@ -9,7 +9,7 @@
 #include "Item.h"
 #include "GuiControl.h"
 #include "GuiManager.h"
-
+#include"SceneIntro.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -83,6 +83,7 @@ bool Scene::Start()
 
 	SDL_Rect btPos = { windowW / 2 - 60,80, 120,20 };
 	/*gcButtom = (GuiControlButton*) app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);*/
+	
 
 	return true;
 
@@ -92,6 +93,7 @@ bool Scene::Start()
 // Called each loop iteration
 bool Scene::PreUpdate()
 {
+	app->sceneintro->active = false;
 	return true;
 }
 bool camaralibre = false;

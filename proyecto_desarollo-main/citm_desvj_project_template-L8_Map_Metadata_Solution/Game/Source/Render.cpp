@@ -79,6 +79,17 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
+	if (app->scene->vsyncActive)
+	{
+		SDL_GL_SetSwapInterval(1); // Enable VSync
+		LOG("VSync enabled");
+	}
+	else
+	{
+		SDL_GL_SetSwapInterval(0); // Disable VSync
+		LOG("VSync disabled");
+	}
+
 	return true;
 }
 
