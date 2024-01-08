@@ -18,6 +18,10 @@ bool Boss::Start() {
 }
 
 bool Boss::Update(float dt) {
+
+	// El boss no tendra un path, atacara aleatoriamente cuando tenga al player cerca. Si el boss toca al player, el player pierde una vida
+	// Si el Boss ataca y da al player, pierde una vida. Si el player se aleja mucho despues de haber combatido un rato, el Boss hara un salto en direccion al player.
+	// Algo mas
 	return true;
 }
 

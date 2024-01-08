@@ -5,6 +5,15 @@
 #include "Animation.h"
 #include "SDL/include/SDL.h"
 
+
+enum class BossState {
+    IDLE,
+    JUMPING,
+    ATACKING,
+    CHARGING,
+    DYING
+};
+
 class Boss : public Entity {
 public:
     Boss();
@@ -20,11 +29,9 @@ public:
 
     pugi::xml_node config;
 
-
     Animation attackAnim;
     Animation moveAnim;
     Animation dieAnim;
-
 
     uint attackFx;
     uint dieFx;
