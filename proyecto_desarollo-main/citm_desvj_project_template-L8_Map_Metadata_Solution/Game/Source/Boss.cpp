@@ -13,15 +13,15 @@ bool Boss::Awake() {
 }
 
 bool Boss::Start() {
-
+	return true;
 }
 
 bool Boss::Update(float dt) {
-
+	return true;
 }
 
 bool Boss::CleanUp() {
-
+	return true;
 }
 
 void Boss::OnCollision(PhysBody* physA, PhysBody* physB) {
