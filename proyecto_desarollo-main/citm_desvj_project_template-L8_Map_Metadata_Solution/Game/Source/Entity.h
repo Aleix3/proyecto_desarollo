@@ -13,6 +13,7 @@ enum class EntityType
 	ENEMY,
 	ENEMYSAMURAI,
 	ENEMYVULTURE,
+	BOSS,
 	UNKNOWN
 };
 

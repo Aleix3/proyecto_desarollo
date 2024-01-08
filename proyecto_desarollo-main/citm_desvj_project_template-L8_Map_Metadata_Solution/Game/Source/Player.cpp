@@ -119,10 +119,10 @@ bool Player::Update(float dt) {
 
     }
     
-        if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-        {
-            godmode = !godmode;
-        }
+    if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+    {
+        godmode = !godmode;
+    }
     
     
     if (godmode == true )
