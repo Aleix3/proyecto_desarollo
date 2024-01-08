@@ -182,15 +182,10 @@ bool Scene::Update(float dt)
 			settings = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "SETTINGS", SettingsPos, { 0,0,0,0 }, this);
 		}
 		
-		
+		app->entityManager->active = false;
 		
 
 		
-	}
-	if (menuu)
-	{
-		app->entityManager->active = false;
-		app->physics->active = false;
 	}
 
 	if (!menuu)
@@ -199,7 +194,7 @@ bool Scene::Update(float dt)
 		if (gcButtom != nullptr)
 		{
 			app->entityManager->active = true;
-			app->physics->active = true;
+
 			gcButtom->state = GuiControlState::DISABLED;
 			exit->state = GuiControlState::DISABLED;
 			settings->state = GuiControlState::DISABLED;
@@ -233,11 +228,11 @@ bool Scene::Update(float dt)
 		SDL_Rect cruzpos = { windowWidth / 2 + 150,windowHeight / 2 - 300, 50,50 };
 		cruz = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "X", cruzpos, { 0,0,0,2 }, this);
 		
-		SDL_Rect vSyncpos = { windowWidth / 2 + 100,windowHeight / 2 - 220, 200, 50 };
-		vsync = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "VSYNC", vSyncpos, { 0,0,20,20 }, this);
+		SDL_Rect vSyncpos = { windowWidth / 2 - 335,windowHeight / 2 +200, 200, 50 };
+		vsync = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "VSYNC", vSyncpos, { 425,-355,20,20 }, this);
 
-		SDL_Rect FullScreen = { windowWidth / 2 + 100,windowHeight / 2 , 200, 50 };
-		fullScreen = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "FULLSCREEN", FullScreen, { 0,0,0,0 }, this);
+		SDL_Rect FullScreen = { windowWidth / 2 - 335,windowHeight / 2 + 300, 200, 50 };
+		fullScreen = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "FULLSCREEN", FullScreen, { 425,-260,0,0 }, this);
 
 		contadormenusettings++;
 		
@@ -245,7 +240,6 @@ bool Scene::Update(float dt)
 	if (menuusettings)
 	{
 		app->entityManager->active = false;
-		app->physics->active = false;
 	}
 	if (!menuusettings)
 	{
@@ -344,7 +338,7 @@ bool Scene::PostUpdate()
 		ret = false;
 
 	if (menuu || menuusettings)
-		app->render->DrawTexture(menu, windowWidth/2 - 250 , windowHeight/2 -400 ,0,0,0,0,0,true);
+		app->render->DrawTexture(menu, windowWidth/2 - 500, windowHeight/2 + 100);
 	
 
 	return ret;

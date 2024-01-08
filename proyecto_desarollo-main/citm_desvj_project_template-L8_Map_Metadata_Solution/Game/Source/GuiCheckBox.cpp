@@ -78,13 +78,13 @@ bool GuiCheckBox::PostUpdate()
 				/*app->render->DrawRectangle(bounds, 200, 200, 200, 255, true, false);*/
 				break;
 			case GuiControlState::NORMAL:
-				app->render->DrawTexture(img, bounds.x, bounds.y);
+				app->render->DrawTexture(img, bounds.x, bounds.y, 0, 0, 0, 0, 0, true);
 				break;
 			case GuiControlState::FOCUSED:
-				app->render->DrawTexture(img, bounds.x, bounds.y);
+				app->render->DrawTexture(img, bounds.x, bounds.y, 0, 0, 0, 0, 0, true);
 				break;
 			case GuiControlState::PRESSED:
-				app->render->DrawTexture(img, bounds.x, bounds.y);
+				app->render->DrawTexture(img, bounds.x, bounds.y, 0, 0, 0, 0, 0, true);
 				break;
 			}
 			app->render->DrawText(text.GetString(), bounds.x + bounds2.x - 200, bounds.y+bounds2.y, bounds.w, bounds.h,id)
@@ -98,13 +98,13 @@ bool GuiCheckBox::PostUpdate()
 				/*app->render->DrawRectangle(bounds, 200, 200, 200, 255, true, false);*/
 				break;
 			case GuiControlState::NORMAL:
-				app->render->DrawTexture(img2, bounds.x, bounds.y);
+				app->render->DrawTexture(img2, bounds.x, bounds.y, 0, 0, 0, 0, 0, true);
 				break;
 			case GuiControlState::FOCUSED:
-				app->render->DrawTexture(img2, bounds.x, bounds.y);
+				app->render->DrawTexture(img2, bounds.x, bounds.y, 0, 0, 0, 0, 0, true);
 				break;
 			case GuiControlState::PRESSED:
-				app->render->DrawTexture(img2, bounds.x, bounds.y);
+				app->render->DrawTexture(img2, bounds.x, bounds.y, 0, 0, 0, 0, 0, true);
 				break;
 			}
 			app->render->DrawText(text.GetString(), bounds.x + bounds2.x - 200, bounds.y + bounds2.y, bounds.w, bounds.h,id);
