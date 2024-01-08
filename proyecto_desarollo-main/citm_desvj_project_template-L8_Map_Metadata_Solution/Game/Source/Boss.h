@@ -8,9 +8,9 @@
 
 enum class BossState {
     IDLE,
-    JUMPING,
     ATACKING,
-    CHARGING,
+    SPAWNING,
+    DAMAGE,
     DYING
 };
 
