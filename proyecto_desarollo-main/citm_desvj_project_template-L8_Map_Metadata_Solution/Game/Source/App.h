@@ -21,6 +21,7 @@ class Map;
 class Physics;
 class Ability;
 class GuiManager;
+class SceneIntro;
 
 class App
 {
@@ -100,6 +101,8 @@ public:
 	Physics* physics;
 	Ability* ability;
 	GuiManager* guiManager;
+	SceneIntro* sceneintro;
+
 private:
 
 	int argc;

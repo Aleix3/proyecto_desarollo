@@ -3,7 +3,8 @@
 #include"Scene.h"
 #include "Defs.h"
 #include "Log.h"
-
+#include "Map.h"
+#include "GuiManager.h"
 #include "SDL/include/SDL.h"
 
 
@@ -62,6 +63,8 @@ bool Window::Awake(pugi::xml_node config)
 			screenSurface = SDL_GetWindowSurface(window);
 		}
 	}
+
+	
 
 	return ret;
 }
