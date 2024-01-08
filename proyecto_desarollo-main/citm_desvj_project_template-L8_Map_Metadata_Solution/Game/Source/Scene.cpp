@@ -45,6 +45,9 @@ bool Scene::Awake(pugi::xml_node config)
 		enemyVulture->parameters = enemyNode;
 	}
 
+	boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
+	boss->config = config.child("Boss");
+
 	//Get the map name from the config file and assigns the value in the module
 	app->map->name = config.child("map").attribute("name").as_string();
 	app->map->path = config.child("map").attribute("path").as_string();

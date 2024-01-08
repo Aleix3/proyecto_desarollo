@@ -9,6 +9,7 @@
 #include "GuiControl.h"
 #include "GuiControlButton.h"
 #include "GuiCheckBox.h"
+#include "Boss.h"
 
 struct SDL_Texture;
 
@@ -62,6 +63,7 @@ public:
 	EnemyVulture* enemyVulture;
 
 	SDL_Texture* mouseTileTex = nullptr;
+
 private:
 	SDL_Texture* img;
 	SDL_Texture* menu;
@@ -72,6 +74,8 @@ private:
 
 	//L03: DONE 3b: Declare a Player attribute
 	Player* player;
+
+	Boss* boss;
 	
 	GuiControlButton* gcButtom;
 	GuiControlButton* exit;

@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Animation.h"
+#include "SDL/include/SDL.h"
 
 class Boss : public Entity {
 public:
@@ -15,10 +16,15 @@ public:
     bool CleanUp();
     void OnCollision(PhysBody* physA, PhysBody* physB);
 
-private:
+public:
+
+    pugi::xml_node config;
+
+
     Animation attackAnim;
     Animation moveAnim;
     Animation dieAnim;
+
 
     uint attackFx;
     uint dieFx;
