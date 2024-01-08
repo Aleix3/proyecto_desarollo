@@ -10,6 +10,7 @@ Boss::~Boss() {
 
 bool Boss::Awake() {
 	name.Create("Boss");
+	return true;
 }
 
 bool Boss::Start() {
