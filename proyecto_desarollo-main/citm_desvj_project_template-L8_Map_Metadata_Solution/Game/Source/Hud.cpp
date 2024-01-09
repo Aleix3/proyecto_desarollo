@@ -34,7 +34,7 @@ bool Hud::Awake(pugi::xml_node config)
 // Called before the first frame
 bool Hud::Start()
 {
-	
+	menu = app->tex->Load("Assets/Textures/Menu/elements2.png");
 	
 	
 	
@@ -71,9 +71,15 @@ bool Hud::PostUpdate()
 	uint windowWidth, windowHeight;
 	app->win->GetWindowSize(windowWidth, windowHeight);
 
-	app->render->DrawText("Hola", windowWidth, windowHeight, 200, 200, 2);
+	
+
+	/*app->render->DrawTexture(menu, windowWidth / 2 - 250, windowHeight / 2 - 400, 0, 0, 0, 0, 0, true);*/
 
 	
+
+	text = "Hola";
+
+	app->render->DrawText(text.GetString(), windowWidth/16, windowHeight/16, 20, 20, 2);
 
 	return ret;
 }

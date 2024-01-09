@@ -47,7 +47,7 @@ public:
 private:
 
 	SString text;
-
+	SDL_Texture* menu;
 
 	bool ret = true;
 
