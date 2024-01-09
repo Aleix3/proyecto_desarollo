@@ -10,6 +10,7 @@
 #include "Ability.h"
 #include "GuiManager.h"
 #include "SceneIntro.h"
+#include"Hud.h"
 
 
 #include "Defs.h"
@@ -40,6 +41,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	ability = new Ability();
 	guiManager = new GuiManager();
 	sceneintro = new SceneIntro();
+	hud = new Hud();
 
 	AddModule(win);
 	AddModule(input);
@@ -50,6 +52,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(map);
 	AddModule(entityManager);
+	AddModule(hud);
 	AddModule(ability);
 	AddModule(guiManager);
 

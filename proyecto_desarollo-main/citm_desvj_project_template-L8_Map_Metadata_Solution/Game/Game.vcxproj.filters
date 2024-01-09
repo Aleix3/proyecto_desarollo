@@ -32,6 +32,7 @@
     <ClCompile Include="Source\GuiCheckBox.cpp" />
     <ClCompile Include="Source\SceneIntro.cpp" />
     <ClCompile Include="Source\Boss.cpp" />
+    <ClCompile Include="Source\Hud.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -90,6 +91,7 @@
     <ClInclude Include="Source\GuiCheckBox.h" />
     <ClInclude Include="Source\SceneIntro.h" />
     <ClInclude Include="Source\Boss.h" />
+    <ClInclude Include="Source\Hud.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

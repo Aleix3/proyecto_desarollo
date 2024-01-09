@@ -22,6 +22,7 @@ class Physics;
 class Ability;
 class GuiManager;
 class SceneIntro;
+class Hud;
 
 class App
 {
@@ -102,6 +103,7 @@ public:
 	Ability* ability;
 	GuiManager* guiManager;
 	SceneIntro* sceneintro;
+	Hud* hud;
 
 private:
 

@@ -38,7 +38,7 @@ bool Scene::Awake(pugi::xml_node config)
 		enemySamurai = (EnemySamurai*)app->entityManager->CreateEntity(EntityType::ENEMYSAMURAI);
 		enemySamurai->parameters = enemyNode;
 	}
-
+	
 	for (pugi::xml_node enemyNode = config.child("EnemyVulture"); enemyNode; enemyNode = enemyNode.next_sibling("EnemyVulture"))
 	{
 		enemyVulture = (EnemyVulture*)app->entityManager->CreateEntity(EntityType::ENEMYVULTURE);
@@ -161,7 +161,6 @@ bool Scene::Update(float dt)
 
 		menuu = !menuu;
 	}
-	
 	
 
 	if (menuu && contadormenu == 0)

@@ -12,6 +12,7 @@
 #include"SceneIntro.h"
 #include "Defs.h"
 #include "Log.h"
+#include "Hud.h"
 
 SceneIntro::SceneIntro() : Module()
 {
@@ -47,6 +48,7 @@ bool SceneIntro::Start()
 	app->entityManager->active = false;
 	app->map->active = false;
 	app->physics->active = false;
+	app->hud->active = false;
 	
 
 	return true;
@@ -125,6 +127,7 @@ bool SceneIntro::Update(float dt)
 				app->entityManager->active = true;
 				app->map->active = true;
 				app->physics->active = true;
+				app->hud->active = true;
 			}
 
 			
