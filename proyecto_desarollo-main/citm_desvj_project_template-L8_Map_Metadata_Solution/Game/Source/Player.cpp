@@ -10,6 +10,7 @@
 #include "Physics.h"
 #include "map.h"
 #include "Enemy.h"
+#include "Hud.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -96,28 +97,12 @@ bool Player::Start() {
 
 
 bool Player::Update(float dt) {
-
+    
 
     currentAnimation = &idleAnim;
 
     velocity = pbody->body->GetLinearVelocity();
-    if (godmode == true)
-    {
-        if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-        {
-            
-            position.x = 250;
-            position.y = 672;
-            app->physics->DestroyBody(pbody);
-            pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
-            pbody->listener = this;
-            pbody->ctype = ColliderType::PLAYER;
-            
-        }
-
-
-
-    }
+   
     
     if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
     {
@@ -141,6 +126,23 @@ bool Player::Update(float dt) {
     }
     else
     {
+        
+        if (restarvida == true && Cooldown(3.0f))
+        {
+            dano = true;
+            currentAnimation = &dashAnim1;
+            app->hud->lives--;
+            restarvida = false;
+        }
+        else
+        {
+            restarvida = false;
+        }
+        if (app->hud->lives == 0)
+        {
+
+            die = true;
+        }
         if (die == true)
         {
             currentAnimation = &dieAnim;
@@ -162,6 +164,17 @@ bool Player::Update(float dt) {
                 pbody->ctype = ColliderType::PLAYER;
                 die = false;
                 dieAnim.Reset();
+                app->hud->lives = 3;
+                app->hud->puntos = 0;
+            }
+        }
+        else if (dano == true)
+        {
+            currentAnimation = &dashAnim1;
+            if (dashAnim1.HasFinished())
+            {
+                dano = false;
+                dashAnim1.Reset();
             }
         }
         else
@@ -289,7 +302,9 @@ bool Player::Update(float dt) {
         app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_NONE, &rect);
     }
 
-    
+    printf("Position X: %d", position.x);
+    printf("\n");
+    printf("Position Y: %d", position.y);
     return true;
 }
 
@@ -318,11 +333,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
         break;
     case ColliderType::DIE:
         LOG("Collision DIE");
-        die = true;
+        restarvida = true;
+        
         break;
     case ColliderType::ENEMY:
         LOG("Collision DIE");
-        die = true;
+        restarvida = true;
+        
         break;
     case ColliderType::ABILITY:
         LOG("Collision ABILITY");

@@ -134,7 +134,7 @@ bool SceneIntro::Update(float dt)
 		}
 		
 	}
-	if(gcButtom != nullptr && gcButtom->click == true)
+	if(gcButtom != nullptr && gcButtom->click == true || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		menuu = false;
 		

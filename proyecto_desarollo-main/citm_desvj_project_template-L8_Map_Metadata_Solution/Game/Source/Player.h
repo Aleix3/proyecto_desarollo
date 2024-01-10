@@ -83,7 +83,8 @@ public:
 	bool isDying = false;
 	bool dash2 = false;
 	bool comprovacionFX = true;
-
+	bool restarvida = false;
+	bool dano = false;
 	//sonidos
 	uint golpePlayerFX = 0;
 	uint dashFX = 0;

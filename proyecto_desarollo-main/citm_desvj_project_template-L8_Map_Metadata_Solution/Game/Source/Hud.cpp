@@ -36,8 +36,9 @@ bool Hud::Start()
 {
 	menu = app->tex->Load("Assets/Textures/Menu/elements2.png");
 	
+	lives = 3;
 	
-	
+	puntos = 0;
 
 	return true;
 }
@@ -77,9 +78,17 @@ bool Hud::PostUpdate()
 
 	
 
-	text = "Hola";
+	char text[20]; // Assuming a reasonable size for the text buffer
 
-	app->render->DrawText(text.GetString(), windowWidth/16, windowHeight/16, 20, 20, 2);
+	// Use sprintf to format the text with the current number of lives
+	
+	sprintf_s(text, "Vidas: %d/3", lives);
+
+	app->render->DrawText(text, windowWidth/16 - 50, windowHeight/16 -50, 120, 50, 2);
+
+	char text2[20];
+	sprintf_s(text2, "Score: %d   pts", puntos);
+	app->render->DrawText(text2, windowWidth / 16 - 50 , windowHeight / 16 + 25, 170, 50, 2);
 
 	return ret;
 }

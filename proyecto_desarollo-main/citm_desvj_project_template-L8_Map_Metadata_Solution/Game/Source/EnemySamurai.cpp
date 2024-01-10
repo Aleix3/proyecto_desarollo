@@ -11,6 +11,7 @@
 #include "map.h"
 #include "Pathfinding.h"
 #include "EnemySamurai.h"
+#include "Hud.h"
 
 
 EnemySamurai::EnemySamurai() : Enemy()
@@ -324,15 +325,17 @@ void EnemySamurai::OnCollision(PhysBody* physA, PhysBody* physB) {
     case ColliderType::DIE:
         LOG("Collision DIE");
         die = true;
+        app->hud->puntos += 50;
         break;
     case ColliderType::ABILITY:
         LOG("Collision ABILITY");
         die = true;
+        app->hud->puntos += 50;
         break;
     case ColliderType::PLAYER:
         LOG("Collision PLAYER");
-        app->scene->GetPlayer()->die = true;
-        dieplayer = true;
+        
+        
         break;
     case ColliderType::UNKNOWN:
         LOG("Collision UNKNOWN");

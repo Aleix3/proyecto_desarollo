@@ -12,6 +12,7 @@
 #include "Pathfinding.h"
 #include "EnemyVulture.h"
 #include "Ability.h"
+#include "Hud.h"
 
 
 EnemyVulture::EnemyVulture() : Enemy()
@@ -263,6 +264,7 @@ bool EnemyVulture::Update(float dt) {
             pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
             pbody->listener = this;
             pbody->ctype = ColliderType::ENEMY;
+            pbody->body->SetGravityScale(0.0f);
         }
 
         else
@@ -312,14 +314,16 @@ void EnemyVulture::OnCollision(PhysBody* physA, PhysBody* physB) {
     case ColliderType::DIE:
         LOG("Collision DIE");
         die = true;
+        app->hud->puntos += 50;
         break;
     case ColliderType::ABILITY:
         LOG("Collision ABILITY");
         die = true;
+        app->hud->puntos += 50;
         break;
     case ColliderType::PLAYER:
         LOG("Collision PLAYER");
-        app->scene->GetPlayer()->die = true;
+        
         break;
     case ColliderType::UNKNOWN:
         LOG("Collision UNKNOWN");

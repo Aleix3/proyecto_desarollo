@@ -40,7 +40,8 @@ public:
 	bool CleanUp();
 
 	
-
+	int lives;
+	int puntos;
 	
 
 	
@@ -51,6 +52,7 @@ private:
 
 	bool ret = true;
 
+	
 };
 
 #endif // __SCENE_H__
