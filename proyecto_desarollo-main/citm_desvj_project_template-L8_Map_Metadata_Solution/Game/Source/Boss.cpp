@@ -52,29 +52,13 @@ bool Boss::Awake() {
     attackAnim.speed = 0.17f;
     attackAnim.loop = false;
 
-    attackAnim.PushBack({ 0, 1000, 125, 100 });
-    attackAnim.PushBack({ 125, 1000, 125, 100 });
-    attackAnim.PushBack({ 250, 1000, 125, 100 });
-    attackAnim.PushBack({ 375, 1000, 125, 100 });
-    attackAnim.PushBack({ 0, 1100, 125, 100 });
-    attackAnim.loop = false;
+    spawnAnim.PushBack({ 0, 1000, 125, 100 });
+    spawnAnim.PushBack({ 125, 1000, 125, 100 });
+    spawnAnim.PushBack({ 250, 1000, 125, 100 });
+    spawnAnim.PushBack({ 375, 1000, 125, 100 });
+    spawnAnim.PushBack({ 0, 1100, 125, 100 });
+    spawnAnim.loop = false;
 
-   /* idle2Anim.PushBack({ 4, 4, 23, 27 });
-    idle2Anim.PushBack({ 37, 3, 22, 28 });
-    idle2Anim.speed = 0.05f;
-
-    spawnAnim.PushBack({ 4, 131, 23, 28 });
-    spawnAnim.PushBack({ 35, 132, 24, 27 });
-    spawnAnim.PushBack({ 70, 130, 22, 29 });
-    spawnAnim.PushBack({ 102, 128, 21, 30 });
-    spawnAnim.PushBack({ 134, 128, 21, 28 });
-    spawnAnim.PushBack({ 164, 129, 23, 28 });
-    spawnAnim.PushBack({ 196, 130, 23, 29 });
-    spawnAnim.PushBack({ 228, 132, 24, 27 });
-    spawnAnim.PushBack({ 259, 132, 24, 27 });
-    spawnAnim.PushBack({ 292, 132, 23, 27 });
-    spawnAnim.speed = 0.15f;
-    */
     ultimo_uso = std::chrono::steady_clock::now();
 
 	return true;
