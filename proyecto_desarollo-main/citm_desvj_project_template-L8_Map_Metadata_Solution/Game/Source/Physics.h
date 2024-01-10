@@ -32,6 +32,7 @@ enum class ColliderType {
 	PLATFORM, 
 	DIE,
 	ABILITY,
+	BOSS,
 	UNKNOWN
 	// ..
 };
