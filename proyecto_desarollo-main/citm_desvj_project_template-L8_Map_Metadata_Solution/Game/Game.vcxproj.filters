@@ -33,6 +33,7 @@
     <ClCompile Include="Source\SceneIntro.cpp" />
     <ClCompile Include="Source\Boss.cpp" />
     <ClCompile Include="Source\Hud.cpp" />
+    <ClCompile Include="Source\Summon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -92,6 +93,7 @@
     <ClInclude Include="Source\SceneIntro.h" />
     <ClInclude Include="Source\Boss.h" />
     <ClInclude Include="Source\Hud.h" />
+    <ClInclude Include="Source\Summon.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
