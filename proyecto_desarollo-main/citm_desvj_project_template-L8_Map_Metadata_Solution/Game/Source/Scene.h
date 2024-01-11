@@ -10,6 +10,7 @@
 #include "GuiControlButton.h"
 #include "GuiCheckBox.h"
 #include "Boss.h"
+#include "item.h"
 
 struct SDL_Texture;
 
@@ -44,6 +45,9 @@ public:
 
 	EnemySamurai* GetEnemySamurai();
 
+
+	Item* GetItem();
+
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 	bool visible = true;
@@ -65,6 +69,7 @@ public:
 	SDL_Texture* mouseTileTex = nullptr;
 
 private:
+	Item* item;
 	SDL_Texture* img;
 	SDL_Texture* menu;
 	float textPosX, textPosY = 0;

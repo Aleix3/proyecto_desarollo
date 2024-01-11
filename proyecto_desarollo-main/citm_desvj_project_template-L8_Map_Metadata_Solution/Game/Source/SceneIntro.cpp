@@ -38,7 +38,8 @@ bool SceneIntro::Start()
 	
 	
 	menu = app->tex->Load("Assets/Textures/Menu/elements2.png");
-	//Music is commented so that you can add your own music
+	fondo = app->tex->Load("Assets/Textures/PLATAFORMA/Texture/fondo2.jpg");
+	//Music is commentapped so that you can add your own music	
 	app->audio->PlayMusic("Assets/Audio/Music/Interloper.ogg");
 
 	//Get the size of the window
@@ -231,9 +232,13 @@ bool SceneIntro::PostUpdate()
 	uint windowWidth, windowHeight;
 	app->win->GetWindowSize(windowWidth, windowHeight);
 	
+	app->render->DrawTexture(fondo, windowWidth / 2 - 650, windowHeight / 2 - 400, 0, 0, 0, 0, 0, true);
 
 	if (menuu || menuusettings)
-		app->render->DrawTexture(menu, windowWidth / 2 - 250, windowHeight / 2 - 400, 0, 0, 0, 0, 0, true);
+		/*app->render->DrawTexture(menu, windowWidth / 2 - 250, windowHeight / 2 - 400, 0, 0, 0, 0, 0, true);*/
+
+
+	
 	
 
 	return ret;

@@ -40,6 +40,7 @@ bool Item::Start() {
 
 bool Item::Update(float dt)
 {
+
 	b2Transform pbodyPos = pbody->body->GetTransform();
 	position.x = METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2;
 	position.y = METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2;
