@@ -10,6 +10,7 @@
 #include "GuiControl.h"
 #include "GuiManager.h"
 #include"SceneIntro.h"
+#include "Hud.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -176,14 +177,17 @@ bool Scene::Update(float dt)
 		
 		else
 		{
-			SDL_Rect btPos = { windowWidth / 2 - 100,windowHeight / 2 - 200, 230,30 };
+			SDL_Rect btPos = { windowWidth / 2 - 100,windowHeight / 2 - 300, 230,30 };
 			gcButtom = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "RESUME", btPos, { 0,0,0,0 }, this);
 
-			SDL_Rect ExitPos = { windowWidth / 2 - 100,windowHeight / 2 + 100, 230,30 };
+			SDL_Rect ExitPos = { windowWidth / 2 - 100,windowHeight / 2 + 130, 230,30 };
 			exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", ExitPos, { 0,0,0,0 }, this);
 
-			SDL_Rect SettingsPos = { windowWidth / 2 - 100,windowHeight / 2 - 60, 230,30 };
+			SDL_Rect SettingsPos = { windowWidth / 2 - 100,windowHeight / 2 - 160, 230,30 };
 			settings = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "SETTINGS", SettingsPos, { 0,0,0,0 }, this);
+
+			SDL_Rect TitlePos = { windowWidth / 2 - 100,windowHeight / 2 - 20, 230,50 };
+			title = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "TITLE SCREEN", TitlePos, { 0,0,0,0 }, this);
 		}
 		
 		
@@ -207,9 +211,11 @@ bool Scene::Update(float dt)
 			gcButtom->state = GuiControlState::DISABLED;
 			exit->state = GuiControlState::DISABLED;
 			settings->state = GuiControlState::DISABLED;
+			title->state = GuiControlState::DISABLED;;
 			gcButtom = nullptr;
 			exit = nullptr;
 			settings = nullptr;
+			title = nullptr;
 			
 			contadormenu = 0;
 		}
@@ -230,6 +236,32 @@ bool Scene::Update(float dt)
 	{
 		menuu = false;
 		menuusettings = true;
+	}
+	if (title != nullptr && title->click == true)
+	{
+		
+		app->scene->active = false;
+		app->entityManager->active = false;
+		app->map->active = false;
+		app->physics->active = false;
+		app->hud->active = false;
+		app->sceneintro->active = true;
+		app->sceneintro->menuu = true;
+		app->entityManager->active = true;
+		app->physics->active = true;
+		gcButtom->state = GuiControlState::DISABLED;
+		exit->state = GuiControlState::DISABLED;
+		settings->state = GuiControlState::DISABLED;
+		title->state = GuiControlState::DISABLED;;
+		gcButtom = nullptr;
+		exit = nullptr;
+		settings = nullptr;
+		title = nullptr;
+		menuu = false;
+
+		contadormenu = 0;
+		
+		
 	}
 
 	if (menuusettings && contadormenusettings == 0)

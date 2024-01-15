@@ -40,7 +40,7 @@ public:
 	bool CleanUp();
 
 	
-
+	bool menuu = true;
 	
 
 	
@@ -48,7 +48,7 @@ private:
 
 	bool visible = true;
 
-	bool menuu = true;
+	
 
 	bool menuusettings = false;
 

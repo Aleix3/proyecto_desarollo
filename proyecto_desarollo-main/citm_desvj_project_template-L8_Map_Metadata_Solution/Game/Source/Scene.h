@@ -85,6 +85,7 @@ private:
 	GuiControlButton* gcButtom;
 	GuiControlButton* exit;
 	GuiControlButton* settings;
+	GuiControlButton* title;
 	GuiCheckBox* vsync;
 	GuiCheckBox* fullScreen;
 	GuiControlButton* cruz;
