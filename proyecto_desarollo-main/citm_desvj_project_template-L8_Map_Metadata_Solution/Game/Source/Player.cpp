@@ -94,7 +94,7 @@ bool Player::Start() {
 	pbody->ctype = ColliderType::PLAYER;
 	return true;
 }
-
+int a = 0;
 
 bool Player::Update(float dt) {
     
@@ -109,8 +109,16 @@ bool Player::Update(float dt) {
         godmode = !godmode;
     }
     
+    if (a == 1 && godmode == false)
+    {
+
+        app->physics->DestroyBody(pbody);
+        pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
+        pbody->listener = this;
+        a = 0;
+    }
     
-    if (godmode == true )
+    if (godmode == true)
     {
         if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
             position.y -= 6;
@@ -123,7 +131,10 @@ bool Player::Update(float dt) {
 
         if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
             position.x += 6;
+        a = 1;
+        
     }
+    
     else
     {
         
@@ -274,6 +285,18 @@ bool Player::Update(float dt) {
                 currentAnimation = &jumpAnim;
             }
 
+            if (portal == true)
+            {
+                position.x = 6912;
+                position.y = 1882;
+                app->physics->DestroyBody(pbody);
+                pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
+                pbody->listener = this;
+                portal = false;
+            }
+
+            
+
             pbody->body->SetLinearVelocity(velocity);
             b2Transform pbodyPos = pbody->body->GetTransform();
 
@@ -342,6 +365,12 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
     case ColliderType::ABILITY:
         LOG("Collision ABILITY");
         
+        break;
+    case ColliderType::PORTAL:
+        LOG("Collision PORTAL");
+        portal = true;
+        
+
         break;
     case ColliderType::UNKNOWN:
         LOG("Collision UNKNOWN");

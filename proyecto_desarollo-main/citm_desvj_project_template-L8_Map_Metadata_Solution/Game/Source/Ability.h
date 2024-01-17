@@ -35,6 +35,7 @@ public:
 	bool left = false;
 
 private:
+	PhysBody* rectangle;
 
 	SDL_Texture* texture;
 	uint texW, texH;

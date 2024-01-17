@@ -85,6 +85,7 @@ public:
 	bool comprovacionFX = true;
 	bool restarvida = false;
 	bool dano = false;
+	bool portal = false;
 	//sonidos
 	uint golpePlayerFX = 0;
 	uint dashFX = 0;
