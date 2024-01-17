@@ -42,6 +42,9 @@ private:
 	Animation* currentAnimation = nullptr;
 	Animation fireballAnim;
 
+	Animation* currentportal = nullptr;
+	Animation PortalAnim;
+
 	uint fireballFX = 0;
 
 	iPoint position;

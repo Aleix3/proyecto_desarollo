@@ -35,8 +35,17 @@ bool Ability::Start() {
 	fireballAnim.PushBack({ 512-64,480,32,32 });
 	fireballAnim.speed = 0.09f;
 	fireballAnim.loop = true;
+
+	PortalAnim.PushBack({ 512, 256,31,31 });
+	PortalAnim.PushBack({ 544 ,255,30,31 });
+	PortalAnim.PushBack({ 575,256,32,30 });
+	PortalAnim.PushBack({ 608,256,30,30 });
+	PortalAnim.speed = 0.09f;
+	PortalAnim.loop = true;
 	
 	fireballFX = app->audio->LoadFx("Assets/Audio/Fx/FireBall.wav");
+
+
 
 	return true;
 }
@@ -139,6 +148,12 @@ bool Ability::Update(float dt)
 		
 	}
 
+	currentportal = &PortalAnim;
+	SDL_Rect recta = (currentportal->GetCurrentFrame());
+
+	app->render->DrawTexture2(texture, 4944, 1954, SDL_FLIP_NONE, &recta);
+	
+	currentportal->Update();
 	
 
 	return true;
