@@ -46,8 +46,11 @@ bool Scene::Awake(pugi::xml_node config)
 		enemyVulture->parameters = enemyNode;
 	}
 
-	boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
-	boss->config = config.child("Boss");
+	for (pugi::xml_node enemyNode = config.child("Boss"); enemyNode; enemyNode = enemyNode.next_sibling("Boss"))
+	{
+		boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
+		boss->parameters = enemyNode;
+	}
 
 	//Get the map name from the config file and assigns the value in the module
 	app->map->name = config.child("map").attribute("name").as_string();
@@ -402,6 +405,16 @@ Player* Scene::GetPlayer()
 EnemySamurai* Scene::GetEnemySamurai()
 {
 	return enemySamurai;
+}
+
+EnemyVulture* Scene::GetEnemyVulture()
+{
+	return enemyVulture;
+}
+
+Boss* Scene::GetBoss()
+{
+	return boss;
 }
 Item* Scene::GetItem()
 {

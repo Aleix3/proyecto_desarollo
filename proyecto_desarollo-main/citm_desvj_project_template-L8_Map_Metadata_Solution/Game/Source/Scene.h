@@ -45,6 +45,9 @@ public:
 
 	EnemySamurai* GetEnemySamurai();
 
+	EnemyVulture* GetEnemyVulture();
+
+	Boss* GetBoss();
 
 	Item* GetItem();
 
@@ -66,6 +69,10 @@ public:
 
 	EnemyVulture* enemyVulture;
 
+	Player* player;
+
+	Boss* boss;
+
 	SDL_Texture* mouseTileTex = nullptr;
 
 private:
@@ -78,9 +85,7 @@ private:
 	
 
 	//L03: DONE 3b: Declare a Player attribute
-	Player* player;
 
-	Boss* boss;
 	
 	GuiControlButton* gcButtom;
 	GuiControlButton* exit;

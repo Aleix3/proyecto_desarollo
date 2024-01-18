@@ -346,6 +346,15 @@ bool Render::LoadState(pugi::xml_node node) {
 		
 	}
 
+	for (pugi::xml_node enemyNode = node.child("Boss"); enemyNode; enemyNode = enemyNode.next_sibling("Boss")) {
+		// Crear una instancia de EnemyVulture directamente en el entityManager
+		app->scene->boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
+
+		// Carga la posición del enemigo desde el nodo XML
+		app->scene->boss->parameters = enemyNode;
+
+	}
+
 	// Iterar sobre los nodos de enemigos y cargar sus posiciones
 	for (pugi::xml_node enemyNode = node.child("EnemyVulture"); enemyNode; enemyNode = enemyNode.next_sibling("EnemyVulture")) {
 		// Crear una instancia de EnemyVulture directamente en el entityManager

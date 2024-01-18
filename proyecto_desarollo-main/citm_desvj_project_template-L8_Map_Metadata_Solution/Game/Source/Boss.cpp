@@ -4,15 +4,7 @@
 #include "Physics.h"
 
 Boss::Boss() : Entity(EntityType::BOSS) {
-
-}
-
-Boss::~Boss() {
-
-}
-
-bool Boss::Awake() {
-	name.Create("Boss");
+    name.Create("Boss");
 
     idleAnim.PushBack({ 0, 700, 125, 100 });
     idleAnim.PushBack({ 125, 700, 125, 100 });
@@ -60,12 +52,20 @@ bool Boss::Awake() {
     spawnAnim.loop = false;
 
     ultimo_uso = std::chrono::steady_clock::now();
+}
 
+Boss::~Boss() {
+
+}
+
+bool Boss::Awake() {
+    position.x = parameters.attribute("x").as_int();
+    position.y = parameters.attribute("y").as_int();
 	return true;
 }
 
 bool Boss::Start() {
-    texture = app->tex->Load(config.attribute("texturePath").as_string());
+    texture = app->tex->Load(parameters.attribute("texturePath").as_string());
     app->tex->GetSize(texture, texW, texH);
 
     pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
@@ -75,7 +75,7 @@ bool Boss::Start() {
 }
 
 bool Boss::Update(float dt) {
-    currentAnimation = &idleAnim;
+    currentAnimation = &attackAnim;
 	// El boss no se movera, sequedará quieto y irá spwaneando varios bichos cada cierto tiempo. Los bichos seguirán al player con el path
 	// Si el player se acerca mucho al Boss, el Boss atacará con su guadaña. El Boss tiene una cierta cantidad de vida
 	return true;
