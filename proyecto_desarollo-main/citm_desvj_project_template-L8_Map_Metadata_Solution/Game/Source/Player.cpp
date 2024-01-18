@@ -115,6 +115,7 @@ bool Player::Update(float dt) {
         app->physics->DestroyBody(pbody);
         pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
         pbody->listener = this;
+        pbody->ctype = ColliderType::PLAYER;
         a = 0;
     }
     
@@ -349,7 +350,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
     case ColliderType::ITEM:
         LOG("Collision ITEM");
         app->audio->PlayFx(pickCoinFxId);
-        app->scene->GetItem()->isPicked = true;
+        //app->scene->GetItem()->isPicked = true;
 
         break;
     case ColliderType::DIE:

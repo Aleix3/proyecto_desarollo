@@ -9,15 +9,16 @@
 #include "Point.h"
 #include "Physics.h"
 #include "Hud.h"
+#include "Heart.h"
 
-Item::Item() : Entity(EntityType::ITEM)
+Heart::Heart() : Entity(EntityType::HEART)
 {
 	name.Create("item");
 }
 
-Item::~Item() {}
+Heart::~Heart() {}
 
-bool Item::Awake() {
+bool Heart::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
@@ -26,7 +27,7 @@ bool Item::Awake() {
 	return true;
 }
 
-bool Item::Start() {
+bool Heart::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
@@ -35,12 +36,12 @@ bool Item::Start() {
 	pbody = app->physics->CreateCircle(position.x + texH / 2, position.y + texH / 2, texH / 2, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ITEM;
-	
+
 
 	return true;
 }
 
-bool Item::Update(float dt)
+bool Heart::Update(float dt)
 {
 	if (isPicked == true)
 	{
@@ -59,36 +60,40 @@ bool Item::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2;
 	position.y = METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2;
 
-	
-	
+
+
 	app->render->DrawTexture(texture, position.x, position.y);
-	
+
 
 	return true;
 }
 
-bool Item::CleanUp()
+bool Heart::CleanUp()
 {
 	return true;
 }
 
-void Item::OnCollision(PhysBody* physA, PhysBody* physB) {
-	
-    switch (physB->ctype)
-    {
-    case ColliderType::PLATFORM:
-        LOG("Collision PLATFORM");
-        break;
- 
-    case ColliderType::PLAYER:
-        LOG("Collision PLAYER");
-		isPicked = true;
-		app->hud->puntos += 20;
-        break;
-    case ColliderType::UNKNOWN:
-        LOG("Collision UNKNOWN");
-        break;
-    default:
-        break;
-    }
+void Heart::OnCollision(PhysBody* physA, PhysBody* physB) {
+
+	switch (physB->ctype)
+	{
+	case ColliderType::PLATFORM:
+		LOG("Collision PLATFORM");
+		break;
+
+	case ColliderType::PLAYER:
+		LOG("Collision PLAYER");
+		if (app->hud->lives < 3)
+		{
+			isPicked = true;
+			app->hud->lives += 1;
+		}
+		
+		break;
+	case ColliderType::UNKNOWN:
+		LOG("Collision UNKNOWN");
+		break;
+	default:
+		break;
+	}
 }

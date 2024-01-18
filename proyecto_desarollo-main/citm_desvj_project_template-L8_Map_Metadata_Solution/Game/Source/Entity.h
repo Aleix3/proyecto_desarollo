@@ -15,6 +15,7 @@ enum class EntityType
 	ENEMYVULTURE,
 	SUMMON,
 	BOSS,
+	HEART,
 	UNKNOWN
 };
 

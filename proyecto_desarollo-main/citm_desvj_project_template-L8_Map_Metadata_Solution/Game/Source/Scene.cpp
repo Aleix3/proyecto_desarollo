@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Item.h"
+#include "Heart.h"
 #include "GuiControl.h"
 #include "GuiManager.h"
 #include"SceneIntro.h"
@@ -62,6 +63,11 @@ bool Scene::Awake(pugi::xml_node config)
 	{
 		item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 		item->parameters = itemNode;
+	}
+	for (pugi::xml_node HeartNode = config.child("heart"); HeartNode; HeartNode = HeartNode.next_sibling("heart"))
+	{
+		heart = (Heart*)app->entityManager->CreateEntity(EntityType::HEART);
+		heart->parameters = HeartNode;
 	}
 
 

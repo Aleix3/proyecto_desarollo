@@ -1,18 +1,17 @@
-#ifndef __ITEM_H__
-#define __ITEM_H__
+#ifndef __HEART_H__
+#define __HEART_H__
 
-#include "Entity.h"
-#include "Point.h"
-#include "SDL/include/SDL.h"
+#include "Enemy.h"
 
 struct SDL_Texture;
 
-class Item : public Entity
+class Heart : public Entity
 {
 public:
 
-	Item();
-	virtual ~Item();
+	Heart();
+
+	virtual ~Heart();
 
 	bool Awake();
 
@@ -24,6 +23,8 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
+
+
 public:
 
 	bool isPicked = false;
@@ -34,6 +35,7 @@ private:
 	const char* texturePath;
 	uint texW, texH;
 	PhysBody* pbody;
+
 };
 
-#endif // __ITEM_H__
+#endif // __PLAYER_H__

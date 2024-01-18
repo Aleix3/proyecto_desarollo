@@ -11,6 +11,7 @@
 #include "GuiCheckBox.h"
 #include "Boss.h"
 #include "item.h"
+#include "Heart.h"
 
 struct SDL_Texture;
 
@@ -77,6 +78,7 @@ public:
 
 private:
 	Item* item;
+	Heart* heart;
 	SDL_Texture* img;
 	SDL_Texture* menu;
 	float textPosX, textPosY = 0;

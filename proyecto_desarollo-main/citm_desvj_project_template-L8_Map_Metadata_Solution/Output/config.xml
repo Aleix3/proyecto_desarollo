@@ -35,10 +35,15 @@
 	  
 	  <map path="Assets/Maps/" name="MapTemplate.tmx"/>
     <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
-    <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
-    <item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>
-    <item x="200" y="672" texturepath="Assets/Textures/goldCoin.png"/>
-    <item x="500" y="672" texturepath="Assets/Textures/goldCoin.png"/>
+    <item x="876" y="1024" texturepath="Assets/Textures/goldCoin.png"/>
+    <item x="1506" y="1342" texturepath="Assets/Textures/goldCoin.png"/>
+    <item x="2556" y="862" texturepath="Assets/Textures/goldCoin.png"/>
+    <item x="2262" y="1822" texturepath="Assets/Textures/goldCoin.png"/>
+	<item x="4110" y="1954" texturepath="Assets/Textures/goldCoin.png"/>
+
+	
+	<heart x="2037" y="676" texturepath="Assets/Textures/HeartFull.png"/>
+	<heart x="1962" y="1972" texturepath="Assets/Textures/HeartFull.png"/>
 
   </scene>
   

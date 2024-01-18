@@ -34,6 +34,7 @@
     <ClCompile Include="Source\Boss.cpp" />
     <ClCompile Include="Source\Hud.cpp" />
     <ClCompile Include="Source\Summon.cpp" />
+    <ClCompile Include="Source\Heart.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -94,6 +95,7 @@
     <ClInclude Include="Source\Boss.h" />
     <ClInclude Include="Source\Hud.h" />
     <ClInclude Include="Source\Summon.h" />
+    <ClInclude Include="Source\Heart.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
