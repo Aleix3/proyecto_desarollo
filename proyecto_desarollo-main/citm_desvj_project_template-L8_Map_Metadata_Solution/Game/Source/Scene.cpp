@@ -117,6 +117,7 @@ int contadormenusettings = 0;
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+
 	//L02 DONE 3: Make the camera movement independent of framerate
 	float camSpeed = 1;
 

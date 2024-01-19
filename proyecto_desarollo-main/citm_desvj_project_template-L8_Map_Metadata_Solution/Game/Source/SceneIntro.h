@@ -42,7 +42,8 @@ public:
 	
 	bool menuu = true;
 	
-
+	
+	void levelScreen();
 	
 private:
 
@@ -74,6 +75,7 @@ private:
 	GuiCheckBox* fullScreen;
 	GuiControlButton* cruz;
 	bool ret = true;
+	bool cargar = false;
 
 };
 

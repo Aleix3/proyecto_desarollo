@@ -11,6 +11,8 @@
 #include "map.h"
 #include "Enemy.h"
 #include "Hud.h"
+#include "Window.h"
+#include "SceneIntro.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -286,14 +288,21 @@ bool Player::Update(float dt) {
                 currentAnimation = &jumpAnim;
             }
 
-            if (portal == true)
+            if (portal == true || app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
             {
+                
                 position.x = 6912;
                 position.y = 1882;
                 app->physics->DestroyBody(pbody);
                 pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
                 pbody->listener = this;
                 portal = false;
+                app->sceneintro->active = true;
+                app->scene->active = false;
+                app->entityManager->active = false;
+                app->map->active = false;
+                app->physics->active = false;
+                app->hud->active = false;
             }
 
             
@@ -307,6 +316,7 @@ bool Player::Update(float dt) {
     }
     if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && jumpCount < 2)//&& isOnGround) {
     {
+        
         position.x = 250;
         position.y = 672;
         app->physics->DestroyBody(pbody);

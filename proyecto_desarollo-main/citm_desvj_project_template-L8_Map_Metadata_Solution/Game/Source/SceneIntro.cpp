@@ -105,12 +105,24 @@ bool SceneIntro::Update(float dt)
 
 		
 	}
+	if (cargar == true)
+	{
+
+		SDL_Delay(3000);
+		app->scene->active = true;
+		app->entityManager->active = true;
+		app->map->active = true;
+		app->physics->active = true;
+		app->hud->active = true;
+	}
 
 	if (!menuu)
 	{
 		
+
 		if (gcButtom != nullptr)
 		{
+			
 			
 
 			gcButtom->state = GuiControlState::DISABLED;
@@ -121,22 +133,26 @@ bool SceneIntro::Update(float dt)
 			settings = nullptr;
 			
 			contadormenu0 = 0;
+			
 
-			if (menuusettings == false)
+			if (menuusettings == false )
 			{
-				app->scene->active = true;
-				app->entityManager->active = true;
-				app->map->active = true;
-				app->physics->active = true;
-				app->hud->active = true;
+				cargar = true;
+				
+				
+
 			}
 
 			
 		}
 		
 	}
+	
+	
 	if(gcButtom != nullptr && gcButtom->click == true || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
+		
+		
 		menuu = false;
 		
 		
@@ -232,10 +248,21 @@ bool SceneIntro::PostUpdate()
 	uint windowWidth, windowHeight;
 	app->win->GetWindowSize(windowWidth, windowHeight);
 	
-	app->render->DrawTexture(fondo, windowWidth / 2 - 650, windowHeight / 2 - 400, 0, 0, 0, 0, 0, true);
+	if (cargar == false)
+	{
+		app->render->DrawTexture(fondo, windowWidth / 2 - 650, windowHeight / 2 - 400, 0, 0, 0, 0, 0, true);
 
-	if (menuu || menuusettings)
-		/*app->render->DrawTexture(menu, windowWidth / 2 - 250, windowHeight / 2 - 400, 0, 0, 0, 0, 0, true);*/
+	}
+
+	else
+	{
+		int p = 1;
+		char text2[20];
+		sprintf_s(text2, "LEVEL 1/2");
+		app->render->DrawText(text2, windowWidth / 2 - 200, windowHeight /2 - 50, 370, 100, 1);
+		
+
+	}
 
 
 	
@@ -250,6 +277,11 @@ bool SceneIntro::CleanUp()
 	LOG("Freeing Prescene");
 
 	return true;
+}
+
+void SceneIntro::levelScreen()
+{
+
 }
 
 
