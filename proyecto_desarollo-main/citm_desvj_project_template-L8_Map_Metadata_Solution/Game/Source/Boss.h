@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Animation.h"
+#include "Physics.h"
 #include "SDL/include/SDL.h"
 #include <chrono>
 
@@ -47,6 +48,10 @@ public:
     PhysBody* pbody;
 
     std::chrono::steady_clock::time_point ultimo_uso;
+
+
+    bool faceleft;
+    b2Vec2 velocity2;
 };
 
 #endif // __BOSS_H__
