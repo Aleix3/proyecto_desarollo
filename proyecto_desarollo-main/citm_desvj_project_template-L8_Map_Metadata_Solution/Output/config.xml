@@ -26,7 +26,7 @@
 	<EnemySamurai x="1724" y="1956" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
 	<EnemySamurai x="2496" y="1624" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
 	<EnemySamurai x="2886" y="1150" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
-	<Boss x="800" y="620" texturePath="Assets/Textures/Boss/Boss.png"/>
+	<Boss x="800" y="690" texturePath="Assets/Textures/Boss/Boss.png"/>
 	
     <EnemyVulture x="1724" y="580" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
 	<EnemyVulture x="1521" y="1580" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>

@@ -29,7 +29,7 @@ public:
     void OnCollision(PhysBody* physA, PhysBody* physB);
 
 public:
-
+    BossState currentState;
     pugi::xml_node config;
 
     SDL_Texture* texture = NULL;
@@ -51,6 +51,9 @@ public:
 
 
     bool faceleft;
+    bool die;
+    bool comprovacionAnim;
+    float scaleFactor = 1.2f;
     b2Vec2 velocity2;
 };
 
