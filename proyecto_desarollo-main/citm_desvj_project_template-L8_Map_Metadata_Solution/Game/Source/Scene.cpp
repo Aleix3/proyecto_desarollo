@@ -257,8 +257,8 @@ bool Scene::Update(float dt)
 		app->hud->active = false;
 		app->sceneintro->active = true;
 		app->sceneintro->menuu = true;
-		app->entityManager->active = true;
-		app->physics->active = true;
+		app->physics->active = false;
+		app->sceneintro->cargar = false;
 		gcButtom->state = GuiControlState::DISABLED;
 		exit->state = GuiControlState::DISABLED;
 		settings->state = GuiControlState::DISABLED;
@@ -268,7 +268,8 @@ bool Scene::Update(float dt)
 		settings = nullptr;
 		title = nullptr;
 		menuu = false;
-
+		app->scene->GetPlayer()->level2 = false;
+		app->sceneintro->level = 1;
 		contadormenu = 0;
 		
 		

@@ -86,6 +86,7 @@ public:
 	bool restarvida = false;
 	bool dano = false;
 	bool portal = false;
+	bool level2 = false;
 	//sonidos
 	uint golpePlayerFX = 0;
 	uint dashFX = 0;

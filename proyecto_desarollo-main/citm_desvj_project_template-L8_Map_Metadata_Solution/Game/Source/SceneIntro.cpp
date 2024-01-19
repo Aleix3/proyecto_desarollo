@@ -114,23 +114,27 @@ bool SceneIntro::Update(float dt)
 		app->map->active = true;
 		app->physics->active = true;
 		app->hud->active = true;
+		
 	}
 
 	if (!menuu)
 	{
 		
 
-		if (gcButtom != nullptr)
+		if (gcButtom != nullptr || app->scene->GetPlayer()->level2 == true)
 		{
 			
 			
-
-			gcButtom->state = GuiControlState::DISABLED;
-			exit->state = GuiControlState::DISABLED;
-			settings->state = GuiControlState::DISABLED;
-			gcButtom = nullptr;
-			exit = nullptr;
-			settings = nullptr;
+			if (app->scene->GetPlayer()->level2 == false)
+			{
+				gcButtom->state = GuiControlState::DISABLED;
+				exit->state = GuiControlState::DISABLED;
+				settings->state = GuiControlState::DISABLED;
+				gcButtom = nullptr;
+				exit = nullptr;
+				settings = nullptr;
+			}
+			
 			
 			contadormenu0 = 0;
 			
@@ -139,7 +143,7 @@ bool SceneIntro::Update(float dt)
 			{
 				cargar = true;
 				
-				
+				app->scene->GetPlayer()->level2 = true;
 
 			}
 
@@ -258,7 +262,7 @@ bool SceneIntro::PostUpdate()
 	{
 		int p = 1;
 		char text2[20];
-		sprintf_s(text2, "LEVEL 1/2");
+		sprintf_s(text2, "LEVEL %d/2", level);
 		app->render->DrawText(text2, windowWidth / 2 - 200, windowHeight /2 - 50, 370, 100, 1);
 		
 

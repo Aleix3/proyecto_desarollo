@@ -303,6 +303,9 @@ bool Player::Update(float dt) {
                 app->map->active = false;
                 app->physics->active = false;
                 app->hud->active = false;
+                app->sceneintro->cargar = false;
+                level2 = true;
+                app->sceneintro->level = 2;
             }
 
             
