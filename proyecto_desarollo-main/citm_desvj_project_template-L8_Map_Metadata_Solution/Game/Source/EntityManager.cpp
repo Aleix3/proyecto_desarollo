@@ -9,6 +9,7 @@
 #include "EnemyVulture.h"
 #include "Boss.h"
 #include "Heart.h"
+#include "Summon.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -105,6 +106,8 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::HEART:
 		entity = new Heart();
 		break;
+	case EntityType::SUMMON:
+		entity = new Summon();
 	default:
 		break;
 	}

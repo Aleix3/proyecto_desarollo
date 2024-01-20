@@ -56,6 +56,7 @@ bool Boss::Awake() {
 
     position.x = parameters.attribute("x").as_int();
     position.y = parameters.attribute("y").as_int();
+    vida = 3;
 	return true;
 }
 
@@ -73,7 +74,7 @@ bool Boss::Update(float dt) {
 
 	// El boss no se movera, sequedará quieto y irá spwaneando varios bichos cada cierto tiempo. Los bichos seguirán al player con el path
 	// Si el player se acerca mucho al Boss, el Boss atacará con su guadaña. El Boss tiene una cierta cantidad de vida
-
+    
     if (pbody != nullptr)
     {
         currentAnimation = &idleAnim;
@@ -81,10 +82,24 @@ bool Boss::Update(float dt) {
         velocity2 = pbody->body->GetLinearVelocity();
         velocity2.x = 0.0;
 
+
+        if (vida <= 0)
+        {
+            Morir();
+            
+        }
+
+        distance = DistanceToPlayer();
+        
+        if (distance <= spawnDistance && Cooldown(spawnCooldown)) {
+            SpawnBicho();
+        }
+
         if (app->scene->GetPlayer()->position.x > position.x) {
             faceleft = false;
             if (app->scene->GetPlayer()->position.x < position.x + 100)
             {
+                currentState = BossState::ATACKING;
                 currentAnimation = &attackAnim;
             }
             
@@ -94,19 +109,9 @@ bool Boss::Update(float dt) {
             faceleft = true;
             if (app->scene->GetPlayer()->position.x > position.x + 100)
             {
+                currentState = BossState::ATACKING;
                 currentAnimation = &attackAnim;
             }
-        }
-
-        if (app->scene->GetPlayer()->die == true)
-        {
-            app->physics->DestroyBody(pbody);
-            position.x = parameters.attribute("x").as_int();
-            position.y = parameters.attribute("y").as_int();
-
-            pbody = app->physics->CreateCircle(position.x, position.y, 20, bodyType::STATIC);
-            pbody->listener = this;
-            pbody->ctype = ColliderType::BOSS;
         }
 
         else
@@ -150,10 +155,11 @@ void Boss::OnCollision(PhysBody* physA, PhysBody* physB) {
         break;
     case ColliderType::DIE:
         LOG("Collision DIE");
+        vida--;
         break;
     case ColliderType::ABILITY:
         LOG("Collision ABILITY");
-        die = true;
+        vida--;
         break;
     case ColliderType::PLAYER:
         LOG("Collision PLAYER");
@@ -166,4 +172,46 @@ void Boss::OnCollision(PhysBody* physA, PhysBody* physB) {
     default:
         break;
     }
+}
+
+bool Boss::Cooldown(float cooldown)
+{
+    auto ahora = std::chrono::steady_clock::now();
+    float tiempo_transcurrido = std::chrono::duration<float>(ahora - ultimo_uso).count();
+
+    if (tiempo_transcurrido >= cooldown) {
+        ultimo_uso = ahora; // reiniciar el contador
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void Boss::Morir()
+{
+    if (pbody != nullptr) {
+        app->physics->DestroyBody(pbody);
+        pbody = nullptr;
+    }
+    if (texture != nullptr) {
+        SDL_DestroyTexture(texture);
+        texture = nullptr;
+    }
+    currentState = BossState::DYING;
+}
+
+void Boss::SpawnBicho() {
+    app->entityManager->AddEntity(bicho);
+    currentState = BossState::SPAWNING;
+}
+
+float Boss::DistanceToPlayer() {
+    Point<int> playerPos = app->scene->GetPlayer()->position;
+    Point<int> bossPos = position;
+
+    int dx = playerPos.x - bossPos.x;
+    int dy = playerPos.y - bossPos.y;
+
+    return sqrt(dx * dx + dy * dy);
 }

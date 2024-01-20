@@ -204,7 +204,7 @@ bool Player::Update(float dt) {
                 left = false;
             }
             else {
-                velocity.x = 0; // Detén al jugador cuando no se presiona ninguna tecla de movimiento
+                velocity.x = 0;
             }
 
             if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumpCount < 2)//&& isOnGround) {

@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Animation.h"
 #include "Physics.h"
+#include "Summon.h"
 #include "SDL/include/SDL.h"
 #include <chrono>
 
@@ -27,6 +28,10 @@ public:
     bool Update(float dt);
     bool CleanUp();
     void OnCollision(PhysBody* physA, PhysBody* physB);
+    bool Cooldown(float cooldown);
+    void Morir();
+    void SpawnBicho();
+    float DistanceToPlayer();
 
 public:
     BossState currentState;
@@ -47,13 +52,20 @@ public:
 
     PhysBody* pbody;
 
+    Summon* bicho;
+
     std::chrono::steady_clock::time_point ultimo_uso;
 
-
+    float distance;
+    float spawnDistance = 200;
+    int spawnCooldown = 3.0f;
     bool faceleft;
     bool die;
     bool comprovacionAnim;
     float scaleFactor = 1.2f;
+
+    int vida;
+
     b2Vec2 velocity2;
 };
 
