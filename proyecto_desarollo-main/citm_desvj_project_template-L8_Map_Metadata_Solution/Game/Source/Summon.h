@@ -26,7 +26,7 @@ public:
     void OnCollision(PhysBody* physA, PhysBody* physB);
 
 public:
-
+    SummonState currentState;
     pugi::xml_node config;
 
     SDL_Texture* texture = NULL;

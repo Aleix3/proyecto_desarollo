@@ -199,10 +199,12 @@ void Boss::Morir()
         texture = nullptr;
     }
     currentState = BossState::DYING;
+    
 }
 
 void Boss::SpawnBicho() {
     app->entityManager->AddEntity(bicho);
+    currentAnimation = &spawnAnim;
     currentState = BossState::SPAWNING;
 }
 
