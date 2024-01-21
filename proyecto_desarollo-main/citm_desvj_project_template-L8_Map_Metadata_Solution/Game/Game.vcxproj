@@ -97,6 +97,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Ability.cpp" />
     <ClCompile Include="Source\Boss.cpp" />
+    <ClCompile Include="Source\DieScreen.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\EnemySamurai.cpp" />
     <ClCompile Include="Source\EnemyVulture.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Source\Ability.h" />
     <ClInclude Include="Source\Boss.h" />
+    <ClInclude Include="Source\DieScreen.h" />
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\EnemySamurai.h" />
     <ClInclude Include="Source\EnemyVulture.h" />

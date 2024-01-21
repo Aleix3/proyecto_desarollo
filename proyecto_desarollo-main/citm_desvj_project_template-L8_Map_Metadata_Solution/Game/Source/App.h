@@ -23,6 +23,7 @@ class Ability;
 class GuiManager;
 class SceneIntro;
 class Hud;
+class DieScreen;
 
 class App
 {
@@ -104,6 +105,7 @@ public:
 	GuiManager* guiManager;
 	SceneIntro* sceneintro;
 	Hud* hud;
+	DieScreen* die;
 
 private:
 

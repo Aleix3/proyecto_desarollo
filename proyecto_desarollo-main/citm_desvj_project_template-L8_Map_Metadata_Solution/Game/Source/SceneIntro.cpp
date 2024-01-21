@@ -13,6 +13,7 @@
 #include "Defs.h"
 #include "Log.h"
 #include "Hud.h"
+#include "DieScreen.h"
 
 SceneIntro::SceneIntro() : Module()
 {
@@ -50,7 +51,7 @@ bool SceneIntro::Start()
 	app->map->active = false;
 	app->physics->active = false;
 	app->hud->active = false;
-	
+	app->die->active = false;
 
 	return true;
 }

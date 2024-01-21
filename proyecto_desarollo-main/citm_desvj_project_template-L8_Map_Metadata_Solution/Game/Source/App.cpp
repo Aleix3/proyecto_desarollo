@@ -11,6 +11,7 @@
 #include "GuiManager.h"
 #include "SceneIntro.h"
 #include"Hud.h"
+#include "DieScreen.h"
 
 
 #include "Defs.h"
@@ -42,6 +43,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	guiManager = new GuiManager();
 	sceneintro = new SceneIntro();
 	hud = new Hud();
+	die = new DieScreen();
 
 	AddModule(win);
 	AddModule(input);
@@ -55,6 +57,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(hud);
 	AddModule(ability);
 	AddModule(guiManager);
+	AddModule(die);
 
 	// Render last to swap buffer
 	AddModule(render);

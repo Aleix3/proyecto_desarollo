@@ -13,6 +13,7 @@
 #include "Hud.h"
 #include "Window.h"
 #include "SceneIntro.h"
+#include "DieScreen.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -180,6 +181,12 @@ bool Player::Update(float dt) {
                 dieAnim.Reset();
                 app->hud->lives = 3;
                 app->hud->puntos = 0;
+                app->scene->active = false;
+                app->entityManager->active = false;
+                app->map->active = false;
+                app->physics->active = false;
+                app->hud->active = false;
+                app->die->active = true;
             }
         }
         else if (dano == true)
