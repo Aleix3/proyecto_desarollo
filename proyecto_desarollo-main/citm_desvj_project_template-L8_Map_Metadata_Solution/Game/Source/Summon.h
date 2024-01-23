@@ -34,7 +34,7 @@ public:
     uint texWl, texHl;
 
     Animation* currentAnimation = nullptr;
-    Animation idleAnim;
+    Animation spawnAnim;
     Animation chasingAnim;
     Animation dyingAnim;
 
