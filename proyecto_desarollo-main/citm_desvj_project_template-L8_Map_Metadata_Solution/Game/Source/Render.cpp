@@ -310,6 +310,10 @@ bool Render::DrawText(const char* text, int posx, int posy, int w, int h, int co
 	{
 		color = { 255, 0, 0 };
 	}
+	if (coloreo == 3)
+	{
+		color = { 255, 255, 0 };
+	}
 	SDL_Surface* surface = TTF_RenderText_Solid(font, text, color);
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 

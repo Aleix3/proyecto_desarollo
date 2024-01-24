@@ -47,6 +47,8 @@ public:
 
 	bool cargar = false;
 
+	bool nidea = true;
+
 	int level = 1;
 	
 private:
