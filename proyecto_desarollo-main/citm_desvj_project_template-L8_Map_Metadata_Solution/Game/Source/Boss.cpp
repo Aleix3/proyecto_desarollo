@@ -219,13 +219,9 @@ void Boss::SpawnBicho() {
     currentAnimation = &spawnAnim;
     app->spawn = true;
     
-
-        app->scene->GetEnemySamurai()->spawn();
-        
-    
-    
+    app->scene->GetSummon()->spawn();
+ 
     currentState = BossState::SPAWNING;
-    
 }
 
 float Boss::DistanceToPlayer() {

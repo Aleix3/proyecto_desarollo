@@ -24,6 +24,7 @@ public:
     bool Update(float dt);
     bool CleanUp();
     void OnCollision(PhysBody* physA, PhysBody* physB);
+    void spawn();
 
 public:
     SummonState currentState;

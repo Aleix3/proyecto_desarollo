@@ -427,6 +427,11 @@ Boss* Scene::GetBoss()
 {
 	return boss;
 }
+
+Summon* Scene::GetSummon()
+{
+	return summon;
+}
 Item* Scene::GetItem()
 {
 	return item;
