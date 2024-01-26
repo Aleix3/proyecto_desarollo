@@ -300,22 +300,36 @@ bool Player::Update(float dt) {
 
             if (portal == true || app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
             {
+                if (position.x > 10000)
+                {
+                    win = true;
+                    app->die->active = true;
+                    app->scene->active = false;
+                    app->entityManager->active = false;
+                    app->map->active = false;
+                    app->physics->active = false;
+                    app->hud->active = false;
+                    app->ability->active = false;
+                }
+                else
+                {
+                    position.x = 6912;
+                    position.y = 1882;
+                    app->physics->DestroyBody(pbody);
+                    pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
+                    pbody->listener = this;
+                    portal = false;
+                    app->sceneintro->active = true;
+                    app->scene->active = false;
+                    app->entityManager->active = false;
+                    app->map->active = false;
+                    app->physics->active = false;
+                    app->hud->active = false;
+                    app->sceneintro->cargar = false;
+                    level2 = true;
+                    app->sceneintro->level = 2;
+                }
                 
-                position.x = 6912;
-                position.y = 1882;
-                app->physics->DestroyBody(pbody);
-                pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
-                pbody->listener = this;
-                portal = false;
-                app->sceneintro->active = true;
-                app->scene->active = false;
-                app->entityManager->active = false;
-                app->map->active = false;
-                app->physics->active = false;
-                app->hud->active = false;
-                app->sceneintro->cargar = false;
-                level2 = true;
-                app->sceneintro->level = 2;
             }
 
             

@@ -53,6 +53,7 @@ bool DieScreen::PreUpdate()
 
 int num = 0;
 int num2 = 0;
+int num3 = 0;
 // Called each loop iteration
 bool DieScreen::Update(float dt)
 {
@@ -104,6 +105,31 @@ bool DieScreen::Update(float dt)
 
 		num2++;
 	}
+
+
+	if (app->scene->GetPlayer()->win == true)
+	{
+		if (num3 == 10)
+		{
+			SDL_Delay(3000);
+
+			app->scene->active = false;
+			app->entityManager->active = false;
+			app->map->active = false;
+			app->physics->active = false;
+			app->hud->active = false;
+			app->sceneintro->active = true;
+			app->sceneintro->menuu = true;
+			app->physics->active = false;
+			app->sceneintro->cargar = false;
+			app->ability->active = false;
+			app->die->active = false;
+			app->scene->GetPlayer()->level2 = false;
+			app->sceneintro->level = 1;
+			app->scene->GetPlayer()->win = false;
+		}
+		num3++;
+	}
 	
 	
 
@@ -138,7 +164,12 @@ bool DieScreen::PostUpdate()
 		app->render->DrawText(text4, windowWidth / 2 - 200, windowHeight / 2 - 50, 370, 100, 1);
 		app->render->DrawText(text5, windowWidth / 2 - 200, windowHeight / 2 + 150, 370, 100, 1);
 	}
-	
+	if (app->scene->GetPlayer()->win == true)
+	{
+		char text6[30];
+		sprintf_s(text6, "YOU WIN:");
+		app->render->DrawText(text6, windowWidth / 2 - 200, windowHeight / 2 - 50, 370, 100, 3);
+	}
 
 	return ret;
 }

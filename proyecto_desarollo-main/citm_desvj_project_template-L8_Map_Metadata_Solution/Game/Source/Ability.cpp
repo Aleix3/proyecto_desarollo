@@ -47,6 +47,8 @@ bool Ability::Start() {
 
 	rectangle = app->physics->CreateRectangle(4944, 1954, 32, 32, STATIC);
 	rectangle->ctype = ColliderType::PORTAL;
+	rectangle2 = app->physics->CreateRectangle(10981, 1642, 32, 32, STATIC);
+	rectangle2->ctype = ColliderType::PORTAL;
 
 	return true;
 }
@@ -153,6 +155,7 @@ bool Ability::Update(float dt)
 	SDL_Rect recta = (currentportal->GetCurrentFrame());
 
 	app->render->DrawTexture2(texture, 4944, 1954, SDL_FLIP_NONE, &recta);
+	app->render->DrawTexture2(texture, 10981, 1622, SDL_FLIP_NONE, &recta);
 	
 	currentportal->Update();
 	

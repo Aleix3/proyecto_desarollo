@@ -37,6 +37,8 @@ public:
 private:
 	PhysBody* rectangle;
 
+	PhysBody* rectangle2;
+
 	SDL_Texture* texture;
 	uint texW, texH;
 

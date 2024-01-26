@@ -88,6 +88,7 @@ public:
 	bool portal = false;
 	bool level2 = false;
 	bool diedie = false;
+	bool win = true;
 	//sonidos
 	uint golpePlayerFX = 0;
 	uint dashFX = 0;
