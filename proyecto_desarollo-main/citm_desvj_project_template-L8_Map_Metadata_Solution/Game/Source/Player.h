@@ -87,6 +87,7 @@ public:
 	bool dano = false;
 	bool portal = false;
 	bool level2 = false;
+	bool level1 = false;
 	bool diedie = false;
 	bool win = true;
 	//sonidos

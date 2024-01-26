@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Hud.h"
 #include "Log.h"
+#include "Audio.h"
 
 Summon::Summon() : Entity(EntityType::SUMMON) {
     name.Create("Summon");
@@ -50,6 +51,7 @@ bool Summon::Start() {
 
     texture = app->tex->Load(parameters.attribute("texturePath").as_string());
     app->tex->GetSize(texture, texW, texH);
+    spawnfx = app->audio->LoadFx("Assets/Audio/Fx/Spawnfx.wav");
     pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
     pbody->listener = this;
     pbody->ctype = ColliderType::ENEMY;
@@ -178,17 +180,8 @@ bool Summon::Update(float dt) {
     }
     
     currentAnimation->Update();
-
     SDL_Rect rect = currentAnimation->GetCurrentFrame();
-
-
-
-    if (faceleft) {
-        app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_HORIZONTAL, &rect);
-    }
-    else {
-        app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_NONE, &rect);
-    }
+    app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_NONE, &rect);
 
 	return true;
 }
@@ -231,8 +224,9 @@ void Summon::spawn()
     {
 
     }
-    position.x = 10722; 
-    position.y = 1632;
+    app->audio->PlayFx(spawnfx);
+    position.x = 10336;
+    position.y = 864;
     app->physics->DestroyBody(pbody);
     pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
     pbody->listener = this;

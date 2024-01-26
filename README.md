@@ -2,7 +2,7 @@
 
 ## Description
 
-This is the Alpha 0.2 of the project for the subject of (Desarrollo de Videojuegos) at the CITM (UPC) center.
+This is the Alpha 0.3 of the project for the subject of (Desarrollo de Videojuegos) at the CITM (UPC) center.
 
 ## Controls
 
@@ -12,7 +12,9 @@ This is the Alpha 0.2 of the project for the subject of (Desarrollo de Videojueg
 - You can make a dash with the letter E.
 
 **Debug Mode**: 
-- F3 = restart level
+- F1 = Teleport to level 1
+- F2 = Teleport to level 2
+- F3 = Restart level
 - F5 = You can save the actual player and enemies posiiton.
 - F6 = You can load the position you saved.
 - F8 = deactivate debug mode
@@ -21,6 +23,8 @@ This is the Alpha 0.2 of the project for the subject of (Desarrollo de Videojueg
 - F11 = Disable Godmode
 
 **Free Camera**: With the debug mode activated, if you press the C key, the camera will be free and you can move it with the arrow keys. Press the C key again if you want to return to the player's position.
+
+**Menu**: You can open the menu with the M key.
 
 ## Developers
 

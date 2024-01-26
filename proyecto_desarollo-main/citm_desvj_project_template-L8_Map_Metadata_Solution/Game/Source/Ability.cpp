@@ -45,6 +45,8 @@ bool Ability::Start() {
 	
 	fireballFX = app->audio->LoadFx("Assets/Audio/Fx/FireBall.wav");
 
+	portalfx = app->audio->LoadFx("Assets/Audio/Fx/Portalfx.wav");
+
 	rectangle = app->physics->CreateRectangle(4944, 1954, 32, 32, STATIC);
 	rectangle->ctype = ColliderType::PORTAL;
 	rectangle2 = app->physics->CreateRectangle(10981, 1642, 32, 32, STATIC);
