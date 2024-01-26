@@ -11,6 +11,7 @@
 #include "GuiControl.h"
 #include "GuiManager.h"
 #include"SceneIntro.h"
+#include "summon.h"
 #include "Hud.h"
 #include "Defs.h"
 #include "Log.h"
@@ -51,6 +52,11 @@ bool Scene::Awake(pugi::xml_node config)
 	{
 		boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
 		boss->parameters = enemyNode;
+	}
+	for (pugi::xml_node enemyNode = config.child("Summon"); enemyNode; enemyNode = enemyNode.next_sibling("Summon"))
+	{
+		summon = (Summon*)app->entityManager->CreateEntity(EntityType::SUMMON);
+		summon->parameters = enemyNode;
 	}
 
 	//Get the map name from the config file and assigns the value in the module

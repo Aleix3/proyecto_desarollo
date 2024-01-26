@@ -3,6 +3,7 @@
 #include "Textures.h"
 #include "Physics.h"
 #include "Scene.h"
+#include "Boss.h"
 
 Summon::Summon() : Entity(EntityType::SUMMON) {
     name.Create("Summon");
@@ -46,11 +47,15 @@ Summon::~Summon() {
 bool Summon::Awake() {
     texture = app->tex->Load(parameters.attribute("texturePath").as_string());
     app->tex->GetSize(texture, texW, texH);
+    position.x = parameters.attribute("x").as_int();
+    position.y = parameters.attribute("y").as_int();
 	return true;
 }
 
 bool Summon::Start() {
 
+
+    pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
     pbody->listener = this;
     pbody->ctype = ColliderType::ENEMY;
 	return true;
@@ -70,9 +75,14 @@ void Summon::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 void Summon::spawn()
 {
+   
     app->physics->DestroyBody(pbody);
-    position.x = app->scene->boss->position.x + 10;
-    position.y = app->scene->boss->position.y;
+    if (pbody != nullptr)
+    {
+
+    }
+    position.x = 10722; 
+    position.y = 1632;
     pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
     pbody->listener = this;
     pbody->ctype = ColliderType::ENEMY;

@@ -286,7 +286,14 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 
 	float factor = (float)M_PI / 180.0f;
 
-	for(uint i = 0; i < 360; ++i)
+	if (use_camera)
+	{
+		x = (int)(camera.x + x * scale);
+		y = (int)(camera.y + y * scale);
+		
+	}
+
+	for (uint i = 0; i < 360; ++i)
 	{
 		points[i].x = (int)(x + radius * cos(i * factor));
 		points[i].y = (int)(y + radius * sin(i * factor));
@@ -294,9 +301,9 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 
 	result = SDL_RenderDrawPoints(renderer, points, 360);
 
-	if(result != 0)
+	if (result != 0)
 	{
-		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
+		LOG("Cannot draw circle to screen. SDL_RenderDrawPoints error: %s", SDL_GetError());
 		ret = false;
 	}
 

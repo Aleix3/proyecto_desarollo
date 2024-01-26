@@ -47,7 +47,7 @@ private:
 	SString title;
 	uint width;
 	uint height;
-	uint scale;
+	uint scale = 2;
 	bool fullscreen = false;
 	
 };
