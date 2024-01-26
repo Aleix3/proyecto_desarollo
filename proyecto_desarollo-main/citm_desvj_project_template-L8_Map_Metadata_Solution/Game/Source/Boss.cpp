@@ -116,6 +116,7 @@ bool Boss::Update(float dt) {
 
         else
         {
+            if(pbody != nullptr)
             pbody->body->SetLinearVelocity(velocity2);
             b2Transform pbodyPos = pbody->body->GetTransform();
             position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 55;
