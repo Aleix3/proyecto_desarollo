@@ -189,6 +189,7 @@ bool Player::Update(float dt) {
                 app->hud->active = false;
                 app->ability->active = false;
                 app->die->active = true;
+                diedie = true;
             }
         }
         else if (dano == true)

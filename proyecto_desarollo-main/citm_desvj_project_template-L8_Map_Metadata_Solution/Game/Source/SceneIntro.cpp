@@ -190,6 +190,22 @@ bool SceneIntro::Update(float dt)
 
 		}
 
+		if (credits != nullptr && credits->click == true)
+		{
+			app->die->active = true;
+			app->sceneintro->active = false;
+			gcButtom->state = GuiControlState::DISABLED;
+			exit->state = GuiControlState::DISABLED;
+			settings->state = GuiControlState::DISABLED;
+			credits->state = GuiControlState::DISABLED;
+			gcButtom = nullptr;
+			exit = nullptr;
+			settings = nullptr;
+			credits = nullptr;
+			credito = true;
+
+		}
+
 		if (menuusettings && contadormenusettings0 == 0)
 		{
 			SDL_Rect cruzpos = { windowWidth / 2 + 150,windowHeight / 2 - 150, 50,50 };

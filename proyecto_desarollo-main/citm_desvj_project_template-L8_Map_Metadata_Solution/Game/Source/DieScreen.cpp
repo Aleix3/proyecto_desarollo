@@ -52,26 +52,62 @@ bool DieScreen::PreUpdate()
 }
 
 int num = 0;
+int num2 = 0;
 // Called each loop iteration
 bool DieScreen::Update(float dt)
 {
 	//L02 DONE 3: Make the camera movement independent of framerate
-	
-	if (num == 10)
+	if (app->scene->GetPlayer()->diedie == true)
 	{
-		SDL_Delay(3000);
-		app->scene->active = true;
-		app->entityManager->active = true;
-		app->map->active = true;
-		app->physics->active = true;
-		app->hud->active = true;
-		app->die->active = false;
-		app->ability->active = true;
-		num = 0;
+		if (num == 10)
+		{
+			SDL_Delay(3000);
+			app->scene->active = true;
+			app->entityManager->active = true;
+			app->map->active = true;
+			app->physics->active = true;
+			app->hud->active = true;
+			app->die->active = false;
+			app->ability->active = true;
+			num = 0;
+			app->scene->GetPlayer()->diedie = false;
+		}
+		num++;
+	}
+	if (app->sceneintro->credito == true)
+	{
+		if (num2 == 10)
+		{
+			
+			SDL_Delay(3000);
+			uint windowWidth, windowHeight;
+			app->win->GetWindowSize(windowWidth, windowHeight);
+
+			SDL_Rect btPos = { windowWidth / 2 - 100,windowHeight / 2 - 70, 230,30 };
+			app->sceneintro->gcButtom = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "START", btPos, { 0,0,0,0 }, this);
+
+			SDL_Rect ExitPos = { windowWidth / 2 - 100,windowHeight / 2 + 300, 230,30 };
+			app->sceneintro->exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", ExitPos, { 0,0,0,0 }, this);
+
+			SDL_Rect SettingsPos = { windowWidth / 2 - 100,windowHeight / 2 + 60, 230,30 };
+			app->sceneintro->settings = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "SETTINGS", SettingsPos, { 0,0,0,0 }, this);
+
+			SDL_Rect CreditsPos = { windowWidth / 2 - 100,windowHeight / 2 + 180, 230,30 };
+			app->sceneintro->credits = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "CREDITS", CreditsPos, { 0,0,0,0 }, this);
+			
+			app->sceneintro->active = true;
+			app->sceneintro->credito = false;
+			app->die->active = false;
+			
+			num2 = 0;
+		}
+
+		num2++;
 	}
 	
+	
 
-	num++;
+	
 	return true;
 }
 
@@ -83,11 +119,25 @@ bool DieScreen::PostUpdate()
 	uint windowWidth, windowHeight;
 	app->win->GetWindowSize(windowWidth, windowHeight);
 
-	int p = 1;
-	char text2[20];
-	sprintf_s(text2, "YOU DIED");
-	app->render->DrawText(text2, windowWidth / 2 - 200, windowHeight / 2 - 50, 370, 100, 2);
+	if (app->scene->GetPlayer()->diedie == true)
+	{
+		char text2[20];
+		sprintf_s(text2, "YOU DIED");
+		app->render->DrawText(text2, windowWidth / 2 - 200, windowHeight / 2 - 50, 370, 100, 2);
+	}
 	
+	if (app->sceneintro->credito == true)
+	{
+		char text3[30];
+		char text4[30];
+		char text5[30];
+		sprintf_s(text3, "DEVS:");
+		sprintf_s(text4, "Eduard Garcia");
+		sprintf_s(text5, "Aleix Botella");
+		app->render->DrawText(text3, windowWidth / 2 - 200, windowHeight / 2 - 250, 370, 100, 1);
+		app->render->DrawText(text4, windowWidth / 2 - 200, windowHeight / 2 - 50, 370, 100, 1);
+		app->render->DrawText(text5, windowWidth / 2 - 200, windowHeight / 2 + 150, 370, 100, 1);
+	}
 	
 
 	return ret;

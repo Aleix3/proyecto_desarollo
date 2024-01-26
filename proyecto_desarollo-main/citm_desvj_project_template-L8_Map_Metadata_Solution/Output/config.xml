@@ -45,7 +45,7 @@
     <item x="2556" y="862" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="2262" y="1822" texturepath="Assets/Textures/goldCoin.png"/>
 	<item x="4110" y="1954" texturepath="Assets/Textures/goldCoin.png"/>
-	<Summon x="300" y="690" texturePath="Assets/Textures/Boss/summon.png"/>
+	<Summon x="-300" y="690" texturePath="Assets/Textures/Boss/summon.png"/>
 	
 	<heart x="2037" y="676" texturepath="Assets/Textures/HeartFull.png"/>
 	<heart x="1962" y="1972" texturepath="Assets/Textures/HeartFull.png"/>

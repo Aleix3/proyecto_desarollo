@@ -50,6 +50,13 @@ public:
 	bool nidea = true;
 
 	int level = 1;
+
+	bool credito = false;
+
+	GuiControlButton* gcButtom;
+	GuiControlButton* exit;
+	GuiControlButton* settings;
+	GuiControlButton* credits;
 	
 private:
 
@@ -74,10 +81,7 @@ private:
 	//L03: DONE 3b: Declare a Player attribute
 	Player* player;
 	
-	GuiControlButton* gcButtom;
-	GuiControlButton* exit;
-	GuiControlButton* settings;
-	GuiControlButton* credits;
+	
 	GuiCheckBox* vsync;
 	GuiCheckBox* fullScreen;
 	GuiControlButton* cruz;
