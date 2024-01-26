@@ -391,7 +391,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
         LOG("Collision PORTAL");
         portal = true;
         
-
+        break;
+    case ColliderType::BOSS:
+        LOG("Collision ABILITY");
+        restarvida = true;
+        
         break;
     case ColliderType::UNKNOWN:
         LOG("Collision UNKNOWN");

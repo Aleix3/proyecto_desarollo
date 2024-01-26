@@ -23,7 +23,7 @@ public:
 
 	// Destructor
 	virtual ~Scene();
-
+	pugi::xml_node config2;
 	// Called before render is available
 	bool Awake(pugi::xml_node config);
 
@@ -53,6 +53,8 @@ public:
 	Item* GetItem();
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
+
+	bool SpawnBicho(pugi::xml_node config);
 
 	bool visible = true;
 

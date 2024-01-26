@@ -91,13 +91,18 @@ bool EnemySamurai::Start() {
     pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
     pbody->listener = this;
     pbody->ctype = ColliderType::ENEMY;
+
+    appear = parameters.attribute("appear");
     
+
     return true;
 }
 
 
 bool EnemySamurai::Update(float dt) {
 
+    appear;
+    
     iPoint origin = app->map->WorldToMap(position.x, position.y);
 
     const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
@@ -110,9 +115,11 @@ bool EnemySamurai::Update(float dt) {
             app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y);
         }
     }
+   
         currentAnimation = &idleAnim;
         currentState = EnemyState::SEARCHING;
         app->map->pathfinding->ClearLastPath();
+        if (pbody != nullptr)
         velocity2 = pbody->body->GetLinearVelocity();
         velocity2.x = 0.0;
 
@@ -279,11 +286,15 @@ bool EnemySamurai::Update(float dt) {
 
         else
         {
-            pbody->body->SetLinearVelocity(velocity2);
-            b2Transform pbodyPos = pbody->body->GetTransform();
+            if (pbody != nullptr)
+            {
+                pbody->body->SetLinearVelocity(velocity2);
+                b2Transform pbodyPos = pbody->body->GetTransform();
 
-            position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
-            position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 11;
+                position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 11;
+                position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 11;
+            }
+            
         }
     
     
@@ -344,6 +355,19 @@ void EnemySamurai::OnCollision(PhysBody* physA, PhysBody* physB) {
     default:
         break;
     }
+}
+
+void EnemySamurai::spawn()
+{
+    
+        app->physics->DestroyBody(pbody);
+        position.x = 790;
+        position.y = 690;
+        pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
+        pbody->listener = this;
+        pbody->ctype = ColliderType::ENEMY;
+    
+    
 }
 
 bool EnemySamurai::LoadState(pugi::xml_node node) {

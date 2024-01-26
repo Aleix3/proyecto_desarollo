@@ -139,6 +139,8 @@ bool Boss::Update(float dt) {
 
         app->render->DrawTexture2(texture, position.x, position.y, SDL_FLIP_HORIZONTAL, &rect);
     }
+
+
 	return true;
 }
 
@@ -160,11 +162,20 @@ void Boss::OnCollision(PhysBody* physA, PhysBody* physB) {
     case ColliderType::ABILITY:
         LOG("Collision ABILITY");
         vida--;
+        if (physA->ctype == ColliderType::ENEMY)
+        {
+            if (app->scene->GetEnemySamurai()->appear == false)
+            {
+                app->scene->GetEnemySamurai()->die = true;
+            }
+           
+        }
+            
+        
         break;
     case ColliderType::PLAYER:
         LOG("Collision PLAYER");
-        app->scene->GetPlayer()->dano = true;
-        app->hud->lives--;
+        
         break;
     case ColliderType::UNKNOWN:
         LOG("Collision UNKNOWN");
@@ -203,9 +214,17 @@ void Boss::Morir()
 }
 
 void Boss::SpawnBicho() {
-    app->entityManager->AddEntity(bicho);
+    
     currentAnimation = &spawnAnim;
+    app->spawn = true;
+    
+
+        app->scene->GetEnemySamurai()->spawn();
+        
+    
+    
     currentState = BossState::SPAWNING;
+    
 }
 
 float Boss::DistanceToPlayer() {

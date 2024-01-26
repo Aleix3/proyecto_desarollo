@@ -23,6 +23,8 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
+	void spawn();
+
 	bool EnemySamurai::LoadState(pugi::xml_node node);
 	bool EnemySamurai::SaveState(pugi::xml_node node);
 
@@ -57,6 +59,7 @@ public:
 	float patrolInterval = 3.0f;
 	bool comprovacionFX = true;
 	uint attackFX = 0;
+	bool appear;
 
 };
 

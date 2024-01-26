@@ -157,6 +157,21 @@ bool App::Update()
 	app->render->camera.x = app->render->camera.x + (app->render->targetCameraX - app->render->camera.x) * interpolationFactor;
 	app->render->camera.y = app->render->camera.y + (app->render->targetCameraY - app->render->camera.y) * interpolationFactor;
 
+
+	if (spawn == true)
+	{
+		ListItem<Module*>* item;
+		item = modules.start;
+
+		while (item != NULL && ret == true)
+		{
+			ret = item->data->SpawnBicho(configFile.child("config").child("EnemySamurai2"));
+			item = item->next;
+		}
+		
+		
+		spawn = false;
+	}
 	FinishUpdate();
 	return ret;
 }

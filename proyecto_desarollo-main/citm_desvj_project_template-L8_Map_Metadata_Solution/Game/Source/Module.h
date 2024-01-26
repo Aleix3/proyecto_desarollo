@@ -71,6 +71,10 @@ public:
 	{
 		return true;
 	}
+	virtual bool SpawnBicho(pugi::xml_node node)
+	{
+		return true;
+	}
 
 public:
 

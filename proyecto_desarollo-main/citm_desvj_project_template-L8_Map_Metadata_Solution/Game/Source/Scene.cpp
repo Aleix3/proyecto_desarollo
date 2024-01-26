@@ -40,7 +40,7 @@ bool Scene::Awake(pugi::xml_node config)
 		enemySamurai = (EnemySamurai*)app->entityManager->CreateEntity(EntityType::ENEMYSAMURAI);
 		enemySamurai->parameters = enemyNode;
 	}
-	
+
 	for (pugi::xml_node enemyNode = config.child("EnemyVulture"); enemyNode; enemyNode = enemyNode.next_sibling("EnemyVulture"))
 	{
 		enemyVulture = (EnemyVulture*)app->entityManager->CreateEntity(EntityType::ENEMYVULTURE);
@@ -70,6 +70,7 @@ bool Scene::Awake(pugi::xml_node config)
 		heart->parameters = HeartNode;
 	}
 
+	
 
 	return ret;
 }
@@ -78,6 +79,7 @@ bool Scene::Awake(pugi::xml_node config)
 bool Scene::Start()
 {
 	
+
 	img = app->tex->Load("Assets/Textures/test.png");
 	menu = app->tex->Load("Assets/Textures/Menu/elements2.png");
 	//Music is commented so that you can add your own music
@@ -393,6 +395,7 @@ bool Scene::PostUpdate()
 	if (menuu || menuusettings)
 		app->render->DrawTexture(menu, windowWidth/2 - 250 , windowHeight/2 -400 ,0,0,0,0,0,true);
 	
+	
 
 	return ret;
 }
@@ -434,4 +437,31 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	LOG("Press Gui Control: %d", control->id);
 
 	return true;
+}
+
+bool Scene::SpawnBicho(pugi::xml_node config)
+{
+	pugi::xml_node falseEnemyNode;
+
+	for (pugi::xml_node enemyNode = config.child("EnemySamurai"); enemyNode; enemyNode = enemyNode.next_sibling("EnemySamurai"))
+	{
+		bool appearValue = enemyNode.attribute("appear").as_bool();
+
+		if (!appearValue)
+		{
+			falseEnemyNode = enemyNode;
+			break;  // Detenemos el bucle cuando encontramos el nodo con appear = false
+		}
+	}
+
+	if (falseEnemyNode)
+	{
+		// Has encontrado el nodo con appear = false
+		// Puedes realizar las operaciones que necesites con falseEnemyNode aquí
+		float x = falseEnemyNode.attribute("x").as_float();
+		float y = falseEnemyNode.attribute("y").as_float();
+		x = x +1;
+		// ... y otros atributos según sea necesario
+	}
+	return ret;
 }

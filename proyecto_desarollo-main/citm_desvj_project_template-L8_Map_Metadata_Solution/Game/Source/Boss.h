@@ -7,6 +7,7 @@
 #include "Summon.h"
 #include "SDL/include/SDL.h"
 #include <chrono>
+#include "EnemySamurai.h"
 
 struct SDL_Texture;
 
@@ -67,6 +68,8 @@ public:
     int vida;
 
     b2Vec2 velocity2;
+
+    EnemySamurai* enemySamurai;
 };
 
 #endif // __BOSS_H__

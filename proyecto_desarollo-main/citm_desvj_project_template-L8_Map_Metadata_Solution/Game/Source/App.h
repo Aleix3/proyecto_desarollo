@@ -106,6 +106,7 @@ public:
 	SceneIntro* sceneintro;
 	Hud* hud;
 	DieScreen* die;
+	bool spawn = false;
 
 private:
 
