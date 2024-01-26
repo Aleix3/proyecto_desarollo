@@ -318,7 +318,25 @@ bool Player::Update(float dt) {
                 app->sceneintro->level = 2;
             }
 
-            
+            if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+            {
+                app->audio->PlayFx(app->ability->portalfx);
+                position.x = 250;
+                position.y = 672;
+                app->physics->DestroyBody(pbody);
+                pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
+                pbody->listener = this;
+                portal = false;
+                app->sceneintro->active = true;
+                app->scene->active = false;
+                app->entityManager->active = false;
+                app->map->active = false;
+                app->physics->active = false;
+                app->hud->active = false;
+                app->sceneintro->cargar = false;
+                level1 = true;
+                app->sceneintro->level = 1;
+            }
 
             pbody->body->SetLinearVelocity(velocity);
             b2Transform pbodyPos = pbody->body->GetTransform();

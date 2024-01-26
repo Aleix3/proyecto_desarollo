@@ -12,6 +12,7 @@ This is the Alpha 0.3 of the project for the subject of (Desarrollo de Videojueg
 - You can make a dash with the letter E.
 
 **Debug Mode**: 
+- F1 = Teleport to level 1
 - F2 = Teleport to level 2
 - F3 = Restart level
 - F5 = You can save the actual player and enemies posiiton.
