@@ -44,18 +44,13 @@ Summon::~Summon() {
 }
 
 bool Summon::Awake() {
-	
-    position.x = app->scene->GetBoss()->position.x;
-    position.y = app->scene->GetBoss()->position.y;
-   
+    texture = app->tex->Load(parameters.attribute("texturePath").as_string());
+    app->tex->GetSize(texture, texW, texH);
 	return true;
 }
 
 bool Summon::Start() {
-    texture = app->tex->Load(config.attribute("texturePath").as_string());
-    app->tex->GetSize(texture, texW, texH);
 
-    pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
     pbody->listener = this;
     pbody->ctype = ColliderType::ENEMY;
 	return true;
@@ -70,5 +65,16 @@ bool Summon::CleanUp() {
 }
 
 void Summon::OnCollision(PhysBody* physA, PhysBody* physB) {
+
+}
+
+void Summon::spawn()
+{
+    app->physics->DestroyBody(pbody);
+    position.x = app->scene->boss->position.x + 10;
+    position.y = app->scene->boss->position.y;
+    pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
+    pbody->listener = this;
+    pbody->ctype = ColliderType::ENEMY;
 
 }

@@ -50,6 +50,8 @@ public:
 
 	Boss* GetBoss();
 
+	Summon* GetSummon();
+
 	Item* GetItem();
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
@@ -75,6 +77,8 @@ public:
 	Player* player;
 
 	Boss* boss;
+
+	Summon* summon;
 
 	SDL_Texture* mouseTileTex = nullptr;
 
