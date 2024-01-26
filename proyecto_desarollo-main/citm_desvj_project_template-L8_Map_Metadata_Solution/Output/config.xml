@@ -33,10 +33,13 @@
 	<EnemySamurai x="10368" y="1632" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
 	<Boss x="10336" y="864" texturePath="Assets/Textures/Boss/Boss.png"/>
 	
-    <EnemyVulture x="1724" y="580" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
+    	<EnemyVulture x="1724" y="580" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
 	<EnemyVulture x="1521" y="1580" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
-	  <EnemyVulture x="402" y="306" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
-	  <EnemyVulture x="3744" y="952" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
+	<EnemyVulture x="402" y="306" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
+	<EnemyVulture x="3744" y="952" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
+	<EnemyVulture x="7744" y="1600" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
+	<EnemyVulture x="9408" y="1568" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
+	<EnemyVulture x="10336" y="1376" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
 	  
 	  <map path="Assets/Maps/" name="MapTemplate.tmx"/>
     <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
