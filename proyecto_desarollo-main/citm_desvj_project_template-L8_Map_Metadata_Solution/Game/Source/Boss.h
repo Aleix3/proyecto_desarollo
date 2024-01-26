@@ -53,18 +53,19 @@ public:
     uint attackFx;
     uint dieFx;
 
-    PhysBody* pbody;
+    PhysBody* pbody;// Cuerpo físico para la física
+
 
     Summon* bicho;
 
     std::chrono::steady_clock::time_point ultimo_uso;
 
     float distance;
-    float spawnDistance = 200;
-    int spawnCooldown = 5.5f;
-    bool faceleft;
-    bool die;
-    bool comprovacionAnim;
+    float spawnDistance = 200; // Distancia para invocar criaturas
+    int spawnCooldown = 5.5f; // Tiempo de cooldown para invocación
+    bool faceleft; // Indica si el jefe está mirando a la izquierda
+    bool die; // Indica si el jefe debe morir
+    bool comprovacionAnim; // Verificación para la animación
 
     int vida;
 

@@ -9,7 +9,7 @@
 
 Boss::Boss() : Entity(EntityType::BOSS) {
     name.Create("Boss");
-
+    //animaciones
     idleAnim.PushBack({ 0, 700, 100, 100 });
     idleAnim.PushBack({ 100, 700, 100, 100 });
     idleAnim.PushBack({ 200, 700, 100, 100 });
@@ -62,6 +62,7 @@ bool Boss::Awake() {
 }
 
 bool Boss::Start() {
+    // Carga de texturas y efectos de sonido, y configuración del cuerpo físico
     texture = app->tex->Load(parameters.attribute("texturePath").as_string());
     app->tex->GetSize(texture, texW, texH);
     golpefx = app->audio->LoadFx("Assets/Audio/Fx/Golpeghostfx.wav");
@@ -74,24 +75,25 @@ bool Boss::Start() {
 
 bool Boss::Update(float dt) {
 
-    if (pbody != nullptr)
+    if (pbody != nullptr) 
     {
-        currentAnimation = &idleAnim;
+        currentAnimation = &idleAnim; // Establece la animación actual
 
-        velocity2 = pbody->body->GetLinearVelocity();
+        velocity2 = pbody->body->GetLinearVelocity(); //Pone la velocidad del boss a 0
         velocity2.x = 0.0;
 
         if (vida <= 0)
         {
-            Morir();
+            Morir(); // Si la vida es inferior o igual a 0, muere
         }
 
-        distance = DistanceToPlayer();
+        distance = DistanceToPlayer(); // se calcula la distancia del player y el boss
         
         if (distance <= spawnDistance && Cooldown(spawnCooldown)) {
-            SpawnBicho();
+            SpawnBicho(); // Se spawnea un bicho si se cumplen los requisitos
         }
 
+        //Logica de ataque
         if (app->scene->GetPlayer()->position.x > position.x) {
             faceleft = false;
             if (app->scene->GetPlayer()->position.x < position.x + 100)
@@ -102,6 +104,7 @@ bool Boss::Update(float dt) {
             }
             
         }
+        //Logica de ataque
         if (app->scene->GetPlayer()->position.x < position.x + 20)
         {
             faceleft = true;
@@ -127,12 +130,12 @@ bool Boss::Update(float dt) {
 
         if (currentAnimation == &attackAnim && !comprovacionAnim && attackAnim.HasFinished()) {
             comprovacionAnim = true;
-            currentAnimation = &idleAnim;
+            currentAnimation = &idleAnim; // Cambia la animación a inactivo una vez finalizada la de ataque
         }
     }
-    
+    //render
     currentAnimation->Update();
-
+    
     SDL_Rect rect = currentAnimation->GetCurrentFrame();
 
     if (faceleft == false) {
@@ -148,11 +151,13 @@ bool Boss::Update(float dt) {
 }
 
 bool Boss::CleanUp() {
-    app->tex->UnLoad(texture);
+    // Limpieza de recursos al destruir el boss
+    app->tex->UnLoad(texture); // Descarga la textura del boss
 	return true;
 }
 
 void Boss::OnCollision(PhysBody* physA, PhysBody* physB) {
+    // Manejo de colisiones del boss con otros objetos
     switch (physB->ctype)
     {
     case ColliderType::PLATFORM:
@@ -189,6 +194,7 @@ void Boss::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 bool Boss::Cooldown(float cooldown)
 {
+    // Control de tiempo para el cooldown de habilidades
     auto ahora = std::chrono::steady_clock::now();
     float tiempo_transcurrido = std::chrono::duration<float>(ahora - ultimo_uso).count();
 
@@ -203,8 +209,9 @@ bool Boss::Cooldown(float cooldown)
 
 void Boss::Morir()
 {
+    // Lógica para manejar la muerte del jefe
     if (pbody != nullptr) {
-        app->physics->DestroyBody(pbody);
+        app->physics->DestroyBody(pbody); // Destruye el cuerpo físico
         pbody = nullptr;
     }
     if (texture != nullptr) {
@@ -216,16 +223,17 @@ void Boss::Morir()
 }
 
 void Boss::SpawnBicho() {
-    
+    // Método para hacer aparecer al summon
     currentAnimation = &spawnAnim;
     app->spawn = true;
     
     app->scene->GetSummon()->spawn();
  
-    currentState = BossState::SPAWNING;
+    currentState = BossState::SPAWNING; // Cambia el estado del boss a "SPAWNING"
 }
 
 float Boss::DistanceToPlayer() {
+    // Cálculo de la distancia al jugador
     Point<int> playerPos = app->scene->GetPlayer()->position;
     Point<int> bossPos = position;
 
