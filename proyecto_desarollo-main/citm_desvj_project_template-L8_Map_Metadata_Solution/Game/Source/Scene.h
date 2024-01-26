@@ -54,9 +54,6 @@ public:
 
 	Item* GetItem();
 
-	bool OnGuiMouseClickEvent(GuiControl* control);
-
-	bool SpawnBicho(pugi::xml_node config);
 
 	bool visible = true;
 

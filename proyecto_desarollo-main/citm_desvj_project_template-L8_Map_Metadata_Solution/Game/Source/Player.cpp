@@ -142,7 +142,7 @@ bool Player::Update(float dt) {
     
     else
     {
-        
+        //restar vidas
         if (restarvida == true && Cooldown(3.0f))
         {
             dano = true;
@@ -159,6 +159,7 @@ bool Player::Update(float dt) {
 
             die = true;
         }
+        //muerte
         if (die == true)
         {
             currentAnimation = &dieAnim;
@@ -168,7 +169,7 @@ bool Player::Update(float dt) {
                 comprovacionFX = false;
             }
             
-
+            
             if (dieAnim.HasFinished())
             {
                 comprovacionFX = true;
@@ -192,6 +193,7 @@ bool Player::Update(float dt) {
                 diedie = true;
             }
         }
+        //animacion recibir daño
         else if (dano == true)
         {
             currentAnimation = &dashAnim1;
@@ -203,6 +205,7 @@ bool Player::Update(float dt) {
         }
         else
         {
+            //controles
             if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
                 velocity.x = -0.2 * dt;
                 currentAnimation = &runAnim;
@@ -216,7 +219,7 @@ bool Player::Update(float dt) {
             else {
                 velocity.x = 0;
             }
-
+            //salto
             if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumpCount < 2)//&& isOnGround) {
             {
                 comprovacionFX = true;
@@ -231,7 +234,7 @@ bool Player::Update(float dt) {
                 }
                 tocasuelo == false;
             }
-
+            //impulso
             if (dash)
             {
 
@@ -297,11 +300,11 @@ bool Player::Update(float dt) {
             {
                 currentAnimation = &jumpAnim;
             }
-
+            // logica portales
             if (portal == true || app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
             {
 
-                if (position.x > 10000)
+                if (position.x > 10000) //portal de victoria
                 {
                     win = true;
                     app->die->active = true;
@@ -311,8 +314,9 @@ bool Player::Update(float dt) {
                     app->physics->active = false;
                     app->hud->active = false;
                     app->ability->active = false;
+                    portal = false;
                 }
-                else
+                else        //portal cambio de nivel
                 {
                     app->audio->PlayFx(app->ability->portalfx);
                     position.x = 6912;
@@ -333,7 +337,7 @@ bool Player::Update(float dt) {
                 }
                 
             }
-
+            // vista colliders
             if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
             {
                 app->audio->PlayFx(app->ability->portalfx);
@@ -361,11 +365,12 @@ bool Player::Update(float dt) {
             position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 16;
         }
     }
+    //reset
     if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && jumpCount < 2)//&& isOnGround) {
     {
         
         
-
+        //segundo nivel
         if (position.x > 6800)
         {
             position.x = 6912;
@@ -384,7 +389,7 @@ bool Player::Update(float dt) {
             level2 = true;
             app->sceneintro->level = 2;
         }
-        else
+        else        //primer nivel
         {
             position.x = 250;
             position.y = 672;

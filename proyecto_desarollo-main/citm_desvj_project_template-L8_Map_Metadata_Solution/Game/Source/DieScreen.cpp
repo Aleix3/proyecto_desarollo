@@ -58,6 +58,8 @@ int num3 = 0;
 bool DieScreen::Update(float dt)
 {
 	//L02 DONE 3: Make the camera movement independent of framerate
+	
+	//pantalla muerte
 	if (app->scene->GetPlayer()->diedie == true)
 	{
 		if (num == 10)
@@ -75,7 +77,7 @@ bool DieScreen::Update(float dt)
 		}
 		num++;
 	}
-	if (app->sceneintro->credito == true)
+	if (app->sceneintro->credito == true)		//pantalla creditos
 	{
 		if (num2 == 10)
 		{
@@ -107,12 +109,11 @@ bool DieScreen::Update(float dt)
 	}
 
 
-	if (app->scene->GetPlayer()->win == true)
+	if (app->scene->GetPlayer()->win == true)		//pantalla victoria
 	{
 		if (num3 == 10)
 		{
 			SDL_Delay(3000);
-			return false;
 			app->scene->active = false;
 			app->entityManager->active = false;
 			app->map->active = false;
@@ -123,7 +124,6 @@ bool DieScreen::Update(float dt)
 			app->physics->active = false;
 			app->sceneintro->cargar = false;
 			app->ability->active = false;
-			app->die->active = false;
 			app->scene->GetPlayer()->level2 = false;
 			app->sceneintro->level = 1;
 			app->scene->GetPlayer()->win = false;

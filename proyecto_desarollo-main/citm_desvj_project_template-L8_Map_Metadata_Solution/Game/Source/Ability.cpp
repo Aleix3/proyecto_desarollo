@@ -47,6 +47,7 @@ bool Ability::Start() {
 
 	portalfx = app->audio->LoadFx("Assets/Audio/Fx/Portalfx.wav");
 
+	//colision portales
 	rectangle = app->physics->CreateRectangle(4944, 1954, 32, 32, STATIC);
 	rectangle->ctype = ColliderType::PORTAL;
 	rectangle2 = app->physics->CreateRectangle(10142, 936, 32, 32, STATIC);

@@ -32,8 +32,10 @@ bool Scene::Awake(pugi::xml_node config)
 	LOG("Loading Scene");
 	bool ret = true;
 
+	//inicializamos todas las entities
+
 	player = (Player*) app->entityManager->CreateEntity(EntityType::PLAYER);
-	//Assigns the XML node to a member in player
+	
 	player->config = config.child("player");  
 
 
@@ -131,6 +133,7 @@ bool Scene::Update(float dt)
 	float camSpeed = 1;
 
 	
+	//movimiento camara
 
 	if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN && app->physics->debug == true)
 	{
@@ -182,6 +185,7 @@ bool Scene::Update(float dt)
 		menuu = !menuu;
 	}
 	
+	//menu de juego
 
 	if (menuu && contadormenu == 0)
 	{
@@ -361,12 +365,6 @@ bool Scene::PostUpdate()
 {
 
 	// Get the mouse position and obtain the map coordinate
-	playerMap = app->map->WorldToMap(player->position.x, player->position.y);
-
-	iPoint mousePos;
-	app->input->GetMousePosition(mousePos.x, mousePos.y);
-	iPoint mouseTile = app->map->WorldToMap((mousePos.x - app->render->camera.x) / 2,
-											(mousePos.y - app->render->camera.y) / 2);
 
 	uint windowWidth, windowHeight;
 	app->win->GetWindowSize(windowWidth, windowHeight);
@@ -419,37 +417,5 @@ Item* Scene::GetItem()
 {
 	return item;
 }
-bool Scene::OnGuiMouseClickEvent(GuiControl* control)
-{
-	// L15: DONE 5: Implement the OnGuiMouseClickEvent method
-	LOG("Press Gui Control: %d", control->id);
 
-	return true;
-}
 
-bool Scene::SpawnBicho(pugi::xml_node config)
-{
-	pugi::xml_node falseEnemyNode;
-
-	for (pugi::xml_node enemyNode = config.child("EnemySamurai"); enemyNode; enemyNode = enemyNode.next_sibling("EnemySamurai"))
-	{
-		bool appearValue = enemyNode.attribute("appear").as_bool();
-
-		if (!appearValue)
-		{
-			falseEnemyNode = enemyNode;
-			break;  // Detenemos el bucle cuando encontramos el nodo con appear = false
-		}
-	}
-
-	if (falseEnemyNode)
-	{
-		// Has encontrado el nodo con appear = false
-		// Puedes realizar las operaciones que necesites con falseEnemyNode aquí
-		float x = falseEnemyNode.attribute("x").as_float();
-		float y = falseEnemyNode.attribute("y").as_float();
-		x = x +1;
-		// ... y otros atributos según sea necesario
-	}
-	return ret;
-}

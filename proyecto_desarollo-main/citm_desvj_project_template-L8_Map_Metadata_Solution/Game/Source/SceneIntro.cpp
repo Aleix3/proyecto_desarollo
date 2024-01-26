@@ -78,6 +78,7 @@ bool SceneIntro::Update(float dt)
 	uint windowWidth, windowHeight;
 	app->win->GetWindowSize(windowWidth, windowHeight);
 	
+	//pantalla inicial
 	if (nidea == true)
 	{
 		char text10[20];
@@ -85,6 +86,7 @@ bool SceneIntro::Update(float dt)
 		app->render->DrawText(text10, windowWidth / 2 -195, windowHeight / 2 - 50, 370, 100, 1);
 		
 	}
+	//menu principal
 	else
 	{
 		if (menuu && contadormenu0 == 0)
@@ -115,7 +117,8 @@ bool SceneIntro::Update(float dt)
 
 
 
-
+			app->hud->lives = 3;
+			app->hud->puntos = 0;
 
 		}
 		if (cargar == true)
@@ -296,7 +299,7 @@ bool SceneIntro::PostUpdate()
 	{
 		if (cargar == false)
 		{
-
+			//menu principal
 			app->render->DrawTexture(fondo, windowWidth / 2 - 650, windowHeight / 2 - 400, 0, 0, 0, 0, 0, true);
 
 			char text1[20];
@@ -310,6 +313,7 @@ bool SceneIntro::PostUpdate()
 
 		else
 		{
+			//pantalla cambio nivel
 			int p = 1;
 			char text2[20];
 			sprintf_s(text2, "LEVEL %d/2", level);
