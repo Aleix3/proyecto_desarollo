@@ -72,9 +72,6 @@ bool Boss::Start() {
 
 bool Boss::Update(float dt) {
 
-	// El boss no se movera, sequedará quieto y irá spwaneando varios bichos cada cierto tiempo. Los bichos seguirán al player con el path
-	// Si el player se acerca mucho al Boss, el Boss atacará con su guadaña. El Boss tiene una cierta cantidad de vida
-    
     if (pbody != nullptr)
     {
         currentAnimation = &idleAnim;
@@ -82,11 +79,9 @@ bool Boss::Update(float dt) {
         velocity2 = pbody->body->GetLinearVelocity();
         velocity2.x = 0.0;
 
-
         if (vida <= 0)
         {
             Morir();
-            
         }
 
         distance = DistanceToPlayer();
@@ -190,7 +185,7 @@ bool Boss::Cooldown(float cooldown)
     float tiempo_transcurrido = std::chrono::duration<float>(ahora - ultimo_uso).count();
 
     if (tiempo_transcurrido >= cooldown) {
-        ultimo_uso = ahora; // reiniciar el contador
+        ultimo_uso = ahora;
         return true;
     }
     else {

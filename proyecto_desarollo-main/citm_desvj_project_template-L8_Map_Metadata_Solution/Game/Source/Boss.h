@@ -59,11 +59,10 @@ public:
 
     float distance;
     float spawnDistance = 200;
-    int spawnCooldown = 6.0f;
+    int spawnCooldown = 5.5f;
     bool faceleft;
     bool die;
     bool comprovacionAnim;
-    float scaleFactor = 1.2f;
 
     int vida;
 

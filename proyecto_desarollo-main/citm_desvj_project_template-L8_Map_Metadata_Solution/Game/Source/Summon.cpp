@@ -233,6 +233,7 @@ void Summon::spawn()
     }
     position.x = 10722; 
     position.y = 1632;
+    app->physics->DestroyBody(pbody);
     pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
     pbody->listener = this;
     pbody->ctype = ColliderType::ENEMY;
