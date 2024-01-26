@@ -19,15 +19,18 @@
 
   <scene>
     <player x="250" y="690" texturePath="Assets/Textures/character/Character.png" coinfxpath="Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg"/>
-    <EnemySamurai x="700" y="690" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png" appear = "true"/>
-    <EnemySamurai x="1070" y="484" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png" appear = "true"/>
-	<EnemySamurai x="1776" y="1252" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png" appear = "true"/>
-	<EnemySamurai x="1087" y="1508" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png" appear = "true"/>
-	<EnemySamurai x="1724" y="1956" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png" appear = "true"/>
-	<EnemySamurai x="2496" y="1624" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png" appear = "true"/>
-	<EnemySamurai x="2886" y="1150" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png" appear = "true"/>
-	<EnemySamurai x="0" y="0" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png" appear = "false"/>
-	
+    <EnemySamurai x="700" y="690" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
+    <EnemySamurai x="1070" y="484" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
+	<EnemySamurai x="1776" y="1252" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
+	<EnemySamurai x="1087" y="1508" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
+	<EnemySamurai x="1724" y="1956" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
+	<EnemySamurai x="2496" y="1624" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
+	<EnemySamurai x="2886" y="1150" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
+	<EnemySamurai x="7744" y="1840" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
+	<EnemySamurai x="8284" y="1840" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
+	<EnemySamurai x="9184" y="1728" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
+	<EnemySamurai x="9952" y="1696" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
+	<EnemySamurai x="10368" y="1632" texturePath="Assets/Textures/enemies/DarkSamurai (64x64).png"/>
 	<Boss x="800" y="690" texturePath="Assets/Textures/Boss/Boss.png"/>
 	
     <EnemyVulture x="1724" y="580" texturePath="Assets/Textures/enemies/woodland monsters sprite sheet/vulture_spritesheet.png"/>
