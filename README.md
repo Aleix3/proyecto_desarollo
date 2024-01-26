@@ -15,12 +15,9 @@ This is the Alpha 0.3 of the project for the subject of (Desarrollo de Videojueg
 - F1 = Teleport to level 1
 - F2 = Teleport to level 2
 - F3 = Restart level
-- F5 = You can save the actual player and enemies posiiton.
-- F6 = You can load the position you saved.
-- F8 = deactivate debug mode
 - F9 = Debug mode
 - F10 = GodMode
-- F11 = Disable Godmode
+
 
 **Free Camera**: With the debug mode activated, if you press the C key, the camera will be free and you can move it with the arrow keys. Press the C key again if you want to return to the player's position.
 
