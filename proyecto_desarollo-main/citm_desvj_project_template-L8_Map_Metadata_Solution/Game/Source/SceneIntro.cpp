@@ -172,7 +172,12 @@ bool SceneIntro::Update(float dt)
 		if (gcButtom != nullptr && gcButtom->click == true || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
 
-
+			app->scene->GetPlayer()->position.x = 250;
+			app->scene->GetPlayer()->position.y = 672;
+			app->physics->DestroyBody(app->scene->GetPlayer()->pbody);
+			app->scene->GetPlayer()->pbody = app->physics->CreateCircle(app->scene->GetPlayer()->position.x, app->scene->GetPlayer()->position.y, 11, bodyType::DYNAMIC);
+			app->scene->GetPlayer()->pbody->listener = app->scene->GetPlayer();
+			app->scene->GetPlayer()->pbody->ctype = ColliderType::PLAYER;
 			menuu = false;
 
 

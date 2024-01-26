@@ -115,11 +115,14 @@ bool Boss::Update(float dt) {
 
         else
         {
-            if(pbody != nullptr)
-            pbody->body->SetLinearVelocity(velocity2);
-            b2Transform pbodyPos = pbody->body->GetTransform();
-            position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 55;
-            position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 50;
+            if (pbody != nullptr)
+            {
+                pbody->body->SetLinearVelocity(velocity2);
+                b2Transform pbodyPos = pbody->body->GetTransform();
+                position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 55;
+                position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 50;
+            }
+            
         }
 
         if (currentAnimation == &attackAnim && !comprovacionAnim && attackAnim.HasFinished()) {

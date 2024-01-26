@@ -364,12 +364,36 @@ bool Player::Update(float dt) {
     if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && jumpCount < 2)//&& isOnGround) {
     {
         
-        position.x = 250;
-        position.y = 672;
-        app->physics->DestroyBody(pbody);
-        pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
-        pbody->listener = this;
-        pbody->ctype = ColliderType::PLAYER;
+        
+
+        if (position.x > 6800)
+        {
+            position.x = 6912;
+            position.y = 1882;
+            app->physics->DestroyBody(pbody);
+            pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
+            pbody->listener = this;
+            portal = false;
+            app->sceneintro->active = true;
+            app->scene->active = false;
+            app->entityManager->active = false;
+            app->map->active = false;
+            app->physics->active = false;
+            app->hud->active = false;
+            app->sceneintro->cargar = false;
+            level2 = true;
+            app->sceneintro->level = 2;
+        }
+        else
+        {
+            position.x = 250;
+            position.y = 672;
+            app->physics->DestroyBody(pbody);
+            pbody = app->physics->CreateCircle(position.x, position.y, 11, bodyType::DYNAMIC);
+            pbody->listener = this;
+            pbody->ctype = ColliderType::PLAYER;
+        }
+        
     }
     
     currentAnimation->Update();
