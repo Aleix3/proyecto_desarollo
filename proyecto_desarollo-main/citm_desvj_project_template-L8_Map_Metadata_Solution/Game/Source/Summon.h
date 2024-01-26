@@ -47,6 +47,7 @@ public:
     b2Vec2 velocity2;
     bool faceleft;
     bool die = false;
+    bool hasspawned = false;
 
     std::chrono::steady_clock::time_point ultimo_uso;
 };

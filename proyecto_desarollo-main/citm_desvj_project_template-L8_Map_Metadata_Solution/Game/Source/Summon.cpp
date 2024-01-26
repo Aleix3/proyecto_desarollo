@@ -12,23 +12,23 @@
 Summon::Summon() : Entity(EntityType::SUMMON) {
     name.Create("Summon");
 
-    spawnAnim.PushBack({ 4, 11, 6, 7 });
-    spawnAnim.PushBack({ 46, 12, 8, 8 });
-    /*spawnAnim.PushBack({ 94, 0, 47, 25 });
+    spawnAnim.PushBack({ 0, 0, 47, 25 });
+    spawnAnim.PushBack({ 47, 0, 47, 25 });
+    spawnAnim.PushBack({ 94, 0, 47, 25 });
     spawnAnim.PushBack({ 141, 0, 47, 25 });
     spawnAnim.PushBack({ 188, 0, 47, 25 });
-    spawnAnim.PushBack({ 235, 0, 47, 25 });*/
-    spawnAnim.speed = 0.10f;
+    spawnAnim.speed = 0.05f;
+    spawnAnim.loop = false;
 
-    chasingAnim.PushBack({ 4, 11, 6, 7 });
-    chasingAnim.PushBack({ 46, 12, 8, 8 });
-    /*chasingAnim.PushBack({ 94, 0, 47, 25 });
-    chasingAnim.PushBack({ 141, 0, 47, 25 });*/
+    chasingAnim.PushBack({ 0, 50, 47, 25 });
+    chasingAnim.PushBack({ 47, 50, 47, 25 });
+    chasingAnim.PushBack({ 94, 50, 47, 25 });
+    chasingAnim.PushBack({ 141, 50, 47, 25 });
     chasingAnim.speed = 0.10f;
 
-    dyingAnim.PushBack({ 0, 50, 47, 25 });
-    dyingAnim.PushBack({ 47, 50, 47, 25 });
-    dyingAnim.PushBack({ 94, 50, 47, 25 });
+    dyingAnim.PushBack({ 0, 25, 47, 25 });
+    dyingAnim.PushBack({ 47, 25, 47, 25 });
+    dyingAnim.PushBack({ 94, 25, 47, 25 });
     dyingAnim.speed = 0.17f;
     dyingAnim.loop = false;
 
@@ -53,46 +53,87 @@ bool Summon::Start() {
     pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
     pbody->listener = this;
     pbody->ctype = ColliderType::ENEMY;
+    currentState = SummonState::IDLE;
+    currentAnimation = &spawnAnim;
 	return true;
 }
 
 bool Summon::Update(float dt) {
-    currentAnimation = &spawnAnim;
-    currentState = SummonState::IDLE;
+    
     app->map->pathfinding->ClearLastPath();
-    if (pbody != nullptr)
     velocity2 = pbody->body->GetLinearVelocity();
     velocity2.x = 0.0;
-
-    if (app->scene->GetPlayer()->position.x > position.x)
+    if (spawnAnim.HasFinished() || hasspawned == true)
     {
-        faceleft = false;
-
-        // Perseguir
-        if (app->scene->GetPlayer()->position.x < position.x + 200 && abs(app->scene->GetPlayer()->position.y - position.y) < 50)
+        hasspawned = true;
+        if (app->scene->GetPlayer()->position.x > position.x)
         {
-            currentState = SummonState::CHASING;
+            faceleft = false;
 
-            iPoint playerMap = app->map->WorldToMap(app->scene->GetPlayer()->position.x, app->scene->GetPlayer()->position.y);
-            iPoint origin = app->map->WorldToMap(position.x, position.y);
-            app->map->pathfinding->CreatePath(origin, playerMap);
-
-            if (app->map->pathfinding != NULL)
+            // Perseguir
+            if (app->scene->GetPlayer()->position.x < position.x + 200 && abs(app->scene->GetPlayer()->position.y - position.y) < 50)
             {
-                const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
+                currentState = SummonState::CHASING;
+
+                iPoint playerMap = app->map->WorldToMap(app->scene->GetPlayer()->position.x, app->scene->GetPlayer()->position.y);
+                iPoint origin = app->map->WorldToMap(position.x, position.y);
+                app->map->pathfinding->CreatePath(origin, playerMap);
+
+                if (app->map->pathfinding != NULL)
                 {
-                    if (pathCopy->Count() > 0)
+                    const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
                     {
-                        const iPoint* nextPointPtr = pathCopy->At(0);
+                        if (pathCopy->Count() > 0)
                         {
-                            iPoint nextPoint = *nextPointPtr;
-
-                            iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
-
-                            if (position.x + 20 < app->scene->GetPlayer()->position.x)
+                            const iPoint* nextPointPtr = pathCopy->At(0);
                             {
-                                currentAnimation = &chasingAnim;
-                                velocity2.x = 0.1 * dt;
+                                iPoint nextPoint = *nextPointPtr;
+
+                                iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
+
+                                if (position.x + 20 < app->scene->GetPlayer()->position.x)
+                                {
+                                    currentAnimation = &chasingAnim;
+                                    velocity2.x = 0.1 * dt;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (app->scene->GetPlayer()->position.x < position.x)
+        {
+            faceleft = true;
+
+            // Perseguir
+            if (app->scene->GetPlayer()->position.x > position.x - 200 && abs(app->scene->GetPlayer()->position.y - position.y) < 50)
+            {
+                currentState = SummonState::CHASING;
+
+                iPoint playerMap = app->map->WorldToMap(app->scene->GetPlayer()->position.x, app->scene->GetPlayer()->position.y);
+                iPoint origin = app->map->WorldToMap(position.x, position.y);
+                app->map->pathfinding->CreatePath(origin, playerMap);
+
+                if (app->map->pathfinding != NULL)
+                {
+                    const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
+                    {
+                        if (pathCopy->Count() > 0)
+                        {
+                            const iPoint* nextPointPtr = pathCopy->At(0);
+                            {
+                                iPoint nextPoint = *nextPointPtr;
+
+                                iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
+
+                                if (position.x > app->scene->GetPlayer()->position.x + 20)
+                                {
+                                    currentAnimation = &chasingAnim;
+                                    velocity2.x = -0.1 * dt;
+
+                                }
                             }
                         }
                     }
@@ -100,44 +141,7 @@ bool Summon::Update(float dt) {
             }
         }
     }
-
-    if (app->scene->GetPlayer()->position.x < position.x)
-    {
-        faceleft = true;
-
-        // Perseguir
-        if (app->scene->GetPlayer()->position.x > position.x - 200 && abs(app->scene->GetPlayer()->position.y - position.y) < 50)
-        {
-            currentState = SummonState::CHASING;
-
-            iPoint playerMap = app->map->WorldToMap(app->scene->GetPlayer()->position.x, app->scene->GetPlayer()->position.y);
-            iPoint origin = app->map->WorldToMap(position.x, position.y);
-            app->map->pathfinding->CreatePath(origin, playerMap);
-
-            if (app->map->pathfinding != NULL)
-            {
-                const DynArray<iPoint>* pathCopy = app->map->pathfinding->GetLastPath();
-                {
-                    if (pathCopy->Count() > 0)
-                    {
-                        const iPoint* nextPointPtr = pathCopy->At(0);
-                        {
-                            iPoint nextPoint = *nextPointPtr;
-
-                            iPoint nextPos = app->map->MapToWorld(nextPoint.x, nextPoint.y);
-
-                            if (position.x > app->scene->GetPlayer()->position.x + 20)
-                            {
-                                currentAnimation = &chasingAnim;
-                                velocity2.x = -0.1 * dt;
-
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+   
 
     if (app->scene->GetPlayer()->die == true)
     {
@@ -172,7 +176,7 @@ bool Summon::Update(float dt) {
         }
 
     }
-
+    
     currentAnimation->Update();
 
     SDL_Rect rect = currentAnimation->GetCurrentFrame();
@@ -223,8 +227,6 @@ void Summon::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 void Summon::spawn()
 {
-   
-    app->physics->DestroyBody(pbody);
     if (pbody != nullptr)
     {
 
