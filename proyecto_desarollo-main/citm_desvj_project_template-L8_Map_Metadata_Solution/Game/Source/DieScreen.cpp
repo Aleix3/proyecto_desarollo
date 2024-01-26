@@ -112,7 +112,7 @@ bool DieScreen::Update(float dt)
 		if (num3 == 10)
 		{
 			SDL_Delay(3000);
-
+			return false;
 			app->scene->active = false;
 			app->entityManager->active = false;
 			app->map->active = false;
