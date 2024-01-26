@@ -171,8 +171,6 @@ void Boss::OnCollision(PhysBody* physA, PhysBody* physB) {
             }
            
         }
-            
-        
         break;
     case ColliderType::PLAYER:
         LOG("Collision PLAYER");

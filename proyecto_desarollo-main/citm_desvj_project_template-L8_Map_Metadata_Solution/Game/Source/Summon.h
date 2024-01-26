@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Animation.h"
+#include "Physics.h"
 #include "SDL/include/SDL.h"
 #include <chrono>
 
@@ -43,6 +44,9 @@ public:
     uint dieFx;
 
     PhysBody* pbody;
+    b2Vec2 velocity2;
+    bool faceleft;
+    bool die = false;
 
     std::chrono::steady_clock::time_point ultimo_uso;
 };
