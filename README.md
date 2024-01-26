@@ -17,7 +17,7 @@ This is the Alpha 0.3 of the project for the subject of (Desarrollo de Videojueg
 - F3 = Restart level
 - F9 = Debug mode
 - F10 = GodMode
-
+- F11 = Cap fps to 30
 
 **Free Camera**: With the debug mode activated, if you press the C key, the camera will be free and you can move it with the arrow keys. Press the C key again if you want to return to the player's position.
 
