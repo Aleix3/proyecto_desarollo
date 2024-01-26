@@ -368,32 +368,6 @@ bool Scene::PostUpdate()
 	iPoint mouseTile = app->map->WorldToMap((mousePos.x - app->render->camera.x) / 2,
 											(mousePos.y - app->render->camera.y) / 2);
 
-	// Render a texture where the mouse is over to highlight the tile, use the texture 'mouseTileTex'
-
-	/*iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x , mouseTile.y);
-	app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);*/
-
-	//iPoint origin = app->map->WorldToMap(enemy->position.x, enemy->position.y);
-
-	////If mouse button is pressed modify player position
-	///*if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
-	//	player->godmode = true;
-	//	player->position = iPoint(highlightedTileWorld.x, highlightedTileWorld.y);
-	//}*/
-
-	//if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) //Aqui meter la distancia del enemy al player
-	//{
-	//	app->map->pathfinding->CreatePath(origin, playerMap);
-
-	//}
-	//
-	//// L13: Get the latest calculated path and draw
-	//const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-	//for (uint i = 0; i < path->Count(); ++i)
-	//{
-	//	iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		
-	//}
 	uint windowWidth, windowHeight;
 	app->win->GetWindowSize(windowWidth, windowHeight);
 	
