@@ -52,6 +52,9 @@
 	
 	<heart x="2037" y="676" texturepath="Assets/Textures/HeartFull.png"/>
 	<heart x="1962" y="1972" texturepath="Assets/Textures/HeartFull.png"/>
+	<heart x="8096" y="664" texturepath="Assets/Textures/HeartFull.png"/>
+	<heart x="10784" y="1632" texturepath="Assets/Textures/HeartFull.png"/>
+	<heart x="10624" y="928" texturepath="Assets/Textures/HeartFull.png"/>
 
   </scene>
   
