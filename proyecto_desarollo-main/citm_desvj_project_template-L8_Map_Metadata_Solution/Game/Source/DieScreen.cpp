@@ -14,6 +14,7 @@
 #include "Log.h"
 #include "Hud.h"
 #include "DieScreen.h"
+#include "ability.h"
 
 DieScreen::DieScreen() : Module()
 {
@@ -65,6 +66,7 @@ bool DieScreen::Update(float dt)
 		app->physics->active = true;
 		app->hud->active = true;
 		app->die->active = false;
+		app->ability->active = true;
 		num = 0;
 	}
 	

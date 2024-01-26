@@ -14,6 +14,7 @@
 #include "Window.h"
 #include "SceneIntro.h"
 #include "DieScreen.h"
+#include "ability.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -186,6 +187,7 @@ bool Player::Update(float dt) {
                 app->map->active = false;
                 app->physics->active = false;
                 app->hud->active = false;
+                app->ability->active = false;
                 app->die->active = true;
             }
         }

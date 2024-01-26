@@ -3,6 +3,7 @@
 #include "Textures.h"
 #include "Physics.h"
 #include "Scene.h"
+#include "Render.h"
 #include "Boss.h"
 #include "Map.h"
 #include "Hud.h"
@@ -11,18 +12,18 @@
 Summon::Summon() : Entity(EntityType::SUMMON) {
     name.Create("Summon");
 
-    spawnAnim.PushBack({ 0, 0, 47, 25 });
-    spawnAnim.PushBack({ 47, 0, 47, 25 });
-    spawnAnim.PushBack({ 94, 0, 47, 25 });
+    spawnAnim.PushBack({ 4, 11, 6, 7 });
+    spawnAnim.PushBack({ 46, 12, 8, 8 });
+    /*spawnAnim.PushBack({ 94, 0, 47, 25 });
     spawnAnim.PushBack({ 141, 0, 47, 25 });
     spawnAnim.PushBack({ 188, 0, 47, 25 });
-    spawnAnim.PushBack({ 235, 0, 47, 25 });
+    spawnAnim.PushBack({ 235, 0, 47, 25 });*/
     spawnAnim.speed = 0.10f;
 
-    chasingAnim.PushBack({ 0, 0, 47, 25 });
-    chasingAnim.PushBack({ 47, 0, 47, 25 });
-    chasingAnim.PushBack({ 94, 0, 47, 25 });
-    chasingAnim.PushBack({ 141, 0, 47, 25 });
+    chasingAnim.PushBack({ 4, 11, 6, 7 });
+    chasingAnim.PushBack({ 46, 12, 8, 8 });
+    /*chasingAnim.PushBack({ 94, 0, 47, 25 });
+    chasingAnim.PushBack({ 141, 0, 47, 25 });*/
     chasingAnim.speed = 0.10f;
 
     dyingAnim.PushBack({ 0, 50, 47, 25 });
@@ -39,8 +40,7 @@ Summon::~Summon() {
 }
 
 bool Summon::Awake() {
-    texture = app->tex->Load(parameters.attribute("texturePath").as_string());
-    app->tex->GetSize(texture, texW, texH);
+    
     position.x = parameters.attribute("x").as_int();
     position.y = parameters.attribute("y").as_int();
 	return true;
@@ -48,6 +48,8 @@ bool Summon::Awake() {
 
 bool Summon::Start() {
 
+    texture = app->tex->Load(parameters.attribute("texturePath").as_string());
+    app->tex->GetSize(texture, texW, texH);
     pbody = app->physics->CreateCircle(position.x, position.y, 15, bodyType::DYNAMIC);
     pbody->listener = this;
     pbody->ctype = ColliderType::ENEMY;

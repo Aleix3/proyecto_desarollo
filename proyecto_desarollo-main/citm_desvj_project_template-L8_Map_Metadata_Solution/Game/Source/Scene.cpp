@@ -12,6 +12,7 @@
 #include "GuiManager.h"
 #include"SceneIntro.h"
 #include "summon.h"
+#include "Ability.h"
 #include "Hud.h"
 #include "Defs.h"
 #include "Log.h"
@@ -217,6 +218,7 @@ bool Scene::Update(float dt)
 	{
 		app->entityManager->active = false;
 		app->physics->active = false;
+		app->ability->active = false;
 	}
 
 	if (!menuu)
@@ -267,6 +269,7 @@ bool Scene::Update(float dt)
 		app->sceneintro->menuu = true;
 		app->physics->active = false;
 		app->sceneintro->cargar = false;
+		app->ability->active = false;
 		gcButtom->state = GuiControlState::DISABLED;
 		exit->state = GuiControlState::DISABLED;
 		settings->state = GuiControlState::DISABLED;
