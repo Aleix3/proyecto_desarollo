@@ -8,7 +8,8 @@ This is the Alpha 0.3 of the project for the subject of (Desarrollo de Videojueg
 
 **Player**:
 - You move your character with the WASD keys.
-- You can cast a fireball with the letter Q.
+- you cam jump with space 2 times(infinite jumps if you're touching a wall).
+- You can cast a fireball with the letter Q(A,D,W. for direction).
 - You can make a dash with the letter E.
 
 **Debug Mode**: 
