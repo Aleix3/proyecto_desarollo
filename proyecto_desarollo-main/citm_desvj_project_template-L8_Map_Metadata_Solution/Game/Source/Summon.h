@@ -42,6 +42,7 @@ public:
 
     uint attackFx;
     uint dieFx;
+    uint spawnfx = 0;
 
     PhysBody* pbody;
     b2Vec2 velocity2;

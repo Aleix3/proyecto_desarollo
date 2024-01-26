@@ -5,6 +5,7 @@
 #include "Log.h"
 #include "Scene.h"
 #include "Hud.h"
+#include "Audio.h"
 
 Boss::Boss() : Entity(EntityType::BOSS) {
     name.Create("Boss");
@@ -63,7 +64,8 @@ bool Boss::Awake() {
 bool Boss::Start() {
     texture = app->tex->Load(parameters.attribute("texturePath").as_string());
     app->tex->GetSize(texture, texW, texH);
-
+    golpefx = app->audio->LoadFx("Assets/Audio/Fx/Golpeghostfx.wav");
+    espadafx = app->audio->LoadFx("Assets/Audio/Fx/Espadafx.wav");
     pbody = app->physics->CreateCircle(position.x, position.y, 20, bodyType::STATIC);
     pbody->listener = this;
     pbody->ctype = ColliderType::BOSS;
@@ -96,6 +98,7 @@ bool Boss::Update(float dt) {
             {
                 currentState = BossState::ATACKING;
                 currentAnimation = &attackAnim;
+                app->audio->PlayFx(espadafx);
             }
             
         }
@@ -106,6 +109,7 @@ bool Boss::Update(float dt) {
             {
                 currentState = BossState::ATACKING;
                 currentAnimation = &attackAnim;
+                app->audio->PlayFx(espadafx);
             }
         }
 
@@ -115,7 +119,7 @@ bool Boss::Update(float dt) {
             pbody->body->SetLinearVelocity(velocity2);
             b2Transform pbodyPos = pbody->body->GetTransform();
             position.x = METERS_TO_PIXELS(pbodyPos.p.x) - 55;
-            position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 70;
+            position.y = METERS_TO_PIXELS(pbodyPos.p.y) - 50;
         }
 
         if (currentAnimation == &attackAnim && !comprovacionAnim && attackAnim.HasFinished()) {
@@ -158,6 +162,7 @@ void Boss::OnCollision(PhysBody* physA, PhysBody* physB) {
     case ColliderType::ABILITY:
         LOG("Collision ABILITY");
         vida--;
+        app->audio->PlayFx(golpefx);
         if (physA->ctype == ColliderType::ENEMY)
         {
             if (app->scene->GetEnemySamurai()->appear == false)

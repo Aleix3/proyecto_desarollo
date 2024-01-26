@@ -41,6 +41,8 @@ public:
     SDL_Texture* texture = NULL;
     uint texW, texH;
     uint texWl, texHl;
+    uint golpefx = 0;
+    uint espadafx = 0;
 
     Animation* currentAnimation = nullptr;
     Animation idleAnim;

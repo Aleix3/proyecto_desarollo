@@ -300,7 +300,7 @@ bool Player::Update(float dt) {
 
             if (portal == true || app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
             {
-                
+                app->audio->PlayFx(app->ability->portalfx);
                 position.x = 6912;
                 position.y = 1882;
                 app->physics->DestroyBody(pbody);

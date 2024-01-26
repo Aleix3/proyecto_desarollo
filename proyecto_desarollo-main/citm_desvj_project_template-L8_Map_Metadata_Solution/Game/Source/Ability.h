@@ -34,6 +34,8 @@ public:
 	bool arriba = false;
 	bool left = false;
 
+	uint portalfx = 0;
+
 private:
 	PhysBody* rectangle;
 
@@ -47,6 +49,7 @@ private:
 	Animation PortalAnim;
 
 	uint fireballFX = 0;
+
 
 	iPoint position;
 	bool renderable = true;
