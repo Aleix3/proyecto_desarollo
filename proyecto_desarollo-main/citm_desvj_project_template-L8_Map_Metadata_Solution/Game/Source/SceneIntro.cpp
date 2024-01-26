@@ -98,14 +98,17 @@ bool SceneIntro::Update(float dt)
 
 			else
 			{
-				SDL_Rect btPos = { windowWidth / 2 - 100,windowHeight / 2 - 50, 230,30 };
+				SDL_Rect btPos = { windowWidth / 2 - 100,windowHeight / 2 - 70, 230,30 };
 				gcButtom = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "START", btPos, { 0,0,0,0 }, this);
 
-				SDL_Rect ExitPos = { windowWidth / 2 - 100,windowHeight / 2 + 250, 230,30 };
+				SDL_Rect ExitPos = { windowWidth / 2 - 100,windowHeight / 2 + 300, 230,30 };
 				exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", ExitPos, { 0,0,0,0 }, this);
 
-				SDL_Rect SettingsPos = { windowWidth / 2 - 100,windowHeight / 2 + 110, 230,30 };
+				SDL_Rect SettingsPos = { windowWidth / 2 - 100,windowHeight / 2 + 60, 230,30 };
 				settings = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "SETTINGS", SettingsPos, { 0,0,0,0 }, this);
+
+				SDL_Rect CreditsPos = { windowWidth / 2 - 100,windowHeight / 2 + 180, 230,30 };
+				credits = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "CREDITS", CreditsPos, { 0,0,0,0 }, this);
 			}
 
 
@@ -138,9 +141,11 @@ bool SceneIntro::Update(float dt)
 					gcButtom->state = GuiControlState::DISABLED;
 					exit->state = GuiControlState::DISABLED;
 					settings->state = GuiControlState::DISABLED;
+					credits->state = GuiControlState::DISABLED;
 					gcButtom = nullptr;
 					exit = nullptr;
 					settings = nullptr;
+					credits = nullptr;
 				}
 
 
