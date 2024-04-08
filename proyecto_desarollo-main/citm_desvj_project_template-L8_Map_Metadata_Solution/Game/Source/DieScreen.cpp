@@ -127,6 +127,7 @@ bool DieScreen::Update(float dt)
 			app->scene->GetPlayer()->level2 = false;
 			app->sceneintro->level = 1;
 			app->scene->GetPlayer()->win = false;
+			num3 = 0;
 		}
 		num3++;
 	}
